@@ -49,7 +49,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>for /r $(TargetDir) %25%25i in (*.pdb) do $(SolutionDir)\Framework\ExternalLibs\Mono\pdb2mdb.exe %25%25~dpni.dll
+    <PostBuildEvent>for /r $(TargetDir) %25%25i in (*.pdb) do $(SolutionDir)Framework\ExternalLibs\Mono\pdb2mdb.exe %25%25~dpni.dll
 echo f | xcopy $(TargetDir)*.dll $(SolutionDir)Unity\Assets\Plugins /y /q
 echo f | xcopy $(TargetDir)*.mdb $(SolutionDir)Unity\Assets\Plugins /y /q</PostBuildEvent>
   </PropertyGroup>
