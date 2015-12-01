@@ -15,9 +15,11 @@ public class TestMono : MonoBehaviour {
 				Debug.Log(info.Invoke(null, null));
 		}
 
-        Rosetta.Rosetta r = new Rosetta.Rosetta();
+        Rosetta.Rosetta r = Rosetta.Rosetta.Instance;
         Debug.LogWarning("Rosetta  100   " + r.GetRandomNum100());
         Debug.LogWarning("Rosetta  1000   " + r.GetRandomNum1000());
+
+        Rosetta.Rosetta.Instance.Init();
 
 	}
 	
@@ -26,10 +28,15 @@ public class TestMono : MonoBehaviour {
 	
 	}
 
+    void OnDestroy()
+    {
+        Rosetta.Rosetta.Instance.Destroy();
+    }
+
     private int count = 0;
     public void OnClick()
     {
-        Framework.MyRandom mr = new Framework.MyRandom();
+        Alkaid.MyRandom mr = new Alkaid.MyRandom();
         Debug.LogWarning("Framework 1000   " + mr.GetRandomNum1000());
 
         GameObject go = mr.CreateOne();

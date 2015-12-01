@@ -1,0 +1,5 @@
+D:\WorkSpace\GitHub\Rosetta\Framework\bin\Debug\Framework.dll
+D:\WorkSpace\GitHub\Rosetta\Framework\bin\Debug\Framework.pdb
+D:\WorkSpace\GitHub\Rosetta\Framework\bin\Debug\UnityEngine.dll
+D:\WorkSpace\GitHub\Rosetta\Framework\obj\Debug\Framework.dll
+D:\WorkSpace\GitHub\Rosetta\Framework\obj\Debug\Framework.pdb

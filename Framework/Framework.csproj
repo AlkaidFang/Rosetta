@@ -38,9 +38,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Framework.cs" />
+    <Compile Include="Framework\Framework.cs" />
+    <Compile Include="Framework\FrameworkConfig.cs" />
+    <Compile Include="Logger\LoggerSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Delegate.cs" />
+    <Compile Include="Util\IObject.cs" />
+    <Compile Include="Util\InstanceTemplate.cs" />
+    <Compile Include="Util\Lifecycle.cs" />
+    <Compile Include="Util\SafeList.cs" />
+    <Compile Include="Util\SafeMap.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
