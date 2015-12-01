@@ -1,9 +1,0 @@
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\Rosetta.dll
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\Rosetta.pdb
-D:\WorkSpace\GitHub\Rosetta\Rosetta\obj\Debug\Rosetta.dll
-D:\WorkSpace\GitHub\Rosetta\Rosetta\obj\Debug\Rosetta.pdb
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\Framework.dll
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\Framework.pdb
-D:\WorkSpace\GitHub\Rosetta\Rosetta\obj\Debug\Rosetta.csprojResolveAssemblyReference.cache
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\Rosetta.dll.config
-D:\WorkSpace\GitHub\Rosetta\Rosetta\bin\Debug\UnityEngine.dll
