@@ -1,0 +1,4 @@
+#ID	Name	ScripName	PrefabPath	AltasPath	ParentName	UseFramework
+1	LogoWindow	1	0	none	root	TRUE
+2	HelloWindow	1	0	none	root	TRUE
+#3	JJJWindow	1	0	none	root	FALSE

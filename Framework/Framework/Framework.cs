@@ -14,7 +14,7 @@ namespace Alkaid
         Finished,
     }
 
-    public class Framework : InstanceTemplate<Framework>, Lifecycle
+    public class Framework : Singleton<Framework>, Lifecycle
     {
         private Thread mLogicThread;
         private LogicThreadStatus mLogicThreadStatus;
@@ -29,9 +29,10 @@ namespace Alkaid
         {
             do
             {
+                if (!LoggerSystem.Instance.Init()) break;
                 LoggerSystem.Instance.Info("Framework init begin.");
 
-
+                if (!DataProviderSystem.Instance.Init()) break;
 
 
                 LoggerSystem.Instance.Info("Framework init end.");
@@ -44,14 +45,16 @@ namespace Alkaid
 
         public void Tick()
         {
-
+            LoggerSystem.Instance.Tick();
+            DataProviderSystem.Instance.Tick();
         }
 
         public void Destroy()
         {
             LoggerSystem.Instance.Info("Framework destroy begin");
 
-
+            LoggerSystem.Instance.Destroy();
+            DataProviderSystem.Instance.Tick();
 
             LoggerSystem.Instance.Info("Framework destroy end.");
 
@@ -62,9 +65,9 @@ namespace Alkaid
         {
             LoggerSystem.Instance.Info("Logic Thread start.");
 
-            int fps = FrameworkConfig.Instance.GetFPS();
+            int fps = FrameworkSetup.Instance.GetFPS();
             int sleepTime = 1000 / fps;
-            LoggerSystem.Instance.Debug("Logic Thread run at FPS:" + fps + ",  frame time is:" + sleepTime + "ms.");
+            LoggerSystem.Instance.Info("Logic Thread run at FPS:" + fps + ",  frame time is:" + sleepTime + "ms.");
             LoggerSystem.Instance.Info("Everything is ready, Let's play!");
             while (mLogicThreadStatus == LogicThreadStatus.Working)
             {
@@ -82,6 +85,9 @@ namespace Alkaid
         public void Start()
         {
             mLogicThreadStatus = LogicThreadStatus.Start;
+
+            // setup
+            FrameworkSetup.Instance.Apply();
 
             // Init
             bool ret = Init();

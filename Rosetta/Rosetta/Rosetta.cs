@@ -4,33 +4,26 @@ using Alkaid;
 
 namespace Rosetta
 {
-    public class Rosetta : InstanceTemplate<Rosetta>, Lifecycle
+    public class Rosetta : Singleton<Rosetta>
     {
-        public bool Init()
+        public bool Init(Callback setupWithUnity)
         {
-            RosettaSetup.Instance.Init();
-
-            RunLogic();
+            if (setupWithUnity == null)
+            {
+                setupWithUnity = RosettaSetup.Instance.SetupWithUnity;
+            }
+            FrameworkSetup.Instance.RegisterSetupFromUnity(setupWithUnity);
+            FrameworkSetup.Instance.RegisterSetupFromPorject(RosettaSetup.Instance.SetupWithProject);
 
             return true;
         }
 
-        public void Tick()
-        {
-
-        }
-
-        public void Destroy()
-        {
-            StopLogic();
-        }
-
-        public void RunLogic()
+        public void StartApp()
         {
             Framework.Instance.Start();
         }
 
-        public void StopLogic()
+        public void StopApp()
         {
             Framework.Instance.Stop();
         }

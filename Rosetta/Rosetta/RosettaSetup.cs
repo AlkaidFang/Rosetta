@@ -5,32 +5,25 @@ using Alkaid;
 
 namespace Rosetta
 {
-    public class RosettaSetup : InstanceTemplate<RosettaSetup>, Lifecycle
+    public class RosettaSetup : Singleton<RosettaSetup>
     {
-        public RosettaSetup()
+        public void SetupWithUnity()
         {
 
         }
 
-        public bool Init()
+        public void SetupWithProject()
         {
-            // 对FrameworkConfig中的内容进行设置
-            FrameworkConfig.Instance.SetFPS(30);
-            FrameworkConfig.Instance.SetClearUICache(true);
-            //FrameworkConfig.Instance.SetLoggerSystem(UnityEn);
-            FrameworkConfig.Instance.SetLoggerSystemLevel((int)Alkaid.LoggerSystem.LogLevel.Info);
+            // 对FrameworkSetup中的内容进行设置
+            FrameworkSetup.Instance.SetFPS(30);
+            FrameworkSetup.Instance.SetClearUICache(true);
 
-            return true;
-        }
+            // LoggerSystem
+            LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.Info);
 
-        public void Tick()
-        {
-
-        }
-
-        public void Destroy()
-        {
-
+            // DataProvider
+            DataProviderSystem.Instance.RegisterDataProvider(DictionaryDataProvider.Instance);
+            DataProviderSystem.Instance.RegisterDataProvider(UIWindowDataProvider.Instance);
         }
 
     }

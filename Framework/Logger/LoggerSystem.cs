@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class LoggerSystem : InstanceTemplate<LoggerSystem>, Lifecycle
+    public class LoggerSystem : Singleton<LoggerSystem>, Lifecycle
     {
         public enum LogLevel
         {
@@ -16,7 +16,7 @@ namespace Alkaid
             Fatal = 5,
         }
 
-        private Callback<string> mOutPut = UnityEngine.Debug.Log;
+        private Callback<string> mOutPut = null;
         private LogLevel mLogLevel;
 
         public LoggerSystem()
@@ -54,7 +54,7 @@ namespace Alkaid
         {
             if (null != mOutPut && mLogLevel <= LogLevel.Info)
             {
-                mOutPut("[info]" + message);
+                mOutPut("[info] " + message);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Alkaid
         {
             if (null != mOutPut && mLogLevel <= LogLevel.Debug)
             {
-                mOutPut("[debug]" + message);
+                mOutPut("[debug] " + message);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Alkaid
         {
             if (null != mOutPut && mLogLevel <= LogLevel.Warn)
             {
-                mOutPut("[warn]" + message);
+                mOutPut("[warn] " + message);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Alkaid
         {
             if (null != mOutPut && mLogLevel <= LogLevel.Error)
             {
-                mOutPut("[error]" + message);
+                mOutPut("[error] " + message);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Alkaid
         {
             if (null != mOutPut && mLogLevel <= LogLevel.Fatal)
             {
-                mOutPut("[fatal]" + message);
+                mOutPut("[fatal] " + message);
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Reflection;
+using Alkaid;
+using Rosetta;
 
 public class TestMono : MonoBehaviour {
 
@@ -19,9 +21,22 @@ public class TestMono : MonoBehaviour {
         Debug.LogWarning("Rosetta  100   " + r.GetRandomNum100());
         Debug.LogWarning("Rosetta  1000   " + r.GetRandomNum1000());
 
-        Rosetta.Rosetta.Instance.Init();
-
+        Rosetta.Rosetta.Instance.Init(SetUpWithUnity);
+        Rosetta.Rosetta.Instance.StartApp();
 	}
+
+    private void SetUpWithUnity()
+    {
+        LoggerSystem.Instance.SetDelegate(UnityEngine.Debug.Log);
+        if (Application.isEditor)
+        {
+            DataProviderSystem.Instance.SetRootDir(Application.streamingAssetsPath);
+        }
+        else
+        {
+            DataProviderSystem.Instance.SetRootDir(Application.persistentDataPath);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,7 +45,8 @@ public class TestMono : MonoBehaviour {
 
     void OnDestroy()
     {
-        Rosetta.Rosetta.Instance.Destroy();
+
+        Rosetta.Rosetta.Instance.StopApp();
     }
 
     private int count = 0;

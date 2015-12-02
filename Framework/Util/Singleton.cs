@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class InstanceTemplate<Type> where Type : new()
+    public class Singleton<Type> where Type : new()
     {
         private volatile static object instance = null;
         private static Object m_lock = new Object();

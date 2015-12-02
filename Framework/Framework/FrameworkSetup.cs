@@ -5,9 +5,11 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class FrameworkConfig : InstanceTemplate<FrameworkConfig>
+    public class FrameworkSetup : Singleton<FrameworkSetup>
     {
         private int mFPS = 30;
+        private Callback mSetupFromProject = null;
+        private Callback mSetupFromUnity = null;
 
         public void SetFPS(int fps)
         {
@@ -46,33 +48,26 @@ namespace Alkaid
 
         }
 
-        /**
-         * 设置logsystem的日志输出委托
-         * */
-        public void SetLoggerSystemDelegate(Callback<string> output)
+        public void RegisterSetupFromUnity(Callback fromUnity)
         {
-            LoggerSystem.Instance.SetDelegate(output);
+            mSetupFromUnity = fromUnity;
+        }
+        public void RegisterSetupFromPorject(Callback fromProject)
+        {
+            mSetupFromProject = fromProject;
         }
 
-        public void SetLoggerSystemLevel(int level)
+        public void Apply()
         {
-            LoggerSystem.Instance.SetLogLevel(level);
-        }
+            if (mSetupFromUnity != null)
+            {
+                mSetupFromUnity();
+            }
 
-        /**
-         * 设置文件读取是否从数据库
-         * */
-        public void SetDataProviderFromDB(bool fromdb)
-        {
-
-        }
-
-        /**
-         * 设置文件读取是否加密
-         * */
-        public void SetDataProviderEncryptioned(bool encryptioned)
-        {
-
+            if (mSetupFromProject != null)
+            {
+                mSetupFromProject();
+            }
         }
     }
 }

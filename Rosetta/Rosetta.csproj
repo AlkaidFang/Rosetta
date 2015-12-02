@@ -35,6 +35,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\UIWindowDataProvider.cs" />
+    <Compile Include="DataProvider\DictionaryDataProvider.cs" />
     <Compile Include="Rosetta\RosettaSetup.cs" />
     <Compile Include="Rosetta\Rosetta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -48,9 +50,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataProvider\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>for /r $(TargetDir) %25%25i in (*.pdb) do $(SolutionDir)Framework\ExternalLibs\Mono\pdb2mdb.exe %25%25~dpni.dll
