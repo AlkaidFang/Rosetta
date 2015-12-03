@@ -28,7 +28,7 @@ namespace Alkaid
             return true;
         }
 
-        public void Tick()
+        public void Tick(float interval)
         {
 
         }

@@ -9,7 +9,7 @@ namespace Alkaid
     {
         bool Init();
 
-        void Tick();
+        void Tick(float interval);
 
         void Destroy();
     }

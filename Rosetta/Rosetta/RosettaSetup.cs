@@ -19,7 +19,7 @@ namespace Rosetta
             FrameworkSetup.Instance.SetClearUICache(true);
 
             // LoggerSystem
-            LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.Info);
+            LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.LOG_LEVEL_DEBUG);
 
             // DataProvider
             DataProviderSystem.Instance.RegisterDataProvider(DictionaryDataProvider.Instance);

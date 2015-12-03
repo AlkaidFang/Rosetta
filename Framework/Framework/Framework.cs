@@ -33,6 +33,8 @@ namespace Alkaid
                 LoggerSystem.Instance.Info("Framework init begin.");
 
                 if (!DataProviderSystem.Instance.Init()) break;
+                if (!EngineSystem.Instance.Init()) break;
+                if (!TimeSystem.Instance.Init()) break;
 
 
                 LoggerSystem.Instance.Info("Framework init end.");
@@ -43,10 +45,12 @@ namespace Alkaid
             return false;
         }
 
-        public void Tick()
+        public void Tick(float interval)
         {
-            LoggerSystem.Instance.Tick();
-            DataProviderSystem.Instance.Tick();
+            LoggerSystem.Instance.Tick(interval);
+            DataProviderSystem.Instance.Tick(interval);
+            EngineSystem.Instance.Tick(interval);
+            TimeSystem.Instance.Tick(interval);
         }
 
         public void Destroy()
@@ -54,7 +58,9 @@ namespace Alkaid
             LoggerSystem.Instance.Info("Framework destroy begin");
 
             LoggerSystem.Instance.Destroy();
-            DataProviderSystem.Instance.Tick();
+            DataProviderSystem.Instance.Destroy();
+            EngineSystem.Instance.Destroy();
+            TimeSystem.Instance.Destroy();
 
             LoggerSystem.Instance.Info("Framework destroy end.");
 
@@ -69,11 +75,14 @@ namespace Alkaid
             int sleepTime = 1000 / fps;
             LoggerSystem.Instance.Info("Logic Thread run at FPS:" + fps + ",  frame time is:" + sleepTime + "ms.");
             LoggerSystem.Instance.Info("Everything is ready, Let's play!");
+            DateTime start = DateTime.Now;
+            TimeSpan during = new TimeSpan();
             while (mLogicThreadStatus == LogicThreadStatus.Working)
             {
-                System.DateTime d = System.DateTime.Now;
+                during = (DateTime.Now - start);
+                start = DateTime.Now;
 
-                Tick();
+                Tick((float)during.TotalMinutes);
 
                 System.Threading.Thread.Sleep(sleepTime);
             }

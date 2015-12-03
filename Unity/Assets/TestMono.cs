@@ -27,7 +27,7 @@ public class TestMono : MonoBehaviour {
 
     private void SetUpWithUnity()
     {
-        LoggerSystem.Instance.SetDelegate(UnityEngine.Debug.Log);
+        LoggerSystem.Instance.SetConsoleDelegate(UnityEngine.Debug.Log);
         if (Application.isEditor)
         {
             DataProviderSystem.Instance.SetRootDir(Application.streamingAssetsPath);

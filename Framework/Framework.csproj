@@ -40,10 +40,12 @@
   <ItemGroup>
     <Compile Include="DataProvider\DataProviderSystem.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="EngineSystem\EngineSystem.cs" />
     <Compile Include="Framework\Framework.cs" />
     <Compile Include="Framework\FrameworkSetup.cs" />
     <Compile Include="Logger\LoggerSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeSystme\TimeSystem.cs" />
     <Compile Include="Util\Delegate.cs" />
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\IObject.cs" />
