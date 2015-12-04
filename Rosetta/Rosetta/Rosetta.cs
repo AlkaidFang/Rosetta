@@ -1,4 +1,8 @@
-﻿using System;
+﻿/**
+ * Rosetta视为RenderThread
+ * Framework视为LogicThread
+ * */
+using System;
 using System.Collections.Generic;
 using Alkaid;
 
@@ -16,6 +20,11 @@ namespace Rosetta
             FrameworkSetup.Instance.RegisterSetupFromPorject(RosettaSetup.Instance.SetupWithProject);
 
             return true;
+        }
+
+        public void RenderTick(float interval)
+        {
+
         }
 
         public void StartApp()

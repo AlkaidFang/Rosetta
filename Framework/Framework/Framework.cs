@@ -72,19 +72,25 @@ namespace Alkaid
             LoggerSystem.Instance.Info("Logic Thread start.");
 
             int fps = FrameworkSetup.Instance.GetFPS();
-            int sleepTime = 1000 / fps;
-            LoggerSystem.Instance.Info("Logic Thread run at FPS:" + fps + ",  frame time is:" + sleepTime + "ms.");
+            int constSleepTime = 1000 / fps;
+            LoggerSystem.Instance.Info("Logic Thread run at FPS:" + fps + ",  frame time is:" + constSleepTime + "ms.");
             LoggerSystem.Instance.Info("Everything is ready, Let's play!");
-            DateTime start = DateTime.Now;
+
             TimeSpan during = new TimeSpan();
+            DateTime tickStart = DateTime.Now;
             while (mLogicThreadStatus == LogicThreadStatus.Working)
             {
-                during = (DateTime.Now - start);
-                start = DateTime.Now;
+                during = (DateTime.Now - tickStart); // 上一帧所消耗的时间
+                tickStart = DateTime.Now;
 
-                Tick((float)during.TotalMinutes);
+                Tick((float)during.TotalSeconds);
 
-                System.Threading.Thread.Sleep(sleepTime);
+                during = DateTime.Now - tickStart; // 当前tick逻辑所消耗的时间
+                if (constSleepTime > during.TotalMilliseconds)
+                {
+                    // 为了帧率稳定
+                    System.Threading.Thread.Sleep(constSleepTime - (int)during.TotalMilliseconds);
+                }
             }
 
             LoggerSystem.Instance.Info("Logic Thread finished.");
