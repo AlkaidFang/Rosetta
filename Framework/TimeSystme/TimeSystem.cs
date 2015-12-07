@@ -7,18 +7,15 @@ namespace Alkaid
 {
     public class TimeSystem : Singleton<TimeSystem>, Lifecycle
     {
+        private DateTime _BaseTime = new DateTime(1970, 1, 1); // 不能声明为const
 
         private int mFrames;
         private double mTotalTickSeconds;
         private double mLocalStartTime;
         private float mRemoteTimeOffset;
 
-        private DateTime _BaseTime;
-
         public TimeSystem()
         {
-            _BaseTime = new DateTime(1970, 1, 1);
-
             mFrames = 0;
             mTotalTickSeconds = 0;
             mLocalStartTime = 0;
@@ -46,8 +43,6 @@ namespace Alkaid
         public void Destroy()
         {
             LoggerSystem.Instance.Info("TimeSystem    destroy  begin");
-            this.mFrames = 0;
-            this.mTotalTickSeconds = 0;
 
             LoggerSystem.Instance.Info("TimeSystem    destroy  end");
         }

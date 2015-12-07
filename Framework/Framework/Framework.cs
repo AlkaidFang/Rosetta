@@ -30,11 +30,11 @@ namespace Alkaid
             do
             {
                 if (!LoggerSystem.Instance.Init()) break;
-                LoggerSystem.Instance.Info("Framework init begin.");
-
+                LoggerSystem.Instance.Info("========================Hello!========================");
+                LoggerSystem.Instance.Info("Framework    init begin.");
+                if (!TimeSystem.Instance.Init()) break;
                 if (!DataProviderSystem.Instance.Init()) break;
                 if (!EngineSystem.Instance.Init()) break;
-                if (!TimeSystem.Instance.Init()) break;
                 if (!EventSystem.Instance.Init()) break;
 
 
@@ -59,15 +59,16 @@ namespace Alkaid
         {
             LoggerSystem.Instance.Info("Framework destroy begin");
 
-            LoggerSystem.Instance.Destroy();
-            DataProviderSystem.Instance.Destroy();
             EngineSystem.Instance.Destroy();
-            TimeSystem.Instance.Destroy();
             EventSystem.Instance.Destroy();
+            DataProviderSystem.Instance.Destroy();
+            TimeSystem.Instance.Destroy();
 
             LoggerSystem.Instance.Info("Framework destroy end.");
 
-            LoggerSystem.Instance.Info("Good bye!");
+            LoggerSystem.Instance.Info("========================Good bye!========================");
+            
+            LoggerSystem.Instance.Destroy();
         }
 
         private void LogicThreading()
@@ -76,8 +77,10 @@ namespace Alkaid
 
             int fps = FrameworkSetup.Instance.GetFPS();
             int constSleepTime = 1000 / fps;
+            LoggerSystem.Instance.Info("-------------------------------------------------");
             LoggerSystem.Instance.Info("Logic Thread run at FPS:" + fps + ",  frame time is:" + constSleepTime + "ms.");
             LoggerSystem.Instance.Info("Everything is ready, Let's play!");
+            LoggerSystem.Instance.Info("-------------------------------------------------");
 
             TimeSpan during = new TimeSpan();
             DateTime tickStart = DateTime.Now;

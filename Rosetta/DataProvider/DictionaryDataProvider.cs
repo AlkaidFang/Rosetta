@@ -44,7 +44,7 @@ namespace Rosetta
         {
             foreach(DictionaryDataItem i in mDataList)
 	        {
-                LoggerSystem.Instance.Debug("Dic   " + i.mID + "  " + i.mData);
+                LoggerSystem.Instance.Debug("Dictionary   " + i.mID + "  " + i.mData);
 	        }
 	        return true;
         }

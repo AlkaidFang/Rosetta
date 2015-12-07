@@ -59,15 +59,16 @@ namespace Alkaid
 
         public void Apply()
         {
+            if (mSetupFromProject != null)
+            {
+                mSetupFromProject();
+            }
+
             if (mSetupFromUnity != null)
             {
                 mSetupFromUnity();
             }
 
-            if (mSetupFromProject != null)
-            {
-                mSetupFromProject();
-            }
         }
     }
 }

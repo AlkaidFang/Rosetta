@@ -16,84 +16,94 @@ namespace Alkaid
             LOG_LEVEL_FATAL = 5,
         }
 
-        private Callback<string> mConsoleOutput = null;
-        private Callback<string> mFileOutput = null;
-        private LogLevel mLogLevel = LogLevel.LOG_LEVEL_INFO;
+        private Logger mConsoleLogger;
+        private Logger mFileLogger;
+        private LogLevel mLogLevel;
 
-        private bool mSaveFile = false;
+        private bool mSaveFile;
 
         public LoggerSystem()
         {
-            mConsoleOutput = null;
-            mFileOutput = null;
+            mConsoleLogger = null;
+            mFileLogger = new FileLogger();
             mLogLevel = LogLevel.LOG_LEVEL_INFO;
+            mSaveFile = false;
         }
 
         public bool Init()
         {
+            mFileLogger.Init();
 
             return true;
         }
 
         public void Tick(float interval)
         {
-
+            mFileLogger.Tick(interval);
         }
 
         public void Destroy()
         {
-
+            mFileLogger.Destroy();
         }
 
 
         private void ConsoleLog(string message)
         {
-            if (null != mConsoleOutput)
+            if (null != mConsoleLogger)
             {
-                mConsoleOutput(message);
+                mConsoleLogger.Write(message);
             }
         }
 
         private void FileLog(string message)
         {
-            if (mSaveFile && null != mFileOutput)
+            if (mSaveFile && null != mFileLogger)
             {
-                mFileOutput(message);
+                mFileLogger.Write(message);
             }
         }
 
         private void WriteLog(LogLevel level, string message)
         {
-            string msg = "";
+            string type = "";
             switch(level)
             {
-                case LogLevel.LOG_LEVEL_DEBUG: msg = "DEBUG:"; break;
-                case LogLevel.LOG_LEVEL_INFO: msg = "INFO:"; break;
-                case LogLevel.LOG_LEVEL_WARN: msg = "WARNING:"; break;
-                case LogLevel.LOG_LEVEL_ERROR: msg = "ERROR:"; break;
-                case LogLevel.LOG_LEVEL_FATAL: msg = "FATAL:"; break;
+                case LogLevel.LOG_LEVEL_DEBUG: type = "DEBUG"; break;
+                case LogLevel.LOG_LEVEL_INFO: type = "INFO"; break;
+                case LogLevel.LOG_LEVEL_WARN: type = "WARNING"; break;
+                case LogLevel.LOG_LEVEL_ERROR: type = "ERROR"; break;
+                case LogLevel.LOG_LEVEL_FATAL: type = "FATAL"; break;
             }
-            msg = msg + " " + message;
+            message = string.Format("{0}, {1}, {2}", TimeSystem.Instance.GetFrame(), type, message);
             
             if (mLogLevel <= level)
             {
                 // console log
-                ConsoleLog(msg);
+                ConsoleLog(message);
 
                 // file log
-                FileLog(msg);
+                FileLog(message);
             }
         }
 
 
-        public void SetConsoleDelegate(Callback<string> output)
+        public void SetConsoleLogger(Logger logger)
         {
-            mConsoleOutput = output;
+            mConsoleLogger = logger;
         }
 
-        public void SetFileDelegate(Callback<string> output)
+        public void SetFileLogger(Logger logger)
         {
-            mFileOutput = output;
+            mFileLogger = logger;
+        }
+
+        public void SetFileLogPath(string path)
+        {
+            if (mSaveFile)
+            {
+                ((FileLogger)mFileLogger).SetSavePath(path);
+            }
         }
 
         public void SaveFileLog(bool status)

@@ -46,19 +46,25 @@
     <Compile Include="EventSystem\EventHandler.cs" />
     <Compile Include="Framework\Framework.cs" />
     <Compile Include="Framework\FrameworkSetup.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LoggerSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="TimeSystme\TimeSystem.cs" />
     <Compile Include="Util\Delegate.cs" />
     <Compile Include="Util\FileReader.cs" />
+    <Compile Include="Util\FileSaver.cs" />
     <Compile Include="Util\IObject.cs" />
     <Compile Include="Util\Singleton.cs" />
     <Compile Include="Util\Lifecycle.cs" />
     <Compile Include="Util\SafeList.cs" />
     <Compile Include="Util\SafeMap.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NetSystem\" />
+    <Folder Include="ThirdPartySystem\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

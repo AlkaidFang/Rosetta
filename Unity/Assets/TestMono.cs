@@ -26,13 +26,16 @@ public class TestMono : MonoBehaviour {
 
     private void SetUpWithUnity()
     {
-        LoggerSystem.Instance.SetConsoleDelegate(UnityEngine.Debug.Log);
+        LoggerSystem.Instance.SetConsoleLogger(new Logger(UnityEngine.Debug.Log));
+        
         if (Application.isEditor)
         {
+            LoggerSystem.Instance.SetFileLogPath(Application.temporaryCachePath);
             DataProviderSystem.Instance.SetRootDir(Application.streamingAssetsPath);
         }
         else
         {
+            LoggerSystem.Instance.SetFileLogPath(Application.temporaryCachePath);
             DataProviderSystem.Instance.SetRootDir(Application.persistentDataPath);
         }
     }

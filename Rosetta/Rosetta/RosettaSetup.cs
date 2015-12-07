@@ -20,6 +20,7 @@ namespace Rosetta
 
             // LoggerSystem
             LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.LOG_LEVEL_DEBUG);
+            LoggerSystem.Instance.SaveFileLog(true);
 
             // DataProvider
             DataProviderSystem.Instance.RegisterDataProvider(DictionaryDataProvider.Instance);
