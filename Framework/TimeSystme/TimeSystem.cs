@@ -37,7 +37,7 @@ namespace Alkaid
 
         public void Tick(float interval)
         {
-            LoggerSystem.Instance.Debug("每tick  时间s: " + interval);
+            //LoggerSystem.Instance.Debug("每tick  时间s: " + interval);
 
             this.mFrames++;
             this.mTotalTickSeconds += interval;

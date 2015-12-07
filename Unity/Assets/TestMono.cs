@@ -22,7 +22,6 @@ public class TestMono : MonoBehaviour {
         Debug.LogWarning("Rosetta  1000   " + r.GetRandomNum1000());
 
         Rosetta.Rosetta.Instance.Init(SetUpWithUnity);
-        Rosetta.Rosetta.Instance.StartApp();
 	}
 
     private void SetUpWithUnity()
@@ -40,13 +39,12 @@ public class TestMono : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Rosetta.Rosetta.Instance.Tick(Time.deltaTime);
 	}
 
     void OnDestroy()
     {
-
-        Rosetta.Rosetta.Instance.StopApp();
+        Rosetta.Rosetta.Instance.Destroy();
     }
 
     private int count = 0;

@@ -33,7 +33,7 @@ namespace Alkaid
             _reset();
 
             // read all lines=
-            if (File.Exists(filePath) != null)
+            if (File.Exists(filePath))
             {
                 try
                 {

@@ -35,6 +35,7 @@ namespace Alkaid
                 if (!DataProviderSystem.Instance.Init()) break;
                 if (!EngineSystem.Instance.Init()) break;
                 if (!TimeSystem.Instance.Init()) break;
+                if (!EventSystem.Instance.Init()) break;
 
 
                 LoggerSystem.Instance.Info("Framework init end.");
@@ -51,6 +52,7 @@ namespace Alkaid
             DataProviderSystem.Instance.Tick(interval);
             EngineSystem.Instance.Tick(interval);
             TimeSystem.Instance.Tick(interval);
+            EventSystem.Instance.Tick(interval);
         }
 
         public void Destroy()
@@ -61,6 +63,7 @@ namespace Alkaid
             DataProviderSystem.Instance.Destroy();
             EngineSystem.Instance.Destroy();
             TimeSystem.Instance.Destroy();
+            EventSystem.Instance.Destroy();
 
             LoggerSystem.Instance.Info("Framework destroy end.");
 
@@ -119,7 +122,6 @@ namespace Alkaid
                 mLogicThreadStatus = LogicThreadStatus.Working;
                 mLogicThread.Start();
             }
-
         }
 
         public void Stop()

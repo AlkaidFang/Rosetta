@@ -8,9 +8,9 @@ using Alkaid;
 
 namespace Rosetta
 {
-    public class Rosetta : Singleton<Rosetta>
+    public class Rosetta : Singleton<Rosetta>, Lifecycle
     {
-        public bool Init(Callback setupWithUnity)
+        public void Init(Callback setupWithUnity)
         {
             if (setupWithUnity == null)
             {
@@ -19,24 +19,30 @@ namespace Rosetta
             FrameworkSetup.Instance.RegisterSetupFromUnity(setupWithUnity);
             FrameworkSetup.Instance.RegisterSetupFromPorject(RosettaSetup.Instance.SetupWithProject);
 
-            return true;
+            Init();
         }
 
         public void RenderTick(float interval)
         {
-
         }
 
-        public void StartApp()
+        public bool Init()
         {
             Framework.Instance.Start();
+
+            return true;
         }
 
-        public void StopApp()
+        public void Tick(float interval)
+        {
+            // 事件系统需要tick
+            EventSystem.Instance.Tick(interval);
+        }
+
+        public void Destroy()
         {
             Framework.Instance.Stop();
         }
-
 
 
 

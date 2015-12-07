@@ -8,43 +8,42 @@ namespace Alkaid
     public class Event
     {
         private string mKey;
-        private object mHoster;
-        private Delegate mHandler;
+        private object[] mArgs;
+        private int mDelayTicks;
 
-        private int mFireCount;
 
-        public Event()
+        public Event(string key, object[] args)
         {
-            mKey = "";
-            mHoster = null;
-            mHandler = null;
-            mFireCount = 0;
+            mKey = key;
+            mArgs = args;
+            mDelayTicks = 0;
         }
 
-        public void Init(string key, object hoster, Delegate handler)
+        public Event(string key, object[] args, int delayTicks)
         {
-            this.mKey = key;
-            this.mHoster = hoster;
-            this.mHandler = handler;
-
+            mKey = key;
+            mArgs = args;
+            mDelayTicks = delayTicks;
         }
 
-        public void Fire(string key, params object[] parameters)
+        public void DoTick()
         {
-            if (this.mHandler != null && this.mHoster != null)
-            {
-                this.mHandler.DynamicInvoke(parameters);
-                this.mFireCount++;
-            }
-            else
-            {
-                LoggerSystem.Instance.Error("EventLisener Error! hoster:" + this.mHoster + ", handler:" + this.mHandler);
-            }
+            mDelayTicks--;
         }
 
-        public bool IsEvent(string key, object hoster)
+        public bool CanFire()
         {
-            return this.mKey == key && this.mHoster == hoster;
+            return mDelayTicks == 0;
+        }
+
+        public string GetKey()
+        {
+            return mKey;
+        }
+
+        public  object[] GetArgs()
+        {
+            return mArgs;
         }
     }
 }

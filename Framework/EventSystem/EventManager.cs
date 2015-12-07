@@ -5,16 +5,19 @@ using System.Text;
 
 namespace Alkaid
 {
+
+
     public class EventManager : Lifecycle
     {
-        private Dictionary<string, List<Event>> mEventHandlerMap;
+        private Dictionary<string, List<EventHandler>> mEventHandlerMap;
 
-        private Dictionary<string, object[]> mFiredEventList;
+        private List<Event> mFiredEventList;
+        //private List<Event> 
 
         public EventManager()
         {
-            mEventHandlerMap = new Dictionary<string, List<Event>>();
-            mFiredEventList = new Dictionary<string, object[]>();
+            mEventHandlerMap = new Dictionary<string, List<EventHandler>>();
+            mFiredEventList = new List<Event>();
         }
 
         public bool Init()
@@ -26,15 +29,18 @@ namespace Alkaid
 
         public void Tick(float interval)
         {
-            foreach (var key in mFiredEventList.Keys)
+            for (int i = mFiredEventList.Count - 1; i >= 0; --i)
             {
-                if (!string.IsNullOrEmpty(key))
+                if (mFiredEventList[i].CanFire())
                 {
-                    DirectFire(key, mFiredEventList[key]);
+                    DirectFire(mFiredEventList[i]);
+                    mFiredEventList.RemoveAt(i);
+                }
+                else
+                {
+                    mFiredEventList[i].DoTick();
                 }
             }
-
-            mFiredEventList.Clear();
         }
 
         public void Destroy()
@@ -43,36 +49,40 @@ namespace Alkaid
             mEventHandlerMap.Clear();
         }
 
-        private void DirectFire(string key, params object[] parameters)
+        private void DirectFire(Event e)
         {
-            List<Event> total = null;
-            if (this.mEventHandlerMap.TryGetValue(key, out total))
+            List<EventHandler> total = null;
+            if (this.mEventHandlerMap.TryGetValue(e.GetKey(), out total))
             {
-                Event e = null;
+                EventHandler eh = null;
                 for(int i = 0; i < total.Count; ++i)
                 {
-                    e = total[i];
-                    if (e != null)
+                    eh = total[i];
+                    if (eh != null)
                     {
-                        e.Fire(key, parameters);
+                        eh.Fire(e.GetKey(), e.GetArgs());
                     }
                 }
+            }
+            else
+            {
+                LoggerSystem.Instance.Error("Not register this event for EventHandler:" + this.GetHashCode());
             }
         }
 
         public void RegisterEvent(string key, object hoster, Delegate handler)
         {
-            Event e = new Event();
+            EventHandler e = new EventHandler();
             e.Init(key, hoster, handler);
 
-            List<Event> total = null;
+            List<EventHandler> total = null;
             if (this.mEventHandlerMap.ContainsKey(key))
             {
                 total = this.mEventHandlerMap[key];
             }
             else
             {
-                total = new List<Event>();
+                total = new List<EventHandler>();
                 this.mEventHandlerMap.Add(key, total);
             }
 
@@ -83,8 +93,8 @@ namespace Alkaid
         {
             if (this.mEventHandlerMap.ContainsKey(key))
             {
-                List<Event> total = this.mEventHandlerMap[key];
-                List<Event> temp = new List<Event>();
+                List<EventHandler> total = this.mEventHandlerMap[key];
+                List<EventHandler> temp = new List<EventHandler>();
                 temp.AddRange(total);
                 foreach(var i in temp)
                 {
@@ -96,5 +106,23 @@ namespace Alkaid
             }
         }
 
+        public void FireEvent(string key, params object[] args)
+        {
+            // 直接执行
+            Event e = new Event(key, args);
+            DirectFire(e);
+            //FireEventDelay(0, key, args);
+        }
+
+        public void FireEvent2(string key, params object[] args)
+        {
+            FireEventDelay(1, key, args);
+        }
+
+        private void FireEventDelay(int delay, string key, params object[] args)
+        {
+            Event e = new Event(key, args, delay);
+            mFiredEventList.Add(e);
+        }
     }
 }
