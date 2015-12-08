@@ -26,8 +26,6 @@ namespace Rosetta
 
         public void Load()
         {
-            FileReader.Load(System.IO.Path.Combine(DataProviderSystem.Instance.GetRootDir(), Path()));
-
             UIWindowDataItem item = null;
             while (!FileReader.IsEnd())
             {
@@ -49,7 +47,7 @@ namespace Rosetta
         {
             foreach(var i in mDataList)
 	        {
-                LoggerSystem.Instance.Debug("Dic   " + i.mID + "  " + i.mName);
+                LoggerSystem.Instance.Debug("UIWindow   " + i.mID + "  " + i.mName);
 	        }
 	        return true;
         }

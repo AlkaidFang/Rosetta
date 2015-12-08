@@ -60,6 +60,11 @@ namespace Alkaid
             return false;
         }
 
+        public static void UnLoad()
+        {
+            _reset();
+        }
+
         private static void DeleteComments()
         {
             foreach (var line in lines_temp)

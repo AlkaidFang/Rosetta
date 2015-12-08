@@ -29,6 +29,7 @@ namespace Alkaid
         {
             do
             {
+                if (!ConfigSystem.Instance.Init()) break;
                 if (!LoggerSystem.Instance.Init()) break;
                 LoggerSystem.Instance.Info("========================Hello!========================");
                 LoggerSystem.Instance.Info("Framework    init begin.");
@@ -36,6 +37,7 @@ namespace Alkaid
                 if (!DataProviderSystem.Instance.Init()) break;
                 if (!EngineSystem.Instance.Init()) break;
                 if (!EventSystem.Instance.Init()) break;
+                if (!LocalStorageSystem.Instance.Init()) break;
 
 
                 LoggerSystem.Instance.Info("Framework init end.");
@@ -53,6 +55,7 @@ namespace Alkaid
             EngineSystem.Instance.Tick(interval);
             TimeSystem.Instance.Tick(interval);
             EventSystem.Instance.Tick(interval);
+            LocalStorageSystem.Instance.Tick(interval);
         }
 
         public void Destroy()
@@ -61,6 +64,7 @@ namespace Alkaid
 
             EngineSystem.Instance.Destroy();
             EventSystem.Instance.Destroy();
+            LocalStorageSystem.Instance.Destroy();
             DataProviderSystem.Instance.Destroy();
             TimeSystem.Instance.Destroy();
 

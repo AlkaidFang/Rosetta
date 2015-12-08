@@ -7,40 +7,31 @@ namespace Alkaid
 {
     public class FileLogger : Logger
     {
-        private object mLocker = new object();
-        private const string _LogFormat = "{0}/Log_{1}.log";
+        private const string _LogFormat = "{0}/{1}_{2}.{3}";
         private const int _FlusInterval = 10;
 
         private string mSavePath;
+        private string mSaveFrontName;
+        private string mSaveExtName;
+        private string mFinalFilePath;
         private FileSaver mFileSaver;
-        private List<string> mMessages;
+        private SafeList<string> mWaitMessages;
         private float mTempSeconds;
 
         public FileLogger()
         {
-            /*base.SetDelegate(Log);*/
             mSavePath = "";
+            mSaveFrontName = "Log";
+            mSaveExtName = "log";
+            mFinalFilePath = "";
+
             mFileSaver = new FileSaver();
-            mMessages = new List<string>();
+            mWaitMessages = new SafeList<string>();
             mTempSeconds = 0;
         }
-
-        private void DirectWriteAll()
-        {
-            lock (mLocker)
-            {
-                foreach (var i in mMessages)
-                {
-                    mFileSaver.WriteLine(i);
-                }
-                mFileSaver.Flush();
-                mMessages.Clear();
-            }
-        }
-
         public override bool Init()
         {
-
+            mFileSaver.Init(GetFinalFilePath());
             return true;
         }
 
@@ -62,26 +53,47 @@ namespace Alkaid
             mFileSaver.Close();
             mFileSaver = null;
         }
+
+        public override void Write(string message)
+        {
+            mWaitMessages.Add(message);
+        }
+
+        private void DirectWriteAll()
+        {
+            mWaitMessages.Foreach((string msg) =>
+            {
+                mFileSaver.WriteLine(msg);
+                mWaitMessages.Remove(msg);
+            });
+
+            mFileSaver.Flush();
+        }
         
         public void SetSavePath(string path)
         {
             mSavePath = path;
-
-            string name = string.Format(_LogFormat, mSavePath, DateTime.Now.ToString("yyyy-MM-dd"));
-            mFileSaver.Init(name);
+            FormatFinalFileName();
+        }
+        public string GetFinalFilePath()
+        {
+            return mFinalFilePath;
         }
 
-        public override void Write(string message)
+        public void SetFileLogFrontName(string name)
         {
-            lock(mLocker)
-            {
-                mMessages.Add(message);
-            }
+            mSaveFrontName = name;
+            FormatFinalFileName();
         }
 
-        /*public void Log(string message)
+        public void SetFileLogExtName(string name)
         {
-            mMessages.Add(message);
-        }*/
+            mSaveExtName = name;
+            FormatFinalFileName();
+        }
+        private void FormatFinalFileName()
+        {
+            mFinalFilePath = string.Format(_LogFormat, mSavePath, mSaveFrontName, DateTime.Now.ToString("yyyy-MM-dd"), mSaveExtName);
+        }
     }
 }

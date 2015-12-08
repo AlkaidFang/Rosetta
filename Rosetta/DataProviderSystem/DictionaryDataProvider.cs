@@ -26,8 +26,6 @@ namespace Rosetta
 
         public void Load()
         {
-            FileReader.Load(System.IO.Path.Combine(DataProviderSystem.Instance.GetRootDir(), Path()));
-
             DictionaryDataItem item = null;
             while (!FileReader.IsEnd())
             {

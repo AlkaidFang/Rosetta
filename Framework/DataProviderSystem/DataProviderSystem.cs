@@ -6,8 +6,6 @@ namespace Alkaid
 {
     public class DataProviderSystem : Singleton<DataProviderSystem>, Lifecycle
     {
-        private string mDir = "";
-
         private List<IDataProvider> mDataProvider = new List<IDataProvider>();
 
         public bool Init()
@@ -17,10 +15,15 @@ namespace Alkaid
             for (int i = 0; i < mDataProvider.Count; ++i)
             {
                 provider = mDataProvider[i];
-                if (provider != null)
+                if (null != provider)
                 {
+                    FileReader.Load(FormatDataProviderPath(provider.Path()));
+
                     provider.Load();
+
                     if (!provider.Verify()) return false;
+
+                    FileReader.UnLoad();
                 }
             }
 
@@ -42,15 +45,10 @@ namespace Alkaid
         {
             mDataProvider.Add(dataProvider);
         }
-        
-        public void SetRootDir(string dir)
-        {
-            mDir = dir;
-        }
 
-        public string GetRootDir()
+        public string FormatDataProviderPath(string datapath)
         {
-            return mDir;
+            return System.IO.Path.Combine(FrameworkSetup.Instance.GetStreamAssetsRootDir(), datapath);
         }
     }
 }

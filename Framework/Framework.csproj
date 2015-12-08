@@ -38,14 +38,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\DataProviderSystem.cs" />
-    <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="ConfigSystem\ConfigSystem.cs" />
+    <Compile Include="DataProviderSystem\DataProviderSystem.cs" />
+    <Compile Include="DataProviderSystem\IDataProvider.cs" />
     <Compile Include="EngineSystem\EngineSystem.cs" />
     <Compile Include="EventSystem\Event.cs" />
     <Compile Include="EventSystem\EventSystem.cs" />
     <Compile Include="EventSystem\EventHandler.cs" />
     <Compile Include="Framework\Framework.cs" />
     <Compile Include="Framework\FrameworkSetup.cs" />
+    <Compile Include="LocalStorageSystem\LocalStorageSystem.cs" />
+    <Compile Include="LocalStorageSystem\ILocalStorage.cs" />
     <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LoggerSystem.cs" />

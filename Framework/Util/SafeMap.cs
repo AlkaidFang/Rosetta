@@ -7,54 +7,54 @@ namespace Alkaid
 {
     public class SafeMap<K, V>
     {
-        private Dictionary<K, V> handlerDict;
-
-        private Dictionary<K, V> tempDict;
-
-        private volatile int hasChanged;
+        private object mLocker;
+        private Dictionary<K, V> mValueDict;
+        private Dictionary<K, V> mTempDict;
+        private volatile int mHaveChanged;
 
         public Dictionary<K, V>.KeyCollection Keys
         {
-            get { return handlerDict.Keys; }
+            get { return mValueDict.Keys; }
         }
 
         public int Count
         {
-            get { return handlerDict.Count; }
+            get { return mValueDict.Count; }
         }
 
         public SafeMap()
         {
-            handlerDict = new Dictionary<K, V>();
-            tempDict = new Dictionary<K, V>();
-            hasChanged = 0;
+            mLocker = new object();
+            mValueDict = new Dictionary<K, V>();
+            mTempDict = new Dictionary<K, V>();
+            mHaveChanged = 0;
         }
 
         public void Put(K key, V value)
         {
-            lock (handlerDict)
+            lock (mLocker)
             {
-                handlerDict.Add(key, value);
+                mValueDict.Add(key, value);
 
-                ++hasChanged;
+                ++mHaveChanged;
             }
         }
 
         public V Get(K key)
         {
-            lock (handlerDict)
+            lock (mLocker)
             {
-                return handlerDict[key];
+                return mValueDict[key];
             }
         }
 
         public void Remove(K key)
         {
-            lock (handlerDict)
+            lock (mLocker)
             {
-                handlerDict.Remove(key);
+                mValueDict.Remove(key);
 
-                ++hasChanged;
+                ++mHaveChanged;
             }
         }
 
@@ -68,38 +68,37 @@ namespace Alkaid
 
         public void Clear()
         {
-            lock (handlerDict)
+            lock (mLocker)
             {
-                handlerDict.Clear();
+                mValueDict.Clear();
             }
         }
 
-        public delegate void _foreach_delegate_(V arg);
-        public void Foreach(_foreach_delegate_ _delegate)
+        public void Foreach(Callback<V> _delegate)
         {
             // foreach 此处使用他的缓存副本
-            if (hasChanged > 0)
+            if (mHaveChanged > 0)
             {
-                tempDict.Clear();
-                lock (handlerDict)
+                mTempDict.Clear();
+                lock (mLocker)
                 {
-                    foreach (var item in handlerDict)
+                    foreach (var item in mValueDict)
                     {
-                        tempDict.Add(item.Key, item.Value);
+                        mTempDict.Add(item.Key, item.Value);
                     }
                 }
 
-                if (--hasChanged > 0)
+                if (--mHaveChanged > 0)
                 {
-                    hasChanged = 1;
+                    mHaveChanged = 1;
                 }
             }
 
-            lock (tempDict)
+            lock (mTempDict)
             {
-                foreach (K key in tempDict.Keys)
+                foreach (K key in mTempDict.Keys)
                 {
-                    _delegate(tempDict[key]);
+                    _delegate(mTempDict[key]);
                 }
             }
 

@@ -7,57 +7,108 @@ namespace Alkaid
 {
     class SafeList<T>
     {
-        private List<T> handlerList;
+        private List<T> mValueList;
+        private List<T> mTempList;
+        private volatile int mHaveChanged;
 
         public int Count
         {
-            get { return handlerList.Count; }
+            get { return mValueList.Count; }
         }
 
         public SafeList()
         {
-            handlerList = new List<T>();
+            mValueList = new List<T>();
+            mTempList = new List<T>();
+            mHaveChanged = 0;
+        }
+
+        private void _Reset()
+        {
+            mValueList.Clear();
+            mTempList.Clear();
+            mHaveChanged = 0;
         }
 
         public void Add(T value)
         {
-            lock (handlerList)
+            lock (mValueList)
             {
-                handlerList.Add(value);
+                mValueList.Add(value);
+                ++mHaveChanged;
             }
         }
 
         public void Remove(T value)
         {
-            lock (handlerList)
+            lock (mValueList)
             {
-                handlerList.Remove(value);
+                mValueList.Remove(value);
+                ++mHaveChanged;
             }
         }
 
         public List<T> ToList()
         {
-            lock (handlerList)
+            lock (mValueList)
             {
-                return handlerList.ToList();
+                return mValueList.ToList();
             }
         }
 
         public T Find(Predicate<T> match)
         {
-            lock (handlerList)
+            lock (mValueList)
             {
-                return handlerList.Find(match);
+                return mValueList.Find(match);
             }
         }
 
         public void Clear()
         {
-            lock (handlerList)
+            lock (mValueList)
             {
-                handlerList.Clear();
+                _Reset();
             }
         }
 
+        public void Foreach(Callback<T> _delegate)
+        {
+            if (mHaveChanged > 0)
+            {
+                mTempList.Clear();
+                lock (mValueList)
+                {
+                    foreach (var i in mValueList)
+                    {
+                        mTempList.Add(i);
+                    }
+                }
+
+                if (--mHaveChanged > 0)
+                {
+                    mHaveChanged = 1;
+                }
+            }
+
+            lock(mTempList)
+            {
+                foreach (var i in mTempList)
+                {
+                    _delegate(i);
+                }
+            }
+        }
+
+        /*
+         * 不要优先考虑这个方法，这个方法将内部数据给外部，并不太好
+         * */
+        public void Lock(Callback<List<T>> _delegate)
+        {
+            lock (mValueList)
+            {
+                _delegate(mValueList);
+            }
+        }
     }
 }

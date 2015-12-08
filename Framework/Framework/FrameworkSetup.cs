@@ -8,6 +8,8 @@ namespace Alkaid
     public class FrameworkSetup : Singleton<FrameworkSetup>
     {
         private int mFPS = 30;
+        private string mVersion = "";
+        private string mStreamAssetsRootDir = "";
         private Callback mSetupFromProject = null;
         private Callback mSetupFromUnity = null;
 
@@ -22,6 +24,27 @@ namespace Alkaid
         public int GetFPS()
         {
             return mFPS;
+        }
+
+        public void SetVersion(string version)
+        {
+            mVersion = version;
+            LocalStorageSystem.Instance.SetAppVersion(mVersion);
+        }
+
+        public string GetVersion()
+        {
+            return mVersion;
+        }
+
+        public void SetStreamAssetsRootDir(string path)
+        {
+            mStreamAssetsRootDir = path;
+        }
+
+        public string GetStreamAssetsRootDir()
+        {
+            return mStreamAssetsRootDir;
         }
 
         /**
