@@ -41,6 +41,11 @@ namespace Rosetta
 
                 mDataList.Add(item);
             }
+
+            foreach (var i in mDataList)
+            {
+                WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName);
+            }
         }
 
         public bool Verify()
