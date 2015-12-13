@@ -37,6 +37,8 @@ namespace Rosetta
         {
             // 事件系统需要tick
             EventSystem.Instance.Tick(interval);
+            // 窗口系统需要tick
+            UISystem.Instance.Tick(interval);
         }
 
         public void Destroy()

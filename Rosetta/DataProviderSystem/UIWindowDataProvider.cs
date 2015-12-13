@@ -42,6 +42,7 @@ namespace Rosetta
                 mDataList.Add(item);
             }
 
+            // 加入注册所有窗口
             foreach (var i in mDataList)
             {
                 WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName);

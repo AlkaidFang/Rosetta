@@ -97,7 +97,7 @@ namespace Alkaid
             if (null != w)
             {
                 w.Show(false);
-                w.Destroy();
+                w.ReleaseAssets();
             }
         }
 

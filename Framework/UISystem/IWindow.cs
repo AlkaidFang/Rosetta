@@ -60,6 +60,37 @@ namespace Alkaid
             UnLoad();
         }
 
+        private void Load()
+        {
+            if (string.IsNullOrEmpty(mLayoutFile))
+            {
+                return;
+            }
+
+            GameObject prefab = Resources.Load(mLayoutFile) as GameObject;
+            if (null == prefab)
+            {
+                LoggerSystem.Instance.Error("Failed to load res:" + mLayoutFile);
+                return;
+            }
+
+            mBaseNode = UnityTools.AddChild(UISystem.Instance.GetRootNode(), prefab);
+
+            mBaseNode.SetActive(false);
+            mIsLoad = true;
+        }
+
+        private void UnLoad()
+        {
+            if (mIsLoad)
+            {
+                GameObject.Destroy(mBaseNode);
+                mBaseNode = null;
+                mIsLoad = false;
+                Resources.UnloadUnusedAssets();
+            }
+        }
+
         public void Show(bool visible)
         {
             if (this.mIsShow == visible)
@@ -81,32 +112,9 @@ namespace Alkaid
             }
         }
 
-        public void Load()
+        public void ReleaseAssets()
         {
-            if (string.IsNullOrEmpty(mLayoutFile))
-            {
-                return;
-            }
-
-            GameObject prefab = Resources.Load(mLayoutFile) as GameObject;
-            if (null == prefab)
-            {
-                LoggerSystem.Instance.Error("Failed to load res:" + mLayoutFile);
-                return;
-            }
-
-            mBaseNode = UnityTools.AddChild(UISystem.Instance.GetRootNode(), prefab);
-
-            mBaseNode.SetActive(false);
-            mIsLoad = true;
-        }
-
-        public void UnLoad()
-        {
-            GameObject.Destroy(mBaseNode);
-            mBaseNode = null;
-            mIsLoad = false;
-            Resources.UnloadUnusedAssets();
+            UnLoad();
         }
 
         public void SetName(string name)

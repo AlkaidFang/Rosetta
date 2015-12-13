@@ -5,26 +5,18 @@ using System.Threading;
 
 namespace Alkaid
 {
-    public enum LogicThreadStatus
-    {
-        None,
-        Start,
-        Working,
-        Stop,
-        Finished,
-    }
-
     public class Framework : Singleton<Framework>, Lifecycle
     {
-        private Thread mLogicThread;
-        private LogicThreadStatus mLogicThreadStatus;
+        private AsyncThreading mLogicThread;
 
         public Framework()
         {
             mLogicThread = null;
-            mLogicThreadStatus = LogicThreadStatus.None;
         }
 
+        /**
+         * This function will be call in renderthread
+         * */
         public bool Init()
         {
             do
@@ -38,6 +30,7 @@ namespace Alkaid
                 if (!EngineSystem.Instance.Init()) break;
                 if (!EventSystem.Instance.Init()) break;
                 if (!LocalStorageSystem.Instance.Init()) break;
+                if (!UISystem.Instance.Init()) break;
 
 
                 LoggerSystem.Instance.Info("Framework init end.");
@@ -48,6 +41,9 @@ namespace Alkaid
             return false;
         }
 
+        /**
+         * This function will be call in logicthread
+         * */
         public void Tick(float interval)
         {
             LoggerSystem.Instance.Tick(interval);
@@ -58,6 +54,9 @@ namespace Alkaid
             LocalStorageSystem.Instance.Tick(interval);
         }
 
+        /**
+         * This function will be call in renderthread
+         * */
         public void Destroy()
         {
             LoggerSystem.Instance.Info("Framework destroy begin");
@@ -67,6 +66,7 @@ namespace Alkaid
             LocalStorageSystem.Instance.Destroy();
             DataProviderSystem.Instance.Destroy();
             TimeSystem.Instance.Destroy();
+            UISystem.Instance.Destroy();
 
             LoggerSystem.Instance.Info("Framework destroy end.");
 
@@ -75,7 +75,7 @@ namespace Alkaid
             LoggerSystem.Instance.Destroy();
         }
 
-        private void LogicThreading()
+        private void Logic(AsyncThreading thread)
         {
             LoggerSystem.Instance.Info("Logic Thread start.");
 
@@ -88,7 +88,7 @@ namespace Alkaid
 
             TimeSpan during = new TimeSpan();
             DateTime tickStart = DateTime.Now;
-            while (mLogicThreadStatus == LogicThreadStatus.Working)
+            while (thread.IsWorking())
             {
                 during = (DateTime.Now - tickStart); // 上一帧所消耗的时间
                 tickStart = DateTime.Now;
@@ -104,13 +104,10 @@ namespace Alkaid
             }
 
             LoggerSystem.Instance.Info("Logic Thread finished.");
-            mLogicThreadStatus = LogicThreadStatus.Finished;
         }
 
         public void Start()
         {
-            mLogicThreadStatus = LogicThreadStatus.Start;
-
             // setup
             FrameworkSetup.Instance.Apply();
 
@@ -119,25 +116,28 @@ namespace Alkaid
             if (!ret)
             {
                 LoggerSystem.Instance.Fatal("Framework init failed.");
+                Stop();
                 return;
             }
 
             // Logic Thread start
-            mLogicThread = new Thread(new ThreadStart(LogicThreading));
+            mLogicThread = new AsyncThreading(Logic);
             if (mLogicThread != null)
             {
-                mLogicThreadStatus = LogicThreadStatus.Working;
                 mLogicThread.Start();
             }
         }
 
         public void Stop()
         {
-            mLogicThreadStatus = LogicThreadStatus.Stop;
-
-            while (mLogicThreadStatus != LogicThreadStatus.Finished) ;
-
-            Destroy();
+            if (mLogicThread != null)
+            {
+                mLogicThread.SyncStop(Destroy);
+            }
+            else
+            {
+                Destroy();
+            }
         }
     }
 
