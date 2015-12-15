@@ -58,14 +58,6 @@ namespace Alkaid
             }
         }
 
-        //public List<T> ToList()
-        //{
-        //    lock (handlerList)
-        //    {
-        //        return handlerList.ToList();
-        //    }
-        //}
-
         public void Clear()
         {
             lock (mLocker)
@@ -77,31 +69,27 @@ namespace Alkaid
         public void Foreach(Callback<V> _delegate)
         {
             // foreach 此处使用他的缓存副本
-            if (mHaveChanged > 0)
+            lock (mLocker)
             {
-                mTempDict.Clear();
-                lock (mLocker)
+                if (mHaveChanged > 0)
                 {
+                    mTempDict.Clear();
                     foreach (var item in mValueDict)
                     {
                         mTempDict.Add(item.Key, item.Value);
                     }
+
+                    if (--mHaveChanged > 0)
+                    {
+                        mHaveChanged = 1;
+                    }
                 }
 
-                if (--mHaveChanged > 0)
-                {
-                    mHaveChanged = 1;
-                }
-            }
-
-            lock (mTempDict)
-            {
                 foreach (K key in mTempDict.Keys)
                 {
                     _delegate(mTempDict[key]);
                 }
             }
-
         }
     }
 }

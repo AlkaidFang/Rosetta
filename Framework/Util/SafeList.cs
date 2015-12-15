@@ -7,6 +7,7 @@ namespace Alkaid
 {
     class SafeList<T>
     {
+        private object mLocker;
         private List<T> mValueList;
         private List<T> mTempList;
         private volatile int mHaveChanged;
@@ -18,6 +19,7 @@ namespace Alkaid
 
         public SafeList()
         {
+            mLocker = new object();
             mValueList = new List<T>();
             mTempList = new List<T>();
             mHaveChanged = 0;
@@ -32,7 +34,7 @@ namespace Alkaid
 
         public void Add(T value)
         {
-            lock (mValueList)
+            lock (mLocker)
             {
                 mValueList.Add(value);
                 ++mHaveChanged;
@@ -41,24 +43,16 @@ namespace Alkaid
 
         public void Remove(T value)
         {
-            lock (mValueList)
+            lock (mLocker)
             {
                 mValueList.Remove(value);
                 ++mHaveChanged;
             }
         }
 
-        public List<T> ToList()
-        {
-            lock (mValueList)
-            {
-                return mValueList.ToList();
-            }
-        }
-
         public T Find(Predicate<T> match)
         {
-            lock (mValueList)
+            lock (mLocker)
             {
                 return mValueList.Find(match);
             }
@@ -66,7 +60,7 @@ namespace Alkaid
 
         public void Clear()
         {
-            lock (mValueList)
+            lock (mLocker)
             {
                 _Reset();
             }
@@ -74,25 +68,22 @@ namespace Alkaid
 
         public void Foreach(Callback<T> _delegate)
         {
-            if (mHaveChanged > 0)
+            lock (mLocker)
             {
-                mTempList.Clear();
-                lock (mValueList)
+                if (mHaveChanged > 0)
                 {
+                    mTempList.Clear();
                     foreach (var i in mValueList)
                     {
                         mTempList.Add(i);
                     }
+
+                    if (--mHaveChanged > 0)
+                    {
+                        mHaveChanged = 1;
+                    }
                 }
 
-                if (--mHaveChanged > 0)
-                {
-                    mHaveChanged = 1;
-                }
-            }
-
-            lock(mTempList)
-            {
                 foreach (var i in mTempList)
                 {
                     _delegate(i);
@@ -105,7 +96,7 @@ namespace Alkaid
          * */
         public void Lock(Callback<List<T>> _delegate)
         {
-            lock (mValueList)
+            lock (mLocker)
             {
                 _delegate(mValueList);
             }

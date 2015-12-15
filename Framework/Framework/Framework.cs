@@ -7,7 +7,7 @@ namespace Alkaid
 {
     public class Framework : Singleton<Framework>, Lifecycle
     {
-        private AsyncThreading mLogicThread;
+        private AsyncThread mLogicThread;
 
         public Framework()
         {
@@ -75,7 +75,7 @@ namespace Alkaid
             LoggerSystem.Instance.Destroy();
         }
 
-        private void Logic(AsyncThreading thread)
+        private void Logic(AsyncThread thread)
         {
             LoggerSystem.Instance.Info("Logic Thread start.");
 
@@ -121,7 +121,7 @@ namespace Alkaid
             }
 
             // Logic Thread start
-            mLogicThread = new AsyncThreading(Logic);
+            mLogicThread = new AsyncThread(Logic);
             if (mLogicThread != null)
             {
                 mLogicThread.Start();

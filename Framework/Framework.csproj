@@ -58,15 +58,21 @@
     <Compile Include="UISystem\IWindow.cs" />
     <Compile Include="UISystem\UISystem.cs" />
     <Compile Include="UISystem\WindowManager.cs" />
+    <Compile Include="Util\AsyncTaskDispatcher.cs" />
+    <Compile Include="Util\SafeQueue.cs" />
+    <Compile Include="Util\TaskProcessor.cs" />
     <Compile Include="Util\Delegate.cs" />
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\FileSaver.cs" />
     <Compile Include="Util\IObject.cs" />
+    <Compile Include="Util\SimplePool.cs" />
     <Compile Include="Util\Singleton.cs" />
     <Compile Include="Util\Lifecycle.cs" />
     <Compile Include="Util\SafeList.cs" />
     <Compile Include="Util\SafeMap.cs" />
-    <Compile Include="Util\AsyncThreading.cs" />
+    <Compile Include="Util\AsyncThread.cs" />
+    <Compile Include="Util\Task.cs" />
+    <Compile Include="Util\UnionDataCollection.cs" />
     <Compile Include="Util\UnityTools.cs" />
   </ItemGroup>
   <ItemGroup>

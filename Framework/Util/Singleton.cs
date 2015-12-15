@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class Singleton<Type> where Type : new()
+    public class Singleton<T> where T : new()
     {
         private volatile static object instance = null;
         private static Object m_lock = new Object();
 
-        private static Type GetInstance()
+        private static T GetInstance()
         {
             if (null == instance)
             {
@@ -18,15 +18,15 @@ namespace Alkaid
                 {
                     if (null == instance)
                     {
-                        instance = new Type();
+                        instance = new T();
                     }
                 }
             }
 
-            return (Type)instance;
+            return (T)instance;
         }
 
-        public static Type Instance
+        public static T Instance
         {
             get { return GetInstance(); }
         }

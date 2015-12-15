@@ -4,7 +4,7 @@ using System.Threading;
 namespace Alkaid
 {
 
-    public class AsyncThreading
+    public class AsyncThread
     {
         public enum ThreadStatus
         {
@@ -15,20 +15,32 @@ namespace Alkaid
             Finished,
         }
 
-        private volatile ThreadStatus mStatus; // cause there only one method to change this value, no need to lock.
-        private Callback<AsyncThreading> mContext;
+        private volatile ThreadStatus mStatus; // Cause there only one method to change this value, no need to lock.
+        private Callback<AsyncThread> mContext;
         private Callback mFinishedContext;
         private Thread mThread;
+        private object mExtraData;
 
-        public AsyncThreading(Callback<AsyncThreading> cb)
+        public AsyncThread(Callback<AsyncThread> cb)
         {
             mStatus = ThreadStatus.None;
             mContext = cb;
+            mFinishedContext = null;
             mThread = new Thread(new ThreadStart(ContextMask));
+            mExtraData = null;
+        }
+
+        public AsyncThread(Callback<AsyncThread> cb, object extraData)
+        {
+            mStatus = ThreadStatus.None;
+            mContext = cb;
+            mFinishedContext = null;
+            mThread = new Thread(new ThreadStart(ContextMask));
+            mExtraData = extraData;
         }
 
         /**
-         * This mask function may cause a little perfermance problem.
+         * This function may cause a little perfermance problem.
          * */
         private void ContextMask()
         {
@@ -51,6 +63,7 @@ namespace Alkaid
             mContext = null;
             mFinishedContext = null;
             mThread = null;
+            mExtraData = null;
         }
 
         public bool Start()
@@ -111,6 +124,16 @@ namespace Alkaid
         public int GetThreadId()
         {
             return null == mThread ? -1 : mThread.ManagedThreadId;
+        }
+
+        public void SetExtraData(object data)
+        {
+            mExtraData = data;
+        }
+
+        public object GetExtraData()
+        {
+            return mExtraData;
         }
     }
 }
