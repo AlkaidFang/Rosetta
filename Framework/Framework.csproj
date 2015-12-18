@@ -52,6 +52,12 @@
     <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LoggerSystem.cs" />
+    <Compile Include="NetSystem\Connector\INetConnector.cs" />
+    <Compile Include="NetSystem\IPacket.cs" />
+    <Compile Include="NetSystem\IPacketFormat.cs" />
+    <Compile Include="NetSystem\NetHoster.cs" />
+    <Compile Include="NetSystem\NetSystem.cs" />
+    <Compile Include="NetSystem\Connector\TCPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="TimeSystme\TimeSystem.cs" />
@@ -76,7 +82,6 @@
     <Compile Include="Util\UnityTools.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NetSystem\" />
     <Folder Include="ThirdPartySystem\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
