@@ -55,6 +55,8 @@
     <Compile Include="NetSystem\Connector\INetConnector.cs" />
     <Compile Include="NetSystem\IPacket.cs" />
     <Compile Include="NetSystem\IPacketFormat.cs" />
+    <Compile Include="NetSystem\IPacketHandler.cs" />
+    <Compile Include="NetSystem\IPacketHandlerManager.cs" />
     <Compile Include="NetSystem\NetHoster.cs" />
     <Compile Include="NetSystem\NetSystem.cs" />
     <Compile Include="NetSystem\Connector\TCPConnector.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="UISystem\UISystem.cs" />
     <Compile Include="UISystem\WindowManager.cs" />
     <Compile Include="Util\AsyncTaskDispatcher.cs" />
+    <Compile Include="Util\Buffer.cs" />
     <Compile Include="Util\SafeQueue.cs" />
     <Compile Include="Util\TaskProcessor.cs" />
     <Compile Include="Util\Delegate.cs" />

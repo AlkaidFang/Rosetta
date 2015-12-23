@@ -28,10 +28,10 @@ namespace Alkaid
 
         public void Tick(float interval)
         {
-            int hashCode = System.Threading.Thread.CurrentThread.GetHashCode();
-            if (mThreadEventManagerMap.ContainsKey(hashCode))
+            int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            if (mThreadEventManagerMap.ContainsKey(uid))
             {
-                mThreadEventManagerMap[hashCode].Tick(interval);
+                mThreadEventManagerMap[uid].Tick(interval);
             }
         }
 
@@ -54,13 +54,13 @@ namespace Alkaid
 
         public void RegisterEvent(string name, string group, Delegate handler, object hoster)
         {
-            int hashCode = System.Threading.Thread.CurrentThread.GetHashCode();
+            int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
             EventManager em = null;
-            if (!mThreadEventManagerMap.TryGetValue(hashCode, out em))
+            if (!mThreadEventManagerMap.TryGetValue(uid, out em))
             {
                 em = new EventManager();
                 em.Init();
-                mThreadEventManagerMap.Add(hashCode, em);
+                mThreadEventManagerMap.Add(uid, em);
             }
             
             if (em != null)
@@ -71,9 +71,9 @@ namespace Alkaid
 
         public void UnRegisterEvent(string name, string group, object hoster)
         {
-            int hashCode = System.Threading.Thread.CurrentThread.GetHashCode();
+            int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
             EventManager em = null;
-            if (mThreadEventManagerMap.TryGetValue(hashCode, out em) && em != null)
+            if (mThreadEventManagerMap.TryGetValue(uid, out em) && em != null)
             {
                 em.UnRegisterEvent(FormatKey(name, group), hoster);
             }
@@ -86,7 +86,7 @@ namespace Alkaid
          * */
         public void FireEvent(string name, string group, params object[] args)
         {
-            int hashCode = System.Threading.Thread.CurrentThread.GetHashCode();
+            int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
             EventManager em = null;
             foreach (var key in mThreadEventManagerMap.Keys)
@@ -94,7 +94,7 @@ namespace Alkaid
                 em = mThreadEventManagerMap[key];
                 if (em == null) continue;
 
-                if (key == hashCode)
+                if (key == uid)
                 {
                     em.FireEvent(FormatKey(name, group), args);
                 }
@@ -107,7 +107,7 @@ namespace Alkaid
 
         public void FireEvent2(string name, string group, params object[] args)
         {
-            int hashCode = System.Threading.Thread.CurrentThread.GetHashCode();
+            int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
             EventManager em = null;
             foreach (var key in mThreadEventManagerMap.Keys)

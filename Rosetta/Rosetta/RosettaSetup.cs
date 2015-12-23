@@ -7,6 +7,12 @@ namespace Rosetta
 {
     public class RosettaSetup : Singleton<RosettaSetup>
     {
+        public enum NetCtr
+        {
+            Lobby = 1,
+            Room,
+        }
+
         public void SetupWithUnity()
         {
 
@@ -30,6 +36,13 @@ namespace Rosetta
             LocalStorageSystem.Instance.RegisterLocalStorage(LocalAccountStorage.Instance);
             LocalStorageSystem.Instance.RegisterLocalStorage(LocalServerStorage.Instance);
             LocalStorageSystem.Instance.RegisterLocalStorage(LocalUnVerifyIAPStorage.Instance);
+
+            // NetSystem
+            PacketFormat pf = new PacketFormat();
+            PacketHandlerManager pm = new PacketHandlerManager();
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, NetSystem.NetType.TCP, pf, null, (ptype, data) => { pm.DispatchHandler(ptype, data); }, null, null);
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Room, NetSystem.NetType.TCP, pf, null, (ptype, data) => { pm.DispatchHandler(ptype, data); }, null, null);
+            pm.RegisterHandler(typeof(XMessage.HelloWorldResult), new SCHelloWorldResultHandler());
         }
 
     }

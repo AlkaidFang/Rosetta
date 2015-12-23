@@ -32,7 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="protobuf-net">
+      <HintPath>..\Framework\ExternalLibs\Protobuf-net\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Framework\ExternalLibs\Engine\UnityEngine.dll</HintPath>
@@ -44,6 +48,12 @@
     <Compile Include="LocalStorageSystem\LocalAccountStorage.cs" />
     <Compile Include="LocalStorageSystem\LocalServerStorage.cs" />
     <Compile Include="LocalStorageSystem\LocalUnVerifyIAPStorage.cs" />
+    <Compile Include="NetSystem\NetPacket.cs" />
+    <Compile Include="NetSystem\PacketFormat.cs" />
+    <Compile Include="NetSystem\PacketHandlerManager.cs" />
+    <Compile Include="NetSystem\PacketHandler\SCHelloWorldResultHandler.cs" />
+    <Compile Include="NetSystem\PacketMessage\PacketMessage.cs" />
+    <Compile Include="NetSystem\PacketType.cs" />
     <Compile Include="Rosetta\RosettaSetup.cs" />
     <Compile Include="Rosetta\Rosetta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

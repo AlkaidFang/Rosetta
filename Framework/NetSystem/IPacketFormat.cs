@@ -8,19 +8,19 @@ using System.Text;
 
 namespace Alkaid
 {
-    public interface PacketFormat
+    public interface IPacketFormat
     {
-        public static byte[] PACKET_HEAD = { 99, 99 }; //{'c', 'c'};
+        //static byte[] PACKET_HEAD = { 99, 99 }; //{'c', 'c'};
 
-        public static int GetLength(System.IO.MemoryStream data);
+        int GetLength(System.IO.MemoryStream data);
 
         // 组装这个包
-        public static void GenerateBuffer(ref Byte[] dest, IPacket packet);
+        void GenerateBuffer(ref Byte[] dest, IPacket packet);
 
         //  检查当前缓冲区中是否包含一个包
-        public static bool CheckHavePacket(Byte[] buffer, int offset);
+        bool CheckHavePacket(Byte[] buffer, int offset);
 
         // 解码这个包
-        public static bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref System.IO.MemoryStream data);
+        bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref System.IO.MemoryStream data);
     }
 }

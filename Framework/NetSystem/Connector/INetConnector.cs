@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class INetConnector
+    public class INetConnector: Lifecycle
     {
         public static int MAX_SOCKET_BUFFER_SIZE = 4096;
 
@@ -18,8 +18,8 @@ namespace Alkaid
             TYPE_UNKNOW = 5,
         }
 
-        public Callback OnConnected;
-        public Callback<MemoryStream> OnRecieved;
+        public Callback<bool> OnConnected;
+        public Callback<int, MemoryStream> OnRecieved;
         public Callback OnDisconnected;
         public Callback OnError;
 
@@ -35,6 +35,21 @@ namespace Alkaid
             OnError = null;
         }
 
+        public virtual bool Init()
+        {
+            return false;
+        }
+
+        public virtual void Tick(float interval)
+        {
+
+        }
+
+        public virtual void Destroy()
+        {
+
+        }
+
         public virtual ConnectionType GetConnectionType()
         {
             return ConnectionType.TYPE_UNKNOW;
@@ -46,24 +61,29 @@ namespace Alkaid
             return false;
         }
 
+        public virtual void SendPacket(IPacket packet)
+        {
+
+        }
+
         public virtual void DisConnect()
         {
 
         }
 
-        protected void CallbackConnected()
+        protected void CallbackConnected(bool status)
         {
             if (OnConnected != null)
             {
-                OnConnected();
+                OnConnected(status);
             }
         }
 
-        protected void CallbackRecieved(MemoryStream ms)
+        protected void CallbackRecieved(int ptype, MemoryStream ms)
         {
             if (OnRecieved != null && ms != null)
             {
-                OnRecieved(ms);
+                OnRecieved(ptype, ms);
             }
         }
 
@@ -82,5 +102,6 @@ namespace Alkaid
                 OnError();
             }
         }
+
     }
 }

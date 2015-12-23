@@ -53,6 +53,20 @@ public class TestMono : MonoBehaviour {
     private int count = 0;
     public void OnClick()
     {
+        if (count == 0)
+        {
+            NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "10.12.25.205", 10086);
+        }
+        if (count > 0)
+        {
+            NetPacket pa = new NetPacket(PacketType.CS_HelloWorld);
+            XMessage.HelloWorld proto = new XMessage.HelloWorld();
+            proto._int = count + 70000;
+            pa.mProto = proto;
+            pa.EncodeProto();
+            NetSystem.Instance.Send((int)RosettaSetup.NetCtr.Lobby, pa);
+        }
+
         Alkaid.MyRandom mr = new Alkaid.MyRandom();
         Debug.LogWarning("Framework 1000   " + mr.GetRandomNum1000());
 
@@ -60,5 +74,8 @@ public class TestMono : MonoBehaviour {
         //go.transform.parent = this.transform;
         go.name = "createone:" + count++;
         go.transform.localPosition = Vector3.one * count;
+
+        
+
     }
 }

@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Alkaid
 {
+
     public interface IPacket
     {
+
         int GetPacketType();
     }
 }

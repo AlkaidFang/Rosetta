@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Threading;
 
 namespace Alkaid
 {
-    public class TCPConnector : INetConnector, Lifecycle
+    public class TCPConnector : INetConnector
     {
         private TcpClient mSocket;
 
+        private IPacketFormat mPacketFormat;
+
         // 缓冲区
-        private int mReadBufferOffset;
-        private Byte[] mReadBuffer;
+        private TBuffer<Byte> mReadBuffer;
         private Byte[] mReadBufferTemp;
-        private int mWriteBufferOffset;
-        private Byte[] mWriteBuffer;
-        // 读临时缓冲
+        private TBuffer<Byte> mWriteBuffer;
+        // 临时解析
         private int tempReadPacketLength = 0;
         private int tempReadPacketType = 0;
         private System.IO.MemoryStream tempReadPacketData = null;
-        private System.Threading.Semaphore tempReadBufferSemaphore;
 
 
-        public TCPConnector()
+        public TCPConnector(IPacketFormat packetFormat)
         {
-            mReadBufferOffset = 0;
-            mReadBuffer = new Byte[INetConnector.MAX_SOCKET_BUFFER_SIZE * 2]; // 主读数据区，默认长度，当某一次长度不够时直接自动延长，延长后不再收缩，先不用内存池的技术了
-            mReadBufferTemp = new Byte[INetConnector.MAX_SOCKET_BUFFER_SIZE]; // 读缓存区
-            mWriteBufferOffset = 0;
-            mWriteBuffer = new Byte[INetConnector.MAX_SOCKET_BUFFER_SIZE * 2]; // 主写数据区，默认长度
+            mPacketFormat = packetFormat;
 
-            tempReadBufferSemaphore = null;
+            mReadBuffer = new TBuffer<Byte>(INetConnector.MAX_SOCKET_BUFFER_SIZE * 2); // 主读数据区
+            mReadBufferTemp = new Byte[INetConnector.MAX_SOCKET_BUFFER_SIZE]; // 读缓存区
+            mWriteBuffer = new TBuffer<Byte>(INetConnector.MAX_SOCKET_BUFFER_SIZE * 2); // 主写数据区
+
         }
 
-        public bool Init()
+        public override bool Init()
         {
             return true;
         }
 
-        public void Tick(float interval)
+        public override void Tick(float interval)
         {
-            DecodeMessage();
+            doDecodeMessage();
+
+            doSendMessage();
         }
 
-        public void Destroy()
+        public override void Destroy()
         {
 
         }
@@ -58,19 +57,72 @@ namespace Alkaid
             }
             catch(Exception e)
             {
+                LoggerSystem.Instance.Error(e.Message);
                 mIsConnected = false;
+                CallbackConnected(mIsConnected);
                 return mIsConnected;
             }
 
             mIsConnected = true;
-            mSocket.GetStream().BeginRead(mReadBufferTemp, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, new AsyncCallback(RecieveCallback), this);
+            mSocket.GetStream().BeginRead(mReadBufferTemp, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, new AsyncCallback(RecieveComplete), this);
 
-            CallbackConnected();
+            CallbackConnected(mIsConnected);
 
             return mIsConnected;
         }
 
-        private void RecieveCallback(IAsyncResult ar)
+        public override void SendPacket(IPacket packet)
+        {
+            Byte[] buffer = null;
+            mPacketFormat.GenerateBuffer(ref buffer, packet);
+
+            mWriteBuffer.Push(buffer, buffer.Length);
+        }
+
+        private void Disconnect()
+        {
+            mSocket.GetStream().Close();
+            mSocket.Close();
+            mIsConnected = false;
+            mSocket = null;
+
+            CallbackDisconnected();
+        }
+
+        private void doDecodeMessage()
+        {
+            while (mReadBuffer.DataSize() > 0 && mPacketFormat.CheckHavePacket(mReadBuffer.Buffer(), mReadBuffer.DataSize()))
+            {
+                // 开始读取
+                mPacketFormat.DecodePacket(mReadBuffer.Buffer(), ref tempReadPacketLength, ref tempReadPacketType, ref tempReadPacketData);
+
+                // 逻辑
+                NetSystem.Instance.DispatchHandler(tempReadPacketType, tempReadPacketData);
+
+                CallbackRecieved(tempReadPacketType, tempReadPacketData);
+
+                // 偏移
+                mReadBuffer.Pop(tempReadPacketLength);
+            }
+        }
+
+        private void doSendMessage()
+        {
+            if (mWriteBuffer.DataSize() > 0 && mSocket.GetStream().CanWrite)
+            {
+                try
+                {
+                    mSocket.GetStream().BeginWrite(mWriteBuffer.Buffer(), 0, mWriteBuffer.DataSize(), new AsyncCallback(WriteComplete), mWriteBuffer.DataSize());
+                }
+                catch (Exception e)
+                {
+                    LoggerSystem.Instance.Error("发送数据错误：" + e.Message);
+                    Disconnect();
+                }
+            }
+        }
+
+        private void RecieveComplete(IAsyncResult ar)
         {
             try
             {
@@ -78,20 +130,9 @@ namespace Alkaid
                 LoggerSystem.Instance.Info("读取到数据字节数:" + readLength);
                 if (readLength > 0)
                 {
-                    lock(mReadBuffer)
-                    {
-                        if (mReadBufferOffset + readLength > mReadBuffer.Length)
-                        {
-                            Byte[] swi = mReadBuffer;
-                            mReadBuffer = new Byte[swi.Length * 2];
-                            System.Array.Copy(swi, mReadBuffer, mReadBufferOffset);
-                        }
-                        System.Array.Copy(mReadBufferTemp, 0, mReadBuffer, mReadBufferOffset, readLength);
-                    }
-                    
-                    mReadBufferOffset += readLength;
+                    mReadBuffer.Push(mReadBufferTemp, readLength);
 
-                    mSocket.GetStream().BeginRead(mReadBufferTemp, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, new AsyncCallback(RecieveCallback), this);
+                    mSocket.GetStream().BeginRead(mReadBufferTemp, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, new AsyncCallback(RecieveComplete), this);
                 }
                 else
                 {
@@ -101,36 +142,34 @@ namespace Alkaid
             }
             catch (Exception e)
             {
-                LoggerSystem.Instance.Info("发生读取错误:" + e.Message);
+                LoggerSystem.Instance.Error("发生读取错误:" + e.Message);
                 Disconnect();
             }
-            
+
         }
 
-        private void DecodeMessage()
+        private void WriteComplete(IAsyncResult ar)
         {
-            lock(mReadBuffer)
+            try
             {
-
+                mSocket.GetStream().EndWrite(ar);
+                int sendLength = (int)ar.AsyncState;
+                LoggerSystem.Instance.Info("发送数据字节数：" + sendLength);
+                if (sendLength > 0)
+                {
+                    mWriteBuffer.Pop(sendLength);
+                }
+                else
+                {
+                    // error
+                    Disconnect();
+                }
             }
-
-        }
-
-        private void SendMessage()
-        {
-
-
-
-        }
-
-
-        private void Disconnect()
-        {
-            mSocket.GetStream().Close();
-            mSocket.Close();
-            mIsConnected = false;
-
-            CallbackDisconnected();
+            catch (Exception e)
+            {
+                LoggerSystem.Instance.Error("发生写入错误：" + e.Message);
+                Disconnect();
+            }
         }
     }
 }
