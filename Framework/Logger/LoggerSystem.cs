@@ -9,12 +9,12 @@ namespace Alkaid
     {
         public enum LogLevel
         {
-            LOG_LEVEL_DEBUG = 1,
-            LOG_LEVEL_INFO = 2,
-            LOG_LEVEL_WARN = 3,
-            LOG_LEVEL_ERROR = 4,
-            LOG_LEVEL_FATAL = 5,
-            LOG_LEVEL_ALWAYS = 6,
+            DEBUG = 1,
+            INFO = 2,
+            WARN = 3,
+            ERROR = 4,
+            FATAL = 5,
+            ALWAYS = 6,
         }
 
         private bool mConsoleLogMode;
@@ -29,17 +29,17 @@ namespace Alkaid
         {
             mConsoleLogMode = true;
             mConsoleLogger = null;
-            mConsoleLogLevel = LogLevel.LOG_LEVEL_INFO;
+            mConsoleLogLevel = LogLevel.INFO;
 
             mFileLogMode = true;
             mFileLogger = new FileLogger();
-            mFileLogLevel = LogLevel.LOG_LEVEL_INFO;
+            mFileLogLevel = LogLevel.INFO;
         }
 
         public bool Init()
         {
             mFileLogger.Init();
-            ConsoleLog(LogLevel.LOG_LEVEL_ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
+            ConsoleLog(LogLevel.ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
 
             return true;
         }
@@ -56,38 +56,40 @@ namespace Alkaid
 
         public void Debug(string message)
         {
-            WriteLog(LogLevel.LOG_LEVEL_DEBUG, message);
+            WriteLog(LogLevel.DEBUG, message);
         }
 
         public void Info(string message)
         {
-            WriteLog(LogLevel.LOG_LEVEL_INFO, message);
+            WriteLog(LogLevel.INFO, message);
         }
 
         public void Warn(string message)
         {
-            WriteLog(LogLevel.LOG_LEVEL_WARN, message);
+            WriteLog(LogLevel.WARN, message);
         }
 
         public void Error(string message)
         {
-            WriteLog(LogLevel.LOG_LEVEL_ERROR, message);
+            WriteLog(LogLevel.ERROR, message);
+            WriteLog(LogLevel.ERROR, UtilTools.GetCallStack());
         }
 
         public void Fatal(string message)
         {
-            WriteLog(LogLevel.LOG_LEVEL_FATAL, message);
+            WriteLog(LogLevel.FATAL, message);
+            WriteLog(LogLevel.FATAL, UtilTools.GetCallStack());
         }
         private void WriteLog(LogLevel level, string message)
         {
             string type = "";
             switch(level)
             {
-                case LogLevel.LOG_LEVEL_DEBUG: type = "DEBUG"; break;
-                case LogLevel.LOG_LEVEL_INFO: type = "INFO"; break;
-                case LogLevel.LOG_LEVEL_WARN: type = "WARNING"; break;
-                case LogLevel.LOG_LEVEL_ERROR: type = "ERROR"; break;
-                case LogLevel.LOG_LEVEL_FATAL: type = "FATAL"; break;
+                case LogLevel.DEBUG: type = "DEBUG"; break;
+                case LogLevel.INFO: type = "INFO"; break;
+                case LogLevel.WARN: type = "WARNING"; break;
+                case LogLevel.ERROR: type = "ERROR"; break;
+                case LogLevel.FATAL: type = "FATAL"; break;
             }
             message = string.Format("{0}, {1}, {2}", TimeSystem.Instance.GetFrame(), type, message);
             

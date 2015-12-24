@@ -52,7 +52,9 @@
     <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LoggerSystem.cs" />
+    <Compile Include="NetSystem\ConnectionType.cs" />
     <Compile Include="NetSystem\Connector\INetConnector.cs" />
+    <Compile Include="NetSystem\Connector\UDPConnector.cs" />
     <Compile Include="NetSystem\IPacket.cs" />
     <Compile Include="NetSystem\IPacketFormat.cs" />
     <Compile Include="NetSystem\IPacketHandler.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Util\Task.cs" />
     <Compile Include="Util\UnionDataCollection.cs" />
     <Compile Include="Util\UnityTools.cs" />
+    <Compile Include="Util\UtilTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ThirdPartySystem\" />

@@ -57,11 +57,14 @@ namespace Alkaid
 
         public bool DispatchHandler(int type, System.IO.MemoryStream data)
         {
-            PacketHandlerInfo handlerInfo = mHandlerDict[type];
-            if (null != handlerInfo)
+            if (data != null && mHandlerDict.ContainsKey(type))
             {
-                object proto = ProtoBuf.Serializer.NonGeneric.Deserialize(handlerInfo.mProtoType, data);
-                return handlerInfo.mHandler.OnPacketHandler(proto);
+                PacketHandlerInfo handlerInfo = mHandlerDict[type];
+                if (null != handlerInfo)
+                {
+                    object proto = ProtoBuf.Serializer.NonGeneric.Deserialize(handlerInfo.mProtoType, data);
+                    return handlerInfo.mHandler.OnPacketHandler(proto);
+                }
             }
 
             return false;

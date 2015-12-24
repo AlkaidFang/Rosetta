@@ -25,7 +25,7 @@ namespace Rosetta
             //FrameworkSetup.Instance.SetClearUICache(true);
 
             // LoggerSystem
-            //LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.LOG_LEVEL_DEBUG);
+            //LoggerSystem.Instance.SetLogLevel((int)LoggerSystem.LogLevel.DEBUG);
             //LoggerSystem.Instance.SaveFileLog(true);
 
             // DataProviderSystem
@@ -40,9 +40,20 @@ namespace Rosetta
             // NetSystem
             PacketFormat pf = new PacketFormat();
             PacketHandlerManager pm = new PacketHandlerManager();
-            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, NetSystem.NetType.TCP, pf, null, (ptype, data) => { pm.DispatchHandler(ptype, data); }, null, null);
-            NetSystem.Instance.RegisterConnector((int)NetCtr.Room, NetSystem.NetType.TCP, pf, null, (ptype, data) => { pm.DispatchHandler(ptype, data); }, null, null);
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.TCP, pf, pm, null, null, null, null);
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Room, ConnectionType.TCP, pf, pm, null, null, null, null);
             pm.RegisterHandler(typeof(XMessage.HelloWorldResult), new SCHelloWorldResultHandler());
+
+            // do connect
+            NetSystem.Instance.Connect((int)NetCtr.Lobby, "127.0.0.1", 10086);
+            // do send
+            NetPacket packet = new NetPacket(PacketType.CS_HelloWorld);
+            XMessage.HelloWorld proto = new XMessage.HelloWorld();
+            proto._int = 11;
+            proto._string = "helloworld";
+            packet.mProto = proto;
+            packet.EncodeProto();
+            NetSystem.Instance.Send((int)NetCtr.Lobby, packet);
         }
 
     }

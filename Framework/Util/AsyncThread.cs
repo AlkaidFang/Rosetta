@@ -8,11 +8,11 @@ namespace Alkaid
     {
         public enum ThreadStatus
         {
-            None,
-            Start,
-            Working,
-            Stop,
-            Finished,
+            NONE,
+            START,
+            WORKING,
+            STOP,
+            FINISHED,
         }
 
         private volatile ThreadStatus mStatus; // Cause there only one method to change this value, no need to lock.
@@ -23,7 +23,7 @@ namespace Alkaid
 
         public AsyncThread(Callback<AsyncThread> cb)
         {
-            mStatus = ThreadStatus.None;
+            mStatus = ThreadStatus.NONE;
             mContext = cb;
             mFinishedContext = null;
             mThread = new Thread(new ThreadStart(ContextMask));
@@ -32,7 +32,7 @@ namespace Alkaid
 
         public AsyncThread(Callback<AsyncThread> cb, object extraData)
         {
-            mStatus = ThreadStatus.None;
+            mStatus = ThreadStatus.NONE;
             mContext = cb;
             mFinishedContext = null;
             mThread = new Thread(new ThreadStart(ContextMask));
@@ -44,17 +44,17 @@ namespace Alkaid
          * */
         private void ContextMask()
         {
-            mStatus = ThreadStatus.Working;
+            mStatus = ThreadStatus.WORKING;
             mContext(this);
 
-            if (mStatus == ThreadStatus.Stop)
+            if (mStatus == ThreadStatus.STOP)
             {
                 if (null != mFinishedContext)
                 {
                     mFinishedContext();
                 }
 
-                mStatus = ThreadStatus.Finished;
+                mStatus = ThreadStatus.FINISHED;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Alkaid
         {
             if (null != mThread)
             {
-                mStatus = ThreadStatus.Start;
+                mStatus = ThreadStatus.START;
                 mThread.Start();
 
                 return true;
@@ -84,7 +84,7 @@ namespace Alkaid
             if (IsWorking())
             {
                 mFinishedContext = null;
-                mStatus = ThreadStatus.Stop;
+                mStatus = ThreadStatus.STOP;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Alkaid
             if (IsWorking())
             {
                 mFinishedContext = cb;
-                mStatus = ThreadStatus.Stop;
+                mStatus = ThreadStatus.STOP;
             }
         }
 
@@ -108,9 +108,9 @@ namespace Alkaid
             if (IsWorking())
             {
                 mFinishedContext = null;
-                mStatus = ThreadStatus.Stop;
+                mStatus = ThreadStatus.STOP;
 
-                while (mStatus != ThreadStatus.Finished) ;
+                while (mStatus != ThreadStatus.FINISHED) ;
                 cb();
             }
             
@@ -118,7 +118,7 @@ namespace Alkaid
 
         public bool IsWorking()
         {
-            return mStatus == ThreadStatus.Working;
+            return mStatus == ThreadStatus.WORKING;
         }
 
         public int GetThreadId()

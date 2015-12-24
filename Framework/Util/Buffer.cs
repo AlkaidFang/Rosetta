@@ -9,6 +9,8 @@ namespace Alkaid
 {
     public interface IBuffer<T>
     {
+        // add all
+        void Push(T[] data);
         // add element
         void Push(T[] data, int length);
 
@@ -50,6 +52,11 @@ namespace Alkaid
             _data = new T[swi.Length * times];
             Array.Copy(swi, _data, swi.Length);
             swi = null;
+        }
+
+        public void Push(T[] data)
+        {
+            Push(data, data.Length);
         }
 
         public void Push(T[] data, int length)

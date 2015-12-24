@@ -7,11 +7,12 @@ namespace Rosetta
 {
     public class IAPPayment
     {
-        public enum PLATFORM{
-            _PLATFORM_UNKNOW_ = 0,
-            _PLATFORM_ANDROID_,
-            _PLATFORM_IOS_,
-            _PLATFORM_WP8_,
+        public enum PLATFORM : int
+        {
+            UNKNOW = 0,
+            ANDROID,
+            IOS,
+            WP8,
         }
 
         public int mPlatform;           // 平台类型
@@ -25,7 +26,7 @@ namespace Rosetta
 
         public IAPPayment()
         {
-            mPlatform = (int)PLATFORM._PLATFORM_UNKNOW_;
+            mPlatform = (int)PLATFORM.UNKNOW;
             mServerId = "";
             mPlayerId = "";
             mProductId = "";
@@ -96,7 +97,7 @@ namespace Rosetta
             // 一定要存盘
 
             IAPPayment payment = new IAPPayment();
-            payment.mPlatform = (int)IAPPayment.PLATFORM._PLATFORM_UNKNOW_;  //需调用系统方法返回各种不同的平台
+            payment.mPlatform = (int)IAPPayment.PLATFORM.UNKNOW;  //需调用系统方法返回各种不同的平台
             payment.mServerId = serverId;
             payment.mPlayerId = playerId;
             payment.mProductId = productId;

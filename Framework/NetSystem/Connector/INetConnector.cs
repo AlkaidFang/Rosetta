@@ -9,30 +9,28 @@ namespace Alkaid
     {
         public static int MAX_SOCKET_BUFFER_SIZE = 4096;
 
-        public enum ConnectionType
-        {
-            TYPE_TCP = 1,
-            TYPE_UDP = 2,
-            TYPE_WSOCKT = 3,
-            TYPE_HTTP = 4,
-            TYPE_UNKNOW = 5,
-        }
-
         public Callback<bool> OnConnected;
         public Callback<int, MemoryStream> OnRecieved;
         public Callback OnDisconnected;
         public Callback OnError;
 
+        private int mUid;
         protected NetHost mNetHoster;
+        protected IPacketFormat mPacketFormat;
+        protected IPacketHandlerManager mPacketHandlerManager;
         protected bool mIsConnected;
 
-        public INetConnector()
+        public INetConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager)
         {
+            mUid = -1;
             mNetHoster = null;
             OnConnected = null;
             OnRecieved = null;
             OnDisconnected = null;
             OnError = null;
+
+            mPacketFormat = packetFormat;
+            mPacketHandlerManager = packetHandlerManager;
         }
 
         public virtual bool Init()
@@ -52,7 +50,7 @@ namespace Alkaid
 
         public virtual ConnectionType GetConnectionType()
         {
-            return ConnectionType.TYPE_UNKNOW;
+            return ConnectionType.UNKNOW;
         }
 
         public virtual bool Connect(string address, int port)
@@ -103,5 +101,14 @@ namespace Alkaid
             }
         }
 
+        public void SetUid(int id)
+        {
+            mUid = id;
+        }
+
+        public int GetUid()
+        {
+            return mUid;
+        }
     }
 }

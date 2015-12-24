@@ -15,13 +15,6 @@ namespace Alkaid
          * 3，websocket
          * */
 
-        public enum NetType
-        {
-            TCP = 1,
-            UDP,
-            WEBSOCKET,
-        }
-
         //private IPacketFormat mPacketFormat; // put it in connector, we suport multiple packetformat and handlermanager
         //private IPacketHandlerManager mPackerHandlerManager;
         private Dictionary<int, INetConnector> mConnectorMap;
@@ -61,28 +54,24 @@ namespace Alkaid
             }
         }
 
-        public bool DispatchHandler(int type, System.IO.MemoryStream data)
+        public void RegisterConnector(int uid, ConnectionType type, IPacketFormat pf, IPacketHandlerManager phm, Callback<bool> connected, Callback<int, System.IO.MemoryStream> recieved, Callback disconnected, Callback error)
         {
-
-            return true;
-        }
-
-        public void RegisterConnector(int uid, NetType type, IPacketFormat pf, Callback<bool> connected = null, Callback<int, System.IO.MemoryStream> recieved = null, Callback disconnected = null, Callback error = null)
-        {
-            INetConnector connector = null;
+            INetConnector ctor = null;
             switch (type)
             {
-                case NetType.TCP: connector = new TCPConnector(pf); break;
+                case ConnectionType.TCP: ctor = new TCPConnector(pf, phm); break;
+                case ConnectionType.UDP: ctor = new UDPConnector(pf, phm); break;
 
-                default: connector = new TCPConnector(pf); break;
+                default: ctor = new TCPConnector(pf, phm); break;
             }
 
-            connector.OnConnected = connected;
-            connector.OnRecieved = recieved;
-            connector.OnDisconnected = disconnected;
-            connector.OnError = error;
+            ctor.OnConnected = connected;
+            ctor.OnRecieved = recieved;
+            ctor.OnDisconnected = disconnected;
+            ctor.OnError = error;
+            ctor.SetUid(uid);
 
-            mConnectorMap.Add(uid, connector);
+            mConnectorMap.Add(uid, ctor);
         }
 
         public void Connect(int uid, string address, int port)

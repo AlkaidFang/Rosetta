@@ -66,11 +66,6 @@ namespace Rosetta
                 if (packetType < 0)
                     break;
 
-                if (packetType > 1)
-                {
-                    int i = 0;
-                }
-
                 proto = new System.IO.MemoryStream(buffer, 8, packetLength - 8);
                 if (null == proto)
                     break;
