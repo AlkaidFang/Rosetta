@@ -9,7 +9,7 @@ namespace Alkaid
     {
         TCP = 1,
         UDP = 2,
-        WSOCKT = 3,
+        WEBSOCKET = 3,
         HTTP = 4,
         UNKNOW = 5,
     }

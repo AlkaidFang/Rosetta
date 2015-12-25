@@ -97,5 +97,13 @@ namespace Alkaid
                 mConnectorMap[uid].DisConnect();
             }
         }
+
+        public INetConnector GetConnector(int uid)
+        {
+            INetConnector ret = null;
+            mConnectorMap.TryGetValue(uid, out ret);
+
+            return ret;
+        }
     }
 }

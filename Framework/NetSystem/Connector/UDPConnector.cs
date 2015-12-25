@@ -41,11 +41,15 @@ namespace Alkaid
 
         public override bool Init()
         {
+            base.Init();
+
             return true;
         }
 
         public override void Tick(float interval)
         {
+            base.Tick(interval);
+
             doDecodeMessage();
 
             doSendMessage();
@@ -53,6 +57,8 @@ namespace Alkaid
 
         public override void Destroy()
         {
+            base.Destroy();
+
             DisConnect();
         }
 
@@ -74,32 +80,34 @@ namespace Alkaid
             catch (Exception e)
             {
                 LoggerSystem.Instance.Error(e.Message);
-                mIsConnected = false;
-                CallbackConnected(mIsConnected);
-                return mIsConnected;
+                SetConnected(false);
+                CallbackConnected(IsConnected());
+                return IsConnected();
             }
-            
-            mIsConnected = true;
-            CallbackConnected(mIsConnected);
+
+            SetConnected(true);
+            CallbackConnected(IsConnected());
             mSocket.BeginReceive(new AsyncCallback(ReadComplete), this);
 
-            return mIsConnected;
+            return IsConnected();
         }
 
         public override void SendPacket(IPacket packet)
         {
             Byte[] buffer = null;
             mPacketFormat.GenerateBuffer(ref buffer, packet);
-            mSendBuffer.Push(buffer, buffer.Length);
+            mSendBuffer.Push(buffer);
         }
 
         public override void DisConnect()
         {
-            if (mIsConnected)
+            if (IsConnected())
             {
                 mSocket.Close();
-                mIsConnected = false;
                 mSocket = null;
+                mReadBuffer.Clear();
+                mSendBuffer.Clear();
+                SetConnected(false);
 
                 CallbackDisconnected();
             }
@@ -171,7 +179,7 @@ namespace Alkaid
 
         private void doSendMessage()
         {
-            if (mIsConnected && mSendBuffer.DataSize() > 0)
+            if (IsConnected() && mSendBuffer.DataSize() > 0)
             {
                 try
                 {

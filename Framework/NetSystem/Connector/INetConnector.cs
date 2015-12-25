@@ -18,7 +18,7 @@ namespace Alkaid
         protected NetHost mNetHoster;
         protected IPacketFormat mPacketFormat;
         protected IPacketHandlerManager mPacketHandlerManager;
-        protected bool mIsConnected;
+        private bool mIsConnected;
 
         public INetConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager)
         {
@@ -109,6 +109,16 @@ namespace Alkaid
         public int GetUid()
         {
             return mUid;
+        }
+
+        public bool IsConnected()
+        {
+            return mIsConnected;
+        }
+
+        public void SetConnected(bool status)
+        {
+            mIsConnected = status;
         }
     }
 }

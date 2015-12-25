@@ -23,6 +23,9 @@ namespace Alkaid
         // data at index
         T Get(int index);
 
+        // clear
+        void Clear();
+
         // get area
         T[] Buffer();
 
@@ -98,6 +101,11 @@ namespace Alkaid
         public T Get(int index)
         {
             return index < _data.Length ? _data[index] : default(T);
+        }
+
+        public void Clear()
+        {
+            _offset = 0;
         }
 
         public T[] Buffer()

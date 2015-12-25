@@ -36,6 +36,9 @@
     <Reference Include="UnityEngine">
       <HintPath>ExternalLibs\Engine\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="WebSocket4Net">
+      <HintPath>ExternalLibs\Websocket4net\net35\Debug\WebSocket4Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigSystem\ConfigSystem.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="NetSystem\ConnectionType.cs" />
     <Compile Include="NetSystem\Connector\INetConnector.cs" />
     <Compile Include="NetSystem\Connector\UDPConnector.cs" />
+    <Compile Include="NetSystem\Connector\WebSocketConnector.cs" />
     <Compile Include="NetSystem\IPacket.cs" />
     <Compile Include="NetSystem\IPacketFormat.cs" />
     <Compile Include="NetSystem\IPacketHandler.cs" />
