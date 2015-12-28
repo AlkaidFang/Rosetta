@@ -189,9 +189,11 @@ namespace Alkaid
 
         private void doSendMessage()
         {
-            if (IsConnected() && mSendBuffer.DataSize() > 0 && mSocket.State == WebSocketState.Open)
+            int length = mSendBuffer.DataSize();
+            if (IsConnected() && length > 0 && mSocket.State == WebSocketState.Open)
             {
-                mSocket.Send(mSendBuffer.Buffer(), 0, mSendBuffer.DataSize());
+                mSocket.Send(mSendBuffer.Buffer(), 0, length);
+                mSendBuffer.Pop(length);
             }
         }
 

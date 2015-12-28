@@ -179,11 +179,12 @@ namespace Alkaid
 
         private void doSendMessage()
         {
-            if (IsConnected() && mSendBuffer.DataSize() > 0)
+            int length = mSendBuffer.DataSize();
+            if (IsConnected() && length > 0)
             {
                 try
                 {
-                    mSocket.BeginSend(mSendBuffer.Buffer(), mSendBuffer.DataSize(), mSendCompleteCallback, this);
+                    mSocket.BeginSend(mSendBuffer.Buffer(), length, mSendCompleteCallback, this);
                 }
                 catch (Exception e)
                 {

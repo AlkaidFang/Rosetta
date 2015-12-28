@@ -37,7 +37,7 @@
       <HintPath>ExternalLibs\Engine\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net">
-      <HintPath>ExternalLibs\Websocket4net\net35\Debug\WebSocket4Net.dll</HintPath>
+      <HintPath>ExternalLibs\Websocket4net\net35\Dbg\WebSocket4Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -180,11 +180,12 @@ namespace Alkaid
 
         private void doSendMessage()
         {
-            if (IsConnected() && mSendBuffer.DataSize() > 0 && mSocket.GetStream().CanWrite)
+            int length = mSendBuffer.DataSize();
+            if (IsConnected() && length > 0 && mSocket.GetStream().CanWrite)
             {
                 try
                 {
-                    mSocket.GetStream().BeginWrite(mSendBuffer.Buffer(), 0, mSendBuffer.DataSize(), mSendCompleteCallback, mSendBuffer.DataSize());
+                    mSocket.GetStream().BeginWrite(mSendBuffer.Buffer(), 0, length, mSendCompleteCallback, length);
                 }
                 catch (Exception e)
                 {
