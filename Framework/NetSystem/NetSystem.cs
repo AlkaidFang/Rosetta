@@ -61,6 +61,7 @@ namespace Alkaid
             {
                 case ConnectionType.TCP: ctor = new TCPConnector(pf, phm); break;
                 case ConnectionType.UDP: ctor = new UDPConnector(pf, phm); break;
+                case ConnectionType.WEBSOCKET: ctor = new WebSocketConnector(pf, phm); break;
 
                 default: ctor = new TCPConnector(pf, phm); break;
             }

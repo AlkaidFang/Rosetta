@@ -10,7 +10,6 @@ namespace Alkaid
         private UdpClient mSocket;
         private IPEndPoint mRemoteEndPoint;
 
-
         // 缓冲区
         private TBuffer<Byte> mReadBuffer;
         private Byte[] mReadBufferTemp;
@@ -70,6 +69,7 @@ namespace Alkaid
         public override bool Connect(string address, int port)
         {
             base.Connect(address, port);
+
             mSocket = new UdpClient();
             try
             {
@@ -87,7 +87,7 @@ namespace Alkaid
 
             SetConnected(true);
             CallbackConnected(IsConnected());
-            mSocket.BeginReceive(new AsyncCallback(ReadComplete), this);
+            mSocket.BeginReceive(mReadCompleteCallback, this);
 
             return IsConnected();
         }

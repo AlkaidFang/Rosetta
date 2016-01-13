@@ -75,6 +75,7 @@
     <Compile Include="Util\AsyncTaskDispatcher.cs" />
     <Compile Include="Util\Buffer.cs" />
     <Compile Include="Util\SafeQueue.cs" />
+    <Compile Include="Util\StreamBuffer.cs" />
     <Compile Include="Util\TaskProcessor.cs" />
     <Compile Include="Util\Delegate.cs" />
     <Compile Include="Util\FileReader.cs" />
