@@ -63,7 +63,7 @@
     <Compile Include="NetSystem\IPacketFormat.cs" />
     <Compile Include="NetSystem\IPacketHandler.cs" />
     <Compile Include="NetSystem\IPacketHandlerManager.cs" />
-    <Compile Include="NetSystem\NetHoster.cs" />
+    <Compile Include="NetSystem\RemoteHost.cs" />
     <Compile Include="NetSystem\NetSystem.cs" />
     <Compile Include="NetSystem\Connector\TCPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

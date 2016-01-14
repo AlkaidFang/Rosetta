@@ -15,7 +15,7 @@ namespace Alkaid
         public Callback OnError;
 
         private int mUid;
-        protected NetHost mNetHoster;
+        protected RemoteHost mRemoteHost;
         protected IPacketFormat mPacketFormat;
         protected IPacketHandlerManager mPacketHandlerManager;
         private bool mIsConnected;
@@ -23,7 +23,7 @@ namespace Alkaid
         public INetConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager)
         {
             mUid = -1;
-            mNetHoster = null;
+            mRemoteHost = null;
             OnConnected = null;
             OnRecieved = null;
             OnDisconnected = null;
@@ -55,7 +55,7 @@ namespace Alkaid
 
         public virtual bool Connect(string address, int port)
         {
-            mNetHoster = new NetHost(address, port);
+            mRemoteHost = new RemoteHost(address, port);
             return false;
         }
 

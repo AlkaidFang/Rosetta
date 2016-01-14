@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class NetHost
+    public class RemoteHost
     {
         private string mAddress;
         private int mPort;
-        public NetHost(string address, int port)
+        public RemoteHost(string address, int port)
         {
             mAddress = address;
             mPort = port;

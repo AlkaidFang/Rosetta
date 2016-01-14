@@ -69,7 +69,7 @@ namespace Alkaid
             mSocket = new TcpClient();
             try
             {
-                mSocket.Connect(mNetHoster.GetAddress(), mNetHoster.GetPort());
+                mSocket.Connect(mRemoteHost.GetAddress(), mRemoteHost.GetPort());
             }
             catch(Exception e)
             {
@@ -125,13 +125,13 @@ namespace Alkaid
                 else
                 {
                     // error
-                    LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mNetHoster.ToString());
+                    LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mRemoteHost.ToString());
                     DisConnect();
                 }
             }
             catch (Exception e)
             {
-                LoggerSystem.Instance.Error("链接：" + mNetHoster.ToString() + ", 发生读取错误：" + e.Message);
+                LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生读取错误：" + e.Message);
                 DisConnect();
             }
 

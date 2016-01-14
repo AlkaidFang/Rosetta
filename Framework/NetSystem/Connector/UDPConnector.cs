@@ -74,7 +74,7 @@ namespace Alkaid
             mSocket = new UdpClient();
             try
             {
-                mRemoteEndPoint = new IPEndPoint(IPAddress.Parse(mNetHoster.GetAddress()), mNetHoster.GetPort());
+                mRemoteEndPoint = new IPEndPoint(IPAddress.Parse(mRemoteHost.GetAddress()), mRemoteHost.GetPort());
                 mSocket.Connect(mRemoteEndPoint);
                 mSocket.DontFragment = true; // 不分段
             }
@@ -127,13 +127,13 @@ namespace Alkaid
                 else
                 {
                     //error
-                    LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mNetHoster.ToString());
+                    LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mRemoteHost.ToString());
                     DisConnect();
                 }
             }
             catch (Exception e)
             {
-                LoggerSystem.Instance.Error("链接：" + mNetHoster.ToString() + ", 发生读取错误：" + e.Message);
+                LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生读取错误：" + e.Message);
                 DisConnect();
             }
         }
@@ -150,13 +150,13 @@ namespace Alkaid
                 else
                 {
                     //error
-                    LoggerSystem.Instance.Error("写入数据为0，将要断开此链接接:" + mNetHoster.ToString());
+                    LoggerSystem.Instance.Error("写入数据为0，将要断开此链接接:" + mRemoteHost.ToString());
                     DisConnect();
                 }
             }
             catch (Exception e)
             {
-                LoggerSystem.Instance.Error("链接：" + mNetHoster.ToString() + ", 发生写入错误：" + e.Message);
+                LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生写入错误：" + e.Message);
                 DisConnect();
             }
         }

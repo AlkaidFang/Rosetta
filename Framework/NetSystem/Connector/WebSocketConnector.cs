@@ -65,10 +65,10 @@ namespace Alkaid
         {
             base.Connect(address, port);
 
-            string url = mNetHoster.GetAddress();
-            if (port > 0 && !mNetHoster.GetAddress().Contains(":"))
+            string url = mRemoteHost.GetAddress();
+            if (port > 0 && !mRemoteHost.GetAddress().Contains(":"))
             {
-                url = string.Format("ws://{0}:{1}/", mNetHoster.GetAddress(), mNetHoster.GetPort());
+                url = string.Format("ws://{0}:{1}/", mRemoteHost.GetAddress(), mRemoteHost.GetPort());
             }
 
             mSocket = new WebSocket(url);
@@ -135,7 +135,7 @@ namespace Alkaid
             }
             else
             {
-                LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:ws://" + mNetHoster.ToString());
+                LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:ws://" + mRemoteHost.ToString());
                 DisConnect();
             }
         }
@@ -148,7 +148,7 @@ namespace Alkaid
             }
             else
             {
-                LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:ws://" + mNetHoster.ToString());
+                LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:ws://" + mRemoteHost.ToString());
                 DisConnect();
             }
         }
