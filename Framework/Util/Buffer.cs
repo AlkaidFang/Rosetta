@@ -64,6 +64,8 @@ namespace Alkaid
 
         public void Push(T[] data, int length)
         {
+            if (length <= 0) return;
+
             lock(_lock)
             {
                 if (_offset + length > _data.Length)
@@ -83,14 +85,14 @@ namespace Alkaid
 
         public T[] Pop(int length)
         {
-            if (length > _offset) return null;
+            if (length > _offset || length <= 0) return null;
 
             T[] ret = new T[length];
             lock(_lock)
             {
                 Array.Copy(_data, ret, length);
 
-                Array.Copy(_data, _offset, _data, 0, length);
+                Array.Copy(_data, length, _data, 0, _offset - length);
 
                 _offset -= length;
             }
@@ -100,7 +102,7 @@ namespace Alkaid
 
         public T Get(int index)
         {
-            return index < _data.Length ? _data[index] : default(T);
+            return index < _offset ? _data[index] : default(T);
         }
 
         public void Clear()

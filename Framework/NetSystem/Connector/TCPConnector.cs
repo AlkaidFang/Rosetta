@@ -9,7 +9,7 @@ namespace Alkaid
         private TcpClient mSocket;
 
         // 缓冲区
-        private StreamBuffer mNetBuffer;
+        private NetStream mNetStream;
         // 临时解析
         private int tempReadPacketLength;
         private int tempReadPacketType;
@@ -18,16 +18,21 @@ namespace Alkaid
         private AsyncCallback mReadCompleteCallback;
         private AsyncCallback mSendCompleteCallback;
 
+        private AsyncThread mSendThread = null;
+
         public TCPConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager) : base(packetFormat, packetHandlerManager)
         {
             mSocket = null;
-            mNetBuffer = new StreamBuffer(INetConnector.MAX_SOCKET_BUFFER_SIZE * 2);
+            mNetStream = new NetStream(INetConnector.MAX_SOCKET_BUFFER_SIZE * 2);
             tempReadPacketLength = 0;
             tempReadPacketType = 0;
             tempReadPacketData = null;
 
             mReadCompleteCallback = new AsyncCallback(ReadComplete);
             mSendCompleteCallback = new AsyncCallback(SendComplete);
+
+            mSendThread = new AsyncThread(SendLogic);
+            mSendThread.Start();
         }
 
         public override bool Init()
@@ -43,7 +48,7 @@ namespace Alkaid
 
             doDecodeMessage();
 
-            doSendMessage();
+            //doSendMessage(); // will do in other thread
         }
 
         public override void Destroy()
@@ -75,7 +80,7 @@ namespace Alkaid
             }
 
             SetConnected(true);
-            mSocket.GetStream().BeginRead(mNetBuffer.InPipe, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
+            mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
 
             CallbackConnected(IsConnected());
 
@@ -87,7 +92,7 @@ namespace Alkaid
             Byte[] buffer = null;
             mPacketFormat.GenerateBuffer(ref buffer, packet);
 
-            mNetBuffer.PushStreamOut(buffer);
+            mNetStream.PushOutStream(buffer);
         }
 
         public override void DisConnect()
@@ -97,7 +102,7 @@ namespace Alkaid
                 mSocket.GetStream().Close();
                 mSocket.Close();
                 mSocket = null;
-                mNetBuffer.Clear();
+                mNetStream.Clear();
                 SetConnected(false);
 
                 CallbackDisconnected();
@@ -113,9 +118,9 @@ namespace Alkaid
                 LoggerSystem.Instance.Info("读取到数据字节数:" + readLength);
                 if (readLength > 0)
                 {
-                    mNetBuffer.FinishedIn(readLength);
+                    mNetStream.FinishedIn(readLength);
 
-                    mSocket.GetStream().BeginRead(mNetBuffer.InPipe, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
+                    mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
                 }
                 else
                 {
@@ -141,7 +146,7 @@ namespace Alkaid
                 LoggerSystem.Instance.Info("发送数据字节数：" + sendLength);
                 if (sendLength > 0)
                 {
-                    mNetBuffer.FinishedOut(sendLength);
+                    mNetStream.FinishedOut(sendLength);
                 }
                 else
                 {
@@ -158,28 +163,38 @@ namespace Alkaid
 
         private void doDecodeMessage()
         {
-            while (mNetBuffer.StreamInLength > 0 && mPacketFormat.CheckHavePacket(mNetBuffer.StreamIn, mNetBuffer.StreamInLength))
+            while (mNetStream.InStreamLength > 0 && mPacketFormat.CheckHavePacket(mNetStream.InStream, mNetStream.InStreamLength))
             {
                 // 开始读取
-                mPacketFormat.DecodePacket(mNetBuffer.StreamIn, ref tempReadPacketLength, ref tempReadPacketType, ref tempReadPacketData);
+                mPacketFormat.DecodePacket(mNetStream.InStream, ref tempReadPacketLength, ref tempReadPacketType, ref tempReadPacketData);
 
                 mPacketHandlerManager.DispatchHandler(tempReadPacketType, tempReadPacketData);
 
                 CallbackRecieved(tempReadPacketType, tempReadPacketData);
 
                 // 偏移
-                mNetBuffer.PopStreamIn(tempReadPacketLength);
+                mNetStream.PopInStream(tempReadPacketLength);
+            }
+        }
+
+        private void SendLogic(AsyncThread thread)
+        {
+            while (thread.IsWorking())
+            {
+                doSendMessage();
+
+                System.Threading.Thread.Sleep(30);
             }
         }
 
         private void doSendMessage()
         {
-            int length = mNetBuffer.StreamOutLength;
-            if (IsConnected() && length > 0 && mSocket.GetStream().CanWrite)
+            int length = mNetStream.OutStreamLength;
+            if (IsConnected() && mNetStream.AsyncPipeOutIdle && length > 0 && mSocket.GetStream().CanWrite)
             {
                 try
                 {
-                    mSocket.GetStream().BeginWrite(mNetBuffer.OutPipe, 0, length, mSendCompleteCallback, length);
+                    mSocket.GetStream().BeginWrite(mNetStream.AsyncPipeOut, 0, length, mSendCompleteCallback, length);
                 }
                 catch (Exception e)
                 {

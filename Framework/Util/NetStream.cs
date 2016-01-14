@@ -5,46 +5,72 @@ using System.Text;
 
 namespace Alkaid
 {
-    public class StreamBuffer
+    public class NetStream
     {
         private TBuffer<Byte> mReadBuffer;
         private Byte[] mReadBufferTemp;
         private TBuffer<Byte> mWriteBuffer;
 
-        public StreamBuffer(int bufferSize)
+        private volatile bool mPipeInIdle;
+        private volatile bool mPipeOutIdle;
+
+        public NetStream(int bufferSize)
         {
             mReadBuffer = new TBuffer<Byte>(bufferSize); // 主读数据区
             mReadBufferTemp = new Byte[bufferSize / 2]; // 读缓存区
             mWriteBuffer = new TBuffer<Byte>(bufferSize); // 主写数据区
+
+            mPipeInIdle = true;
+            mPipeOutIdle = true;
         }
 
-        public Byte[] InPipe
+        public Byte[] AsyncPipeIn
         {
             get
             {
+                mPipeInIdle = false;
                 return mReadBufferTemp;
+            }
+        }
+
+        public bool AsyncPipeInIdle
+        {
+            get
+            {
+                return mPipeInIdle;
             }
         }
 
         public void FinishedIn(int length)
         {
             mReadBuffer.Push(mReadBufferTemp, length);
+            mPipeInIdle = true;
         }
 
-        public Byte[] OutPipe
+        public Byte[] AsyncPipeOut
         {
             get
             {
+                mPipeOutIdle = false;
                 return mWriteBuffer.Buffer();
+            }
+        }
+
+        public bool AsyncPipeOutIdle
+        {
+            get
+            {
+                return mPipeOutIdle;
             }
         }
 
         public void FinishedOut(int length)
         {
             mWriteBuffer.Pop(length);
+            mPipeOutIdle = false;
         }
 
-        public Byte[] StreamIn
+        public Byte[] InStream
         {
             get
             {
@@ -52,7 +78,7 @@ namespace Alkaid
             }
         }
 
-        public int StreamInLength
+        public int InStreamLength
         {
             get
             {
@@ -60,7 +86,7 @@ namespace Alkaid
             }
         }
 
-        public Byte[] StreamOut
+        public Byte[] OutStream
         {
             get
             {
@@ -68,7 +94,7 @@ namespace Alkaid
             }
         }
 
-        public int StreamOutLength
+        public int OutStreamLength
         {
             get
             {
@@ -76,14 +102,24 @@ namespace Alkaid
             }
         }
 
-        public void PopStreamIn(int length)
+        public void PushInStream(byte[] buffer)
+        {
+            mReadBuffer.Push(buffer);
+        }
+
+        public void PopInStream(int length)
         {
             mReadBuffer.Pop(length);
         }
 
-        public void PushStreamOut(byte[] buffer)
+        public void PushOutStream(byte[] buffer)
         {
             mWriteBuffer.Push(buffer);
+        }
+
+        public void PopOutStream(int length)
+        {
+            mWriteBuffer.Pop(length);
         }
 
         public void Clear()
