@@ -94,21 +94,12 @@ public class JRandom{
         lock (this)
         {
             seed = (seed * multiplier + 0xbL) & ((1L << 48) - 1);
+            // while value: ((1L << 48) - 1) always be positive number, so when and(&) to a number, the result will be a positive num.
+            // so, >>> sign equals >>
             //ret = (int) (seed >>> (48 - bits));
-            ret = (int) MOVERIGHT(seed, 48 - bits);
+            ret = (int)(seed >> (48 - bits));
         }
         return ret;
-    }
-
-    private long MOVERIGHT(long num, long length)
-    {
-        long mask = 0x7fffffffffffffff;
-        for (int i = 0; i < length; ++i)
-        {
-            num >>= 1;
-            num &= mask;
-        }
-        return num;
     }
 
     /**
@@ -197,8 +188,8 @@ public class JRandom{
      */
     public int nextInt(int n) {
         if (n <= 0) {
+            throw new ArgumentException("n <= 0: " + n);
             //throw new IllegalArgumentException("n <= 0: " + n);
-            return -1;
         }
         if ((n & -n) == n) {
             return (int) ((n * (long) next(31)) >> 31);
