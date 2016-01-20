@@ -68,12 +68,14 @@
     <Compile Include="NetSystem\Connector\TCPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
+    <Compile Include="ThirdPartySystem\ThirdPartySystem.cs" />
     <Compile Include="TimeSystme\TimeSystem.cs" />
     <Compile Include="UISystem\IWindow.cs" />
     <Compile Include="UISystem\UISystem.cs" />
     <Compile Include="UISystem\WindowManager.cs" />
     <Compile Include="Util\AsyncTaskDispatcher.cs" />
     <Compile Include="Util\Buffer.cs" />
+    <Compile Include="Util\JRandom.cs" />
     <Compile Include="Util\SafeQueue.cs" />
     <Compile Include="Util\NetStream.cs" />
     <Compile Include="Util\TaskProcessor.cs" />
@@ -92,9 +94,7 @@
     <Compile Include="Util\UnityTools.cs" />
     <Compile Include="Util\UtilTools.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ThirdPartySystem\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
