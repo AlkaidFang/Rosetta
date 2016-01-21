@@ -36,7 +36,7 @@ namespace Alkaid
             // fps
             if (mConfigs.TryGetValue("fps", out v))
             {
-                FrameworkSetup.Instance.SetFPS(int.Parse(v));
+                FrameworkSetup.Instance.SetFPS(Converter.ConvertNumber<int>(v));
             }
             // version
             if (mConfigs.TryGetValue("version", out v))
@@ -46,19 +46,19 @@ namespace Alkaid
             // log
             if (mConfigs.TryGetValue("consolelogmode", out v))
             {
-                LoggerSystem.Instance.SetConsoleLogMode(int.Parse(v) > 0);
+                LoggerSystem.Instance.SetConsoleLogMode(Converter.ConvertBool(v));
             }
             if (mConfigs.TryGetValue("consoleloglevel", out v))
             {
-                LoggerSystem.Instance.SetConsoleLogLevel(int.Parse(v));
+                LoggerSystem.Instance.SetConsoleLogLevel(Converter.ConvertNumber<int>(v));
             }
             if (mConfigs.TryGetValue("filelogmode", out v))
             {
-                LoggerSystem.Instance.SetFileLogMode(int.Parse(v) > 0);
+                LoggerSystem.Instance.SetFileLogMode(Converter.ConvertBool(v));
             }
             if (mConfigs.TryGetValue("fileloglevel", out v))
             {
-                LoggerSystem.Instance.SetFileLogLevel(int.Parse(v));
+                LoggerSystem.Instance.SetFileLogLevel(Converter.ConvertNumber<int>(v));
             }
             if (mConfigs.TryGetValue("filelogfrontname", out v))
             {

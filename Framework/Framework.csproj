@@ -74,7 +74,9 @@
     <Compile Include="UISystem\UISystem.cs" />
     <Compile Include="UISystem\WindowManager.cs" />
     <Compile Include="Util\AsyncTaskDispatcher.cs" />
+    <Compile Include="Util\BitOperator.cs" />
     <Compile Include="Util\Buffer.cs" />
+    <Compile Include="Util\Converter.cs" />
     <Compile Include="Util\JRandom.cs" />
     <Compile Include="Util\SafeQueue.cs" />
     <Compile Include="Util\NetStream.cs" />
