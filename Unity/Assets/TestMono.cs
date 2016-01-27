@@ -55,15 +55,15 @@ public class TestMono : MonoBehaviour {
     {
         if (count == 0)
         {
-            NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "10.12.25.205", 10086);
+            NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "ws://10.12.25.205:8080/PearlHarbor/Game", 8080);
         }
         if (count > 0)
         {
             NetPacket pa = new NetPacket(PacketType.CS_HelloWorld);
-            XMessage.HelloWorld proto = new XMessage.HelloWorld();
+            XMessage.CS_HelloWorld proto = new XMessage.CS_HelloWorld();
             proto._int = count + 70000;
-            pa.mProto = proto;
-            pa.EncodeProto();
+            proto._long = 123456;
+            pa.Proto = proto;
             NetSystem.Instance.Send((int)RosettaSetup.NetCtr.Lobby, pa);
         }
 

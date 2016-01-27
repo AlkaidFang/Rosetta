@@ -59,6 +59,8 @@ namespace Alkaid
         {
             base.Destroy();
 
+            mSendThread.Stop();
+
             DisConnect();
         }
 

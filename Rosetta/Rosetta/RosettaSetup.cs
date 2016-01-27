@@ -40,20 +40,30 @@ namespace Rosetta
             // NetSystem
             PacketFormat pf = new PacketFormat();
             PacketHandlerManager pm = new PacketHandlerManager();
-            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.TCP, pf, pm, null, null, null, null);
+            pm.RegisterHandler(typeof(XMessage.SC_HelloWorldResult), new SCHelloWorldResultHandler());
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.WEBSOCKET, pf, pm, null, null, null, null);
+            /*NetSystem.Instance.Connect((int)NetCtr.Lobby, "ws://localhost:8080/PearlHarbor/Game", 8080);
+            NetPacket packet = new NetPacket(PacketType.CS_HelloWorld);
+            XMessage.CS_HelloWorld proto = new XMessage.CS_HelloWorld();
+            proto._int = 11;
+            proto._string = "helloworld";
+            proto._long = 999;
+            packet.Proto = proto;
+            NetSystem.Instance.Send((int)NetCtr.Lobby, packet);*/
+
+
+            /*NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.TCP, pf, pm, null, null, null, null);
             NetSystem.Instance.RegisterConnector((int)NetCtr.Room, ConnectionType.TCP, pf, pm, null, null, null, null);
-            pm.RegisterHandler(typeof(XMessage.HelloWorldResult), new SCHelloWorldResultHandler());
 
             // do connect
             NetSystem.Instance.Connect((int)NetCtr.Lobby, "127.0.0.1", 10086);
             // do send
             NetPacket packet = new NetPacket(PacketType.CS_HelloWorld);
-            XMessage.HelloWorld proto = new XMessage.HelloWorld();
+            XMessage.CS_HelloWorld proto = new XMessage.CS_HelloWorld();
             proto._int = 11;
             proto._string = "helloworld";
-            packet.mProto = proto;
-            packet.EncodeProto();
-            NetSystem.Instance.Send((int)NetCtr.Lobby, packet);
+            packet.Proto = proto;
+            NetSystem.Instance.Send((int)NetCtr.Lobby, packet);*/
         }
 
     }

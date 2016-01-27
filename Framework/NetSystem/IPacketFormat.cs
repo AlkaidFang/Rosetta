@@ -12,7 +12,7 @@ namespace Alkaid
     {
         //static byte[] PACKET_HEAD = { 99, 99 }; //{'c', 'c'};
 
-        int GetLength(System.IO.MemoryStream data);
+        int GetLength(int dataLength);
 
         // 组装这个包
         void GenerateBuffer(ref Byte[] dest, IPacket packet);

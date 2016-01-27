@@ -105,10 +105,10 @@ namespace XMessage
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"HelloWorld")]
-  public partial class HelloWorld : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CS_HelloWorld")]
+  public partial class CS_HelloWorld : global::ProtoBuf.IExtensible
   {
-    public HelloWorld() {}
+    public CS_HelloWorld() {}
     
     private int __int;
     [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"_int", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
@@ -143,10 +143,10 @@ namespace XMessage
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"HelloWorldResult")]
-  public partial class HelloWorldResult : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"SC_HelloWorldResult")]
+  public partial class SC_HelloWorldResult : global::ProtoBuf.IExtensible
   {
-    public HelloWorldResult() {}
+    public SC_HelloWorldResult() {}
     
     private int __resultCode;
     [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"_resultCode", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]

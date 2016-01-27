@@ -10,5 +10,7 @@ namespace Alkaid
     {
 
         int GetPacketType();
+
+        Byte[] GetData();
     }
 }

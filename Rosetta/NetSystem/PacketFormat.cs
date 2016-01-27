@@ -8,17 +8,16 @@ namespace Rosetta
     {
         public static byte[] PACKET_HEAD = { 99, 99 }; //{'c', 'c'};
 
-        public int GetLength(System.IO.MemoryStream data)
+        public int GetLength(int dataLength)
         {
-            return 2 + 4 + 2 + (int)data.Length;
+            return 2 + 4 + 4 + dataLength;
         }
 
         // 组装这个包
         public void GenerateBuffer(ref Byte[] dest, IPacket packet)
         {
-            System.IO.MemoryStream data = new System.IO.MemoryStream();
-            ProtoBuf.Serializer.Serialize(data, packet);
-            int iLength = GetLength(data);
+            Byte[] data = packet.GetData();
+            int iLength = GetLength(data.Length);
 
             dest = new Byte[iLength];
 
@@ -30,12 +29,12 @@ namespace Rosetta
             Array.Copy(bLength, 0, dest, 2, 4);
 
             // 类型
-            short iType = (short)packet.GetPacketType();
+            int iType = packet.GetPacketType();
             Byte[] bType = BitConverter.GetBytes(iType);
-            Array.Copy(bType, 0, dest, 6, 2);
+            Array.Copy(bType, 0, dest, 6, 4);
 
             // 数据
-            Array.Copy(data.GetBuffer(), 0, dest, 8, data.Length);
+            Array.Copy(data, 0, dest, 10, data.Length);
         }
 
         //  检查当前缓冲区中是否包含一个包
@@ -62,16 +61,13 @@ namespace Rosetta
                 if (packetLength < 0)
                     break;
 
-                packetType = BitConverter.ToInt16(buffer, 6);
+                packetType = BitConverter.ToInt32(buffer, 6);
                 if (packetType < 0)
                     break;
 
-                proto = new System.IO.MemoryStream(buffer, 8, packetLength - 8);
+                proto = new System.IO.MemoryStream(buffer, 10, packetLength - 10);
                 if (null == proto)
                     break;
-
-                NetPacket packet = ProtoBuf.Serializer.Deserialize<NetPacket>(proto);
-                proto = new System.IO.MemoryStream(packet.mProtoStream);
 
                 return true;
             }

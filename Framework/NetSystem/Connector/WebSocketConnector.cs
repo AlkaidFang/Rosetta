@@ -51,7 +51,9 @@ namespace Alkaid
 
         public override void Destroy()
         {
+            base.Destroy();
 
+            mSendThread.Stop();
 
             DisConnect();
         }

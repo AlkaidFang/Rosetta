@@ -5,20 +5,25 @@ using ProtoBuf;
 
 namespace Rosetta
 {
-    [ProtoContract]
     public class NetPacket : IPacket
     {
-        [ProtoMember(1)]
-        public PacketType mType;
-        [ProtoMember(2)]
-        public Byte[] mProtoStream;
+        private PacketType mType;
+        private Byte[] mProtoBytes;
+        private object mProto;
 
-        public object mProto;
+        public object Proto
+        {
+            set
+            {
+                mProto = value;
+                EncodeProto();
+            }
+        }
 
         public NetPacket(PacketType type)
         {
             mType = type;
-            mProtoStream = null;
+            mProtoBytes = null;
             mProto = null;
         }
 
@@ -27,13 +32,18 @@ namespace Rosetta
             return (int)mType;
         }
 
-        public void EncodeProto()
+        public Byte[] GetData()
+        {
+            return mProtoBytes;
+        }
+
+        private void EncodeProto()
         {
             if (mProto != null)
             {
                 System.IO.MemoryStream Stream = new System.IO.MemoryStream();
                 ProtoBuf.Serializer.Serialize(Stream, mProto);
-                mProtoStream = Stream.GetBuffer();
+                mProtoBytes = Stream.GetBuffer();
             }
         }
     }

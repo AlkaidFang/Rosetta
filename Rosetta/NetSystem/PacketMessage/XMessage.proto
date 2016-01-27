@@ -23,7 +23,7 @@ message AddressBook {
   repeated Person person = 1;
 }
 
-message HelloWorld
+message CS_HelloWorld
 {
 	required int32 _int = 1;
 	required float _float = 2;
@@ -31,7 +31,7 @@ message HelloWorld
 	required string _string = 4;
 }
 
-message HelloWorldResult
+message SC_HelloWorldResult
 {
 	required int32 _resultCode = 1;
 }
