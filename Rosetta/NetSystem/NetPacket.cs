@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Alkaid;
-using ProtoBuf;
 
 namespace Rosetta
 {
