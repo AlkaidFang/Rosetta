@@ -53,7 +53,7 @@ namespace Rosetta
         }
 
         // 解码这个包
-        public bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref System.IO.MemoryStream proto)
+        public bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref Byte[] proto)
         {
             do
             {
@@ -65,7 +65,9 @@ namespace Rosetta
                 if (packetType < 0)
                     break;
 
-                proto = new System.IO.MemoryStream(buffer, 10, packetLength - 10);
+                proto = new Byte[packetLength - 10];
+                Array.Copy(buffer, 10, proto, 0, packetLength - 10);
+                //proto = new System.IO.MemoryStream(buffer, 10, packetLength - 10);
                 if (null == proto)
                     break;
 

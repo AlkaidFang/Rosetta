@@ -9,6 +9,6 @@ namespace Alkaid
     {
         void RegisterHandler(Type protoType, IPacketHandler handler);
 
-        bool DispatchHandler(int type, System.IO.MemoryStream data);
+        bool DispatchHandler(int type, Byte[] data);
     }
 }

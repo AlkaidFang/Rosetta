@@ -16,7 +16,7 @@ namespace Alkaid
         // 临时解析
         private int tempReadPacketLength = 0;
         private int tempReadPacketType = 0;
-        private System.IO.MemoryStream tempReadPacketData = null;
+        private Byte[] tempReadPacketData = null;
 
         private AsyncCallback mReadCompleteCallback;
         private AsyncCallback mSendCompleteCallback;

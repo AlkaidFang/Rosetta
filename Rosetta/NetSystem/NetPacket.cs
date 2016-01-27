@@ -38,11 +38,10 @@ namespace Rosetta
 
         private void EncodeProto()
         {
-            if (mProto != null)
+            Google.Protobuf.IMessage im = (Google.Protobuf.IMessage)mProto;
+            if (im != null)
             {
-                System.IO.MemoryStream Stream = new System.IO.MemoryStream();
-                ProtoBuf.Serializer.Serialize(Stream, mProto);
-                mProtoBytes = Stream.GetBuffer();
+                mProtoBytes = Google.Protobuf.MessageExtensions.ToByteArray(im);
             }
         }
     }

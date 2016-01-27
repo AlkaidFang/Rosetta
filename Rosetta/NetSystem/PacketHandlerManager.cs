@@ -55,15 +55,14 @@ namespace Alkaid
             }
         }
 
-        public bool DispatchHandler(int type, System.IO.MemoryStream data)
+        public bool DispatchHandler(int type, Byte[] data)
         {
             if (data != null && mHandlerDict.ContainsKey(type))
             {
                 PacketHandlerInfo handlerInfo = mHandlerDict[type];
                 if (null != handlerInfo)
                 {
-                    object proto = ProtoBuf.Serializer.NonGeneric.Deserialize(handlerInfo.mProtoType, data);
-                    return handlerInfo.mHandler.OnPacketHandler(proto);
+                    return handlerInfo.mHandler.OnPacketHandler(data);
                 }
             }
 

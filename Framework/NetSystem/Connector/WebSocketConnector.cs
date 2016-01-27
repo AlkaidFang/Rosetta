@@ -17,7 +17,7 @@ namespace Alkaid
         // 临时解析
         private int tempReadPacketLength;
         private int tempReadPacketType;
-        private System.IO.MemoryStream tempReadPacketData;
+        private Byte[] tempReadPacketData;
 
         private AsyncThread mSendThread = null;
 

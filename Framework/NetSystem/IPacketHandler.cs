@@ -9,6 +9,6 @@ namespace Alkaid
     {
         int GetPacketType();
 
-        bool OnPacketHandler(object data);
+        bool OnPacketHandler(Byte[] data);
     }
 }

@@ -21,6 +21,6 @@ namespace Alkaid
         bool CheckHavePacket(Byte[] buffer, int offset);
 
         // 解码这个包
-        bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref System.IO.MemoryStream data);
+        bool DecodePacket(Byte[] buffer, ref int packetLength, ref int packetType, ref Byte[] data);
     }
 }

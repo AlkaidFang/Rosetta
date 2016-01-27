@@ -27,11 +27,6 @@ namespace Alkaid
 
         public static bool GetBitFlag(int data, int index)
         {
-            if (null == data)
-            {
-                return false;
-            }
-
             if (index < 0 || index >= sizeof(int) * BYTESIZE)
             {
                 return false;

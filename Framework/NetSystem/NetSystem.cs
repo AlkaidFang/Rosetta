@@ -54,7 +54,7 @@ namespace Alkaid
             }
         }
 
-        public void RegisterConnector(int uid, ConnectionType type, IPacketFormat pf, IPacketHandlerManager phm, Callback<bool> connected, Callback<int, System.IO.MemoryStream> recieved, Callback disconnected, Callback error)
+        public void RegisterConnector(int uid, ConnectionType type, IPacketFormat pf, IPacketHandlerManager phm, Callback<bool> connected, Callback<int, Byte[]> recieved, Callback disconnected, Callback error)
         {
             INetConnector ctor = null;
             switch (type)

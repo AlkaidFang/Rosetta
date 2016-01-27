@@ -67,7 +67,7 @@ namespace Alkaid
         public void FinishedOut(int length)
         {
             mWriteBuffer.Pop(length);
-            mPipeOutIdle = false;
+            mPipeOutIdle = true;
         }
 
         public Byte[] InStream

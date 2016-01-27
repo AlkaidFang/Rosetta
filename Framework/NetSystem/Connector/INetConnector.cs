@@ -10,7 +10,7 @@ namespace Alkaid
         public static int MAX_SOCKET_BUFFER_SIZE = 4096;
 
         public Callback<bool> OnConnected;
-        public Callback<int, MemoryStream> OnRecieved;
+        public Callback<int, Byte[]> OnRecieved;
         public Callback OnDisconnected;
         public Callback OnError;
 
@@ -77,7 +77,7 @@ namespace Alkaid
             }
         }
 
-        protected void CallbackRecieved(int ptype, MemoryStream ms)
+        protected void CallbackRecieved(int ptype, Byte[] ms)
         {
             if (OnRecieved != null && ms != null)
             {
