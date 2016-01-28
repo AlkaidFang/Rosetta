@@ -106,10 +106,10 @@ namespace Alkaid
         {
             if (IsConnected())
             {
+                SetConnected(false);
                 mSocket.Close();
                 mSocket = null;
                 mNetStream.Clear();
-                SetConnected(false);
 
                 CallbackDisconnected();
             }

@@ -101,11 +101,11 @@ namespace Alkaid
         {
             if (IsConnected())
             {
+                SetConnected(false);
                 mSocket.GetStream().Close();
                 mSocket.Close();
                 mSocket = null;
                 mNetStream.Clear();
-                SetConnected(false);
 
                 CallbackDisconnected();
             }

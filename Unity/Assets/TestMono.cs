@@ -64,7 +64,7 @@ public class TestMono : MonoBehaviour {
             proto.Int = count + 70000;
             proto.Float = 0.998f;
             proto.String = "helloworld";
-            proto.Long = 123456;
+            proto.Long = 22222 - count;
             pa.Proto = proto;
             NetSystem.Instance.Send((int)RosettaSetup.NetCtr.Lobby, pa);
         }
