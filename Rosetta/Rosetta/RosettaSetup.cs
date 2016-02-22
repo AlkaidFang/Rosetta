@@ -41,7 +41,8 @@ namespace Rosetta
             PacketFormat pf = new PacketFormat();
             PacketHandlerManager pm = new PacketHandlerManager();
             pm.RegisterHandler(typeof(XMessage.SC_HelloWorldResult), new SCHelloWorldResultHandler());
-            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.WEBSOCKET, pf, pm, null, null, null, null);
+            //NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.WEBSOCKET, pf, pm, null, null, null, null);
+            NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.TCP, pf, pm, null, null, null, null);
             /*NetSystem.Instance.Connect((int)NetCtr.Lobby, "ws://localhost:8080/PearlHarbor/Game", 8080);
             NetPacket packet = new NetPacket(PacketType.CS_HelloWorld);
             XMessage.CS_HelloWorld proto = new XMessage.CS_HelloWorld();
