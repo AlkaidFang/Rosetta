@@ -32,15 +32,19 @@ namespace XMessage {
             "AygLMhAuWE1lc3NhZ2UuUGVyc29uIk0KDUNTX0hlbGxvV29ybGQSDAoEX2lu",
             "dBgBIAEoBRIOCgZfZmxvYXQYAiABKAISDQoFX2xvbmcYAyABKAMSDwoHX3N0",
             "cmluZxgEIAEoCSIqChNTQ19IZWxsb1dvcmxkUmVzdWx0EhMKC19yZXN1bHRD",
-            "b2RlGAEgASgFQiYKGmNvbS5hbGthaWQucGVhcmxoYXJib3IubmV0QghYTWVz",
-            "c2FnZWIGcHJvdG8z"));
+            "b2RlGAEgASgFIjwKCENTX0xvZ2luEg8KB2FjY291bnQYASABKAkSEAoIcGFz",
+            "c3dvcmQYAiABKAkSDQoFdWd1aWQYAyABKAkiJAoOU0NfTG9naW5SZXN1bHQS",
+            "EgoKcmVzdWx0Y29kZRgBIAEoCEImChpjb20uYWxrYWlkLnBlYXJsaGFyYm9y",
+            "Lm5ldEIIWE1lc3NhZ2ViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedCodeInfo(null, new pbr::GeneratedCodeInfo[] {
             new pbr::GeneratedCodeInfo(typeof(global::XMessage.Person), global::XMessage.Person.Parser, new[]{ "Name", "Id", "Email", "Phones" }, null, new[]{ typeof(global::XMessage.Person.Types.PhoneType) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::XMessage.Person.Types.PhoneNumber), global::XMessage.Person.Types.PhoneNumber.Parser, new[]{ "Number", "Type" }, null, null, null)}),
             new pbr::GeneratedCodeInfo(typeof(global::XMessage.AddressBook), global::XMessage.AddressBook.Parser, new[]{ "People" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::XMessage.CS_HelloWorld), global::XMessage.CS_HelloWorld.Parser, new[]{ "Int", "Float", "Long", "String" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.SC_HelloWorldResult), global::XMessage.SC_HelloWorldResult.Parser, new[]{ "ResultCode" }, null, null, null)
+            new pbr::GeneratedCodeInfo(typeof(global::XMessage.SC_HelloWorldResult), global::XMessage.SC_HelloWorldResult.Parser, new[]{ "ResultCode" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::XMessage.CS_Login), global::XMessage.CS_Login.Parser, new[]{ "Account", "Password", "Uguid" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::XMessage.SC_LoginResult), global::XMessage.SC_LoginResult.Parser, new[]{ "Resultcode" }, null, null, null)
           }));
     }
     #endregion
@@ -746,6 +750,266 @@ namespace XMessage {
             break;
           case 8: {
             ResultCode = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class CS_Login : pb::IMessage<CS_Login> {
+    private static readonly pb::MessageParser<CS_Login> _parser = new pb::MessageParser<CS_Login>(() => new CS_Login());
+    public static pb::MessageParser<CS_Login> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public CS_Login() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public CS_Login(CS_Login other) : this() {
+      account_ = other.account_;
+      password_ = other.password_;
+      uguid_ = other.uguid_;
+    }
+
+    public CS_Login Clone() {
+      return new CS_Login(this);
+    }
+
+    /// <summary>Field number for the "account" field.</summary>
+    public const int AccountFieldNumber = 1;
+    private string account_ = "";
+    public string Account {
+      get { return account_; }
+      set {
+        account_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "password" field.</summary>
+    public const int PasswordFieldNumber = 2;
+    private string password_ = "";
+    public string Password {
+      get { return password_; }
+      set {
+        password_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "uguid" field.</summary>
+    public const int UguidFieldNumber = 3;
+    private string uguid_ = "";
+    public string Uguid {
+      get { return uguid_; }
+      set {
+        uguid_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as CS_Login);
+    }
+
+    public bool Equals(CS_Login other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Account != other.Account) return false;
+      if (Password != other.Password) return false;
+      if (Uguid != other.Uguid) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Account.Length != 0) hash ^= Account.GetHashCode();
+      if (Password.Length != 0) hash ^= Password.GetHashCode();
+      if (Uguid.Length != 0) hash ^= Uguid.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Account.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Account);
+      }
+      if (Password.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Password);
+      }
+      if (Uguid.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Uguid);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Account.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Account);
+      }
+      if (Password.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Password);
+      }
+      if (Uguid.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uguid);
+      }
+      return size;
+    }
+
+    public void MergeFrom(CS_Login other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Account.Length != 0) {
+        Account = other.Account;
+      }
+      if (other.Password.Length != 0) {
+        Password = other.Password;
+      }
+      if (other.Uguid.Length != 0) {
+        Uguid = other.Uguid;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Account = input.ReadString();
+            break;
+          }
+          case 18: {
+            Password = input.ReadString();
+            break;
+          }
+          case 26: {
+            Uguid = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class SC_LoginResult : pb::IMessage<SC_LoginResult> {
+    private static readonly pb::MessageParser<SC_LoginResult> _parser = new pb::MessageParser<SC_LoginResult>(() => new SC_LoginResult());
+    public static pb::MessageParser<SC_LoginResult> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public SC_LoginResult() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public SC_LoginResult(SC_LoginResult other) : this() {
+      resultcode_ = other.resultcode_;
+    }
+
+    public SC_LoginResult Clone() {
+      return new SC_LoginResult(this);
+    }
+
+    /// <summary>Field number for the "resultcode" field.</summary>
+    public const int ResultcodeFieldNumber = 1;
+    private bool resultcode_;
+    public bool Resultcode {
+      get { return resultcode_; }
+      set {
+        resultcode_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as SC_LoginResult);
+    }
+
+    public bool Equals(SC_LoginResult other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Resultcode != other.Resultcode) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Resultcode != false) hash ^= Resultcode.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Resultcode != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(Resultcode);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Resultcode != false) {
+        size += 1 + 1;
+      }
+      return size;
+    }
+
+    public void MergeFrom(SC_LoginResult other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Resultcode != false) {
+        Resultcode = other.Resultcode;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Resultcode = input.ReadBool();
             break;
           }
         }
