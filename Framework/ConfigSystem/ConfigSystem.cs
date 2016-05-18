@@ -7,7 +7,7 @@ namespace Alkaid
 {
     public class ConfigSystem : Singleton<ConfigSystem>, Lifecycle
     {
-        private string mConfigFilePath = "";
+        private string mConfigFilePath = string.Empty;
         private Dictionary<string, string> mConfigs = new Dictionary<string,string>();
 
         public ConfigSystem()

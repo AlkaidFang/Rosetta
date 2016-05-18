@@ -82,7 +82,7 @@ namespace Alkaid
         }
         private void WriteLog(LogLevel level, string message)
         {
-            string type = "";
+            string type = string.Empty;
             switch(level)
             {
                 case LogLevel.DEBUG: type = "DEBUG"; break;

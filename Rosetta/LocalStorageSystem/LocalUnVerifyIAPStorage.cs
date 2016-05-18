@@ -27,12 +27,12 @@ namespace Rosetta
         public IAPPayment()
         {
             mPlatform = (int)PLATFORM.UNKNOW;
-            mServerId = "";
-            mPlayerId = "";
-            mProductId = "";
+            mServerId = string.Empty;
+            mPlayerId = string.Empty;
+            mProductId = string.Empty;
             mGoodId = 0;
-            mOrderId = "";
-            mOrderReceipt = "";
+            mOrderId = string.Empty;
+            mOrderReceipt = string.Empty;
             mVerifyFaildedTimes = 0;
         }
     }

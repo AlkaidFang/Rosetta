@@ -9,11 +9,11 @@ namespace Rosetta
         public class UIWindowDataItem
         {
             public int mID = -1;
-            public string mName = "";
-            public string mScriptName = "";
-            public string mPrefabPath = "";
-            public string mAltasPath = "";
-            public string mParentName = "";
+            public string mName = string.Empty;
+            public string mScriptName = string.Empty;
+            public string mPrefabPath = string.Empty;
+            public string mAltasPath = string.Empty;
+            public string mParentName = string.Empty;
             public bool mUseFramework = false;
         }
 

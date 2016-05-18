@@ -15,7 +15,7 @@ namespace Alkaid
 
         public EventHandler()
         {
-            mKey = "";
+            mKey = string.Empty;
             mHoster = null;
             mHandler = null;
             mFireCount = 0;

@@ -20,10 +20,10 @@ namespace Alkaid
 
         public FileLogger()
         {
-            mSavePath = "";
+            mSavePath = string.Empty;
             mSaveFrontName = "Log";
             mSaveExtName = "log";
-            mFinalFilePath = "";
+            mFinalFilePath = string.Empty;
 
             mFileSaver = new FileSaver();
             mWaitMessages = new SafeList<string>();

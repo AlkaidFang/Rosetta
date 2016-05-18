@@ -8,8 +8,8 @@ namespace Alkaid
     public class FrameworkSetup : Singleton<FrameworkSetup>
     {
         private int mFPS = 30;
-        private string mVersion = "";
-        private string mStreamAssetsRootDir = "";
+        private string mVersion = string.Empty;
+        private string mStreamAssetsRootDir = string.Empty;
         private Callback mSetupFromProject = null;
         private Callback mSetupFromUnity = null;
 

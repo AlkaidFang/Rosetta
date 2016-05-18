@@ -21,8 +21,8 @@ namespace Alkaid
             mBaseNode = null;
             mIsShow = false;
             mIsLoad = false;
-            mName = "";
-            mLayoutFile = "";
+            mName = string.Empty;
+            mLayoutFile = string.Empty;
             mExtraDatas = new Dictionary<string,string>();
         }
 
@@ -151,7 +151,7 @@ namespace Alkaid
 
         public string GetExtraData(string k)
         {
-            string v = "";
+            string v = string.Empty;
             mExtraDatas.TryGetValue(k, out v);
             return v;
         }

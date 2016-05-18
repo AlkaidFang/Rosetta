@@ -9,7 +9,7 @@ namespace Rosetta
         public class DictionaryDataItem
         {
             public int mID = -1;
-            public string mData = "";
+            public string mData = string.Empty;
         }
 
         private List<DictionaryDataItem> mDataList = new List<DictionaryDataItem>();

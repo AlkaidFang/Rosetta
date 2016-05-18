@@ -8,7 +8,7 @@ namespace Rosetta
     public class LocalServerStorage : Singleton<LocalServerStorage>, ILocalStorage
     {
         public int m_iServerId = 0;                 // 上次登录服务器ID
-        public string m_sServerIP = "";             // 上次登录服务器IP
+        public string m_sServerIP = string.Empty;             // 上次登录服务器IP
         public int m_iServerPort = 0;               // 上次登录服务器端口
 
         public string Name()

@@ -28,10 +28,10 @@ namespace Alkaid
         // funcitons：
         public LocalStorageSystem()
         {
-            m_sAppVersion = "";
+            m_sAppVersion = string.Empty;
 
             m_iTempIndex = 0;
-            m_sTempName = "";
+            m_sTempName = string.Empty;
         }
 
         public bool Init()

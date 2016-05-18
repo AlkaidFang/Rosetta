@@ -26,7 +26,7 @@ public class TestMono : MonoBehaviour {
 
     private void SetUpWithUnity()
     {
-        LoggerSystem.Instance.SetConsoleLogger(new Logger(UnityEngine.Debug.Log));
+        LoggerSystem.Instance.SetConsoleLogger(new Alkaid.Logger(UnityEngine.Debug.Log));
         
         if (Application.isEditor)
         {

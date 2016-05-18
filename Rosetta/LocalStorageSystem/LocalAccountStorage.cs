@@ -7,9 +7,9 @@ namespace Rosetta
 {
     public class LocalAccountStorage : Singleton<LocalAccountStorage>, ILocalStorage
     {
-        public string name = "";
-        public string uid = "";
-        public string AccountHistory = "";
+        public string name = string.Empty;
+        public string uid = string.Empty;
+        public string AccountHistory = string.Empty;
 
         public string Name()
         {
