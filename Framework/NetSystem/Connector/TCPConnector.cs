@@ -65,28 +65,35 @@ namespace Alkaid
             return ConnectionType.TCP;
         }
 
-        public override bool Connect(string address, int port)
-        {
+        public override void Connect(string address, int port)
+		{
+			SetConnectStatus(ConnectionStatus.CONNECTING);
             base.Connect(address, port);
-            mSocket = new TcpClient();
-            try
-            {
-                mSocket.Connect(mRemoteHost.GetAddress(), mRemoteHost.GetPort());
-            }
-            catch(Exception e)
-            {
-                LoggerSystem.Instance.Error(e.Message);
-                SetConnected(false);
-                CallbackConnected(IsConnected());
-                return IsConnected();
-            }
+			mSocket = new TcpClient();
+			AsyncThread connectThread = new AsyncThread ((thread) => {
+				
+				try
+				{
+					mSocket.Connect(mRemoteHost.GetAddress(), mRemoteHost.GetPort());
+				}
+				catch(Exception e)
+				{
+					LoggerSystem.Instance.Error(e.Message);
+					SetConnectStatus(ConnectionStatus.ERROR);
+					CallbackConnected(IsConnected());
+					// return IsConnected();
+				}
 
-            SetConnected(true);
-            mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
+				SetConnectStatus(ConnectionStatus.CONNECTED);
+				mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
 
-            CallbackConnected(IsConnected());
+				CallbackConnected(IsConnected());
+			
+			});
 
-            return IsConnected();
+			connectThread.Start ();
+
+            // return IsConnected();
         }
 
         public override void SendPacket(IPacket packet)
@@ -100,8 +107,8 @@ namespace Alkaid
         public override void DisConnect()
         {
             if (IsConnected())
-            {
-                SetConnected(false);
+			{
+				SetConnectStatus(ConnectionStatus.DISCONNECTED);
                 mSocket.GetStream().Close();
                 mSocket.Close();
                 mSocket = null;

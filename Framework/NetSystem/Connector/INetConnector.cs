@@ -18,7 +18,8 @@ namespace Alkaid
         protected RemoteHost mRemoteHost;
         protected IPacketFormat mPacketFormat;
         protected IPacketHandlerManager mPacketHandlerManager;
-        private bool mIsConnected;
+
+		private ConnectionStatus mConnectedStatus = ConnectionStatus.UNKNOW;
 
         public INetConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager)
         {
@@ -53,10 +54,10 @@ namespace Alkaid
             return ConnectionType.UNKNOW;
         }
 
-        public virtual bool Connect(string address, int port)
+        public virtual void Connect(string address, int port)
         {
             mRemoteHost = new RemoteHost(address, port);
-            return false;
+            // return false;
         }
 
         public virtual void SendPacket(IPacket packet)
@@ -113,12 +114,18 @@ namespace Alkaid
 
         public bool IsConnected()
         {
-            return mIsConnected;
+			return mConnectedStatus == ConnectionStatus.CONNECTED;
         }
 
-        public void SetConnected(bool status)
-        {
-            mIsConnected = status;
-        }
+		public ConnectionStatus GetConnectStatus()
+		{
+			return mConnectedStatus;
+		}
+
+		public void SetConnectStatus(ConnectionStatus status)
+		{
+			mConnectedStatus = status;
+		}
+
     }
 }

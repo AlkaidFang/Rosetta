@@ -13,4 +13,15 @@ namespace Alkaid
         HTTP = 4,
         UNKNOW = 5,
     }
+
+	public enum ConnectionStatus : int
+	{
+		UNKNOW = 0,
+		INIT = 1,
+		CONNECTING = 2,
+		CONNECTED = 3,
+		DISCONNECTED = 4,
+		ERROR = 5,
+	}
+
 }

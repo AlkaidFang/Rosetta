@@ -69,8 +69,9 @@ namespace Alkaid
             return ConnectionType.UDP;
         }
 
-        public override bool Connect(string address, int port)
+        public override void Connect(string address, int port)
         {
+			SetConnectStatus (ConnectionStatus.CONNECTING);
             base.Connect(address, port);
 
             mSocket = new UdpClient();
@@ -83,16 +84,15 @@ namespace Alkaid
             catch (Exception e)
             {
                 LoggerSystem.Instance.Error(e.Message);
-                SetConnected(false);
+				SetConnectStatus (ConnectionStatus.ERROR);
                 CallbackConnected(IsConnected());
-                return IsConnected();
+                // return IsConnected();
             }
-
-            SetConnected(true);
+			SetConnectStatus (ConnectionStatus.CONNECTED);
             CallbackConnected(IsConnected());
             mSocket.BeginReceive(mReadCompleteCallback, this);
 
-            return IsConnected();
+            // return IsConnected();
         }
 
         public override void SendPacket(IPacket packet)
@@ -106,7 +106,7 @@ namespace Alkaid
         {
             if (IsConnected())
             {
-                SetConnected(false);
+				SetConnectStatus (ConnectionStatus.DISCONNECTED);
                 mSocket.Close();
                 mSocket = null;
                 mNetStream.Clear();

@@ -63,7 +63,7 @@ namespace Alkaid
             return ConnectionType.WEBSOCKET;
         }
 
-        public override bool Connect(string address, int port)
+        public override void Connect(string address, int port)
         {
             base.Connect(address, port);
 
@@ -74,7 +74,7 @@ namespace Alkaid
             }
 
             mSocket = new WebSocket(url);
-            if (mSocket == null) return false;
+            if (mSocket == null) return;
             mSocket.EnableAutoSendPing = true;
             mSocket.AutoSendPingInterval = 10;
             mSocket.Opened += new System.EventHandler(OnOpenedCallback);
@@ -84,7 +84,7 @@ namespace Alkaid
             mSocket.DataReceived += new EventHandler<DataReceivedEventArgs>(OnDataReceivedCallback);
             mSocket.Open();
 
-            return true;
+            // return true;
         }
 
         public override void SendPacket(IPacket packet)
@@ -98,7 +98,7 @@ namespace Alkaid
         {
             if (IsConnected())
             {
-                SetConnected(false);
+				SetConnectStatus (ConnectionStatus.DISCONNECTED);
 
                 mSocket.Close();
                 mSocket = null;
@@ -110,7 +110,7 @@ namespace Alkaid
 
         private void OnOpenedCallback(object sender, EventArgs e)
         {
-            SetConnected(true);
+			SetConnectStatus (ConnectionStatus.CONNECTED);
 
             CallbackConnected(IsConnected());
         }
