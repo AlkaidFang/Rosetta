@@ -36,7 +36,7 @@ public class TestMono : MonoBehaviour {
         else
         {
             LoggerSystem.Instance.SetFileLogPath(Application.temporaryCachePath);
-            FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.persistentDataPath);
+			FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
         }
     }
 	

@@ -49,10 +49,10 @@ namespace Alkaid
 
         private string FormatKey(string arg0, string arg1)
         {
-            return string.Format(_Format4Key, arg0, arg1);
+			return string.Format(_Format4Key, arg0, arg1);
         }
 
-        public void RegisterEvent(string name, string group, Delegate handler, object hoster)
+		private void RegisterEvent(string name, string group, Delegate handler, object hoster)
         {
             int uid = System.Threading.Thread.CurrentThread.ManagedThreadId;
             EventManager em = null;
@@ -68,6 +68,40 @@ namespace Alkaid
                 em.RegisterEvent(FormatKey(name, group), hoster, handler);
             }
         }
+
+		public void RegisterEvent(string name, string group, Callback handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+
+		public void RegisterEvent<T0>(string name, string group, Callback<T0> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1>(string name, string group, Callback<T0, T1> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1, T2>(string name, string group, Callback<T0, T1, T2> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1, T2, T3>(string name, string group, Callback<T0, T1, T2, T3> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1, T2, T3, T4>(string name, string group, Callback<T0, T1, T2, T3, T4> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1, T2, T3, T4, T5>(string name, string group, Callback<T0, T1, T2, T3, T4, T5> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
+		public void RegisterEvent<T0, T1, T2, T3, T4, T5, T6>(string name, string group, Callback<T0, T1, T2, T3, T4, T5, T6> handler, object hoster)
+		{
+			RegisterEvent (name, group, handler, hoster);
+		}
 
         public void UnRegisterEvent(string name, string group, object hoster)
         {

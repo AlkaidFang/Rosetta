@@ -10,6 +10,7 @@ namespace Alkaid
         private int mFPS = 30;
         private string mVersion = string.Empty;
         private string mStreamAssetsRootDir = string.Empty;
+		private string mWritableRootDir = string.Empty;
         private Callback mSetupFromProject = null;
         private Callback mSetupFromUnity = null;
 
@@ -46,6 +47,16 @@ namespace Alkaid
         {
             return mStreamAssetsRootDir;
         }
+
+		public void SetWritableRootDir(string path)
+		{
+			mWritableRootDir = path;
+		}
+
+		public string GetWritableRootDir()
+		{
+			return mWritableRootDir;
+		}
 
         /**
          * 是否清空UI缓存

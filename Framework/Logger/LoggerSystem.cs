@@ -38,6 +38,8 @@ namespace Alkaid
 
         public bool Init()
         {
+			SetFileLogPath (FrameworkSetup.Instance.GetWritableRootDir());
+
             mFileLogger.Init();
             ConsoleLog(LogLevel.ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
 

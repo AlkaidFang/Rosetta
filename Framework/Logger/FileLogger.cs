@@ -7,6 +7,7 @@ namespace Alkaid
 {
     public class FileLogger : Logger
     {
+		private const string _LogPath = "{0}/GameLog";
         private const string _LogFormat = "{0}/{1}_{2}.{3}";
         private const int _FlusInterval = 10;
 
@@ -93,7 +94,12 @@ namespace Alkaid
         }
         private void FormatFinalFileName()
         {
-            mFinalFilePath = string.Format(_LogFormat, mSavePath, mSaveFrontName, DateTime.Now.ToString("yyyy-MM-dd"), mSaveExtName);
-        }
+			string dir = string.Format(_LogPath, mSavePath);
+			if (!Directory.Exists (dir))
+			{
+				Directory.CreateDirectory (dir);
+			}
+            mFinalFilePath = string.Format(_LogFormat, dir, mSaveFrontName, DateTime.Now.ToString("yyyy-MM-dd"), mSaveExtName);
+		}
     }
 }

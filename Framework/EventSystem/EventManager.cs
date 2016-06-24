@@ -45,32 +45,10 @@ namespace Alkaid
 
         public void Destroy()
         {
-
             mEventHandlerMap.Clear();
         }
 
-        private void DirectFire(Event e)
-        {
-            List<EventHandler> total = null;
-            if (this.mEventHandlerMap.TryGetValue(e.GetKey(), out total))
-            {
-                EventHandler eh = null;
-                for(int i = 0; i < total.Count; ++i)
-                {
-                    eh = total[i];
-                    if (eh != null)
-                    {
-                        eh.Fire(e.GetKey(), e.GetArgs());
-                    }
-                }
-            }
-            else
-            {
-                LoggerSystem.Instance.Error("Not register this event for EventHandler:" + this.GetHashCode());
-            }
-        }
-
-        public void RegisterEvent(string key, object hoster, Delegate handler)
+		public void RegisterEvent(string key, object hoster, Delegate handler)
         {
             EventHandler e = new EventHandler();
             e.Init(key, hoster, handler);
@@ -116,12 +94,33 @@ namespace Alkaid
 
         public void FireEvent2(string key, params object[] args)
         {
-            FireEventDelay(1, key, args);
+			Event e = new Event (key, args);
+			DelayFire (e, 1);
         }
 
-        private void FireEventDelay(int delay, string key, params object[] args)
+		private void DirectFire(Event e)
+		{
+			List<EventHandler> total = null;
+			if (this.mEventHandlerMap.TryGetValue(e.GetKey(), out total))
+			{
+				EventHandler eh = null;
+				for(int i = 0; i < total.Count; ++i)
+				{
+					eh = total[i];
+					if (eh != null)
+					{
+						eh.Fire(e.GetKey(), e.GetArgs());
+					}
+				}
+			}
+			else
+			{
+				LoggerSystem.Instance.Error("Not register this event for EventHandler:" + this.GetHashCode());
+			}
+		}
+
+        private void DelayFire(Event e, int delay)
         {
-            Event e = new Event(key, args, delay);
             mFiredEventList.Add(e);
         }
     }
