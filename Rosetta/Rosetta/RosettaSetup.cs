@@ -18,6 +18,8 @@ namespace Rosetta
 
         }
 
+        // for /r $(TargetDir) %%i in (*.pdb) do $(SolutionDir)Framework\ExternalLibs\Mono\pdb2mdb.exe %%~dpni.dll
+
         public void SetupWithProject()
         {
             // 对FrameworkSetup中的内容进行设置

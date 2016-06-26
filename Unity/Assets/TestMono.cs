@@ -78,7 +78,7 @@ public class TestMono : MonoBehaviour {
         go.name = "createone:" + count++;
         go.transform.localPosition = Vector3.one * count;
 
-        
 
+        WindowManager.Instance.ShowWindow("LogoWindow");
     }
 }

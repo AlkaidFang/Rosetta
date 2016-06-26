@@ -23,9 +23,9 @@ namespace Alkaid
 
 		public void Init(string key, object hoster, Delegate handler)
         {
-            this.mKey = key;
-            this.mHoster = hoster;
-            this.mHandler = handler;
+            mKey = key;
+            mHoster = hoster;
+            mHandler = handler;
 
         }
 
@@ -36,12 +36,12 @@ namespace Alkaid
 
         public void Fire(string key, object[] parameters)
         {
-            if (this.mHandler != null && this.mHoster != null)
+            if (mHandler != null && mHoster != null)
             {
-                this.mHandler.DynamicInvoke(parameters);
+                mHandler.DynamicInvoke(parameters);
 				//this.mHandler.Invoke (parameters);
 				//this.mHandler (parameters);
-                this.mFireCount++;
+                mFireCount++;
             }
             else
             {
