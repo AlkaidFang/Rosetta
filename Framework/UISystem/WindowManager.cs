@@ -87,10 +87,10 @@ namespace Alkaid
             mWindowMap.TryGetValue(name, out w);
             if (null != w)
             {
-                w.Show(true);
-            }
+				w.Show(true);
 
-			CheckExclusive (name, true);
+				CheckExclusive (w, true);
+            }
         }
 
         public void HideWindow(string name)
@@ -100,7 +100,9 @@ namespace Alkaid
             if (null != w)
             {
                 w.Show(false);
-                w.ReleaseAssets();
+				w.ReleaseAssets();
+
+				CheckExclusive (w, false);
             }
         }
 
@@ -136,7 +138,7 @@ namespace Alkaid
 				for (int i = 0; i < window.GetExclusiveNames ().Count; ++i)
 				{
 					ename = window.GetExclusiveNames () [i];
-					if (mExclusiveWindows.TryGetValue(ename, ewindow))
+					if (mExclusiveWindows.TryGetValue(ename, out ewindow))
 					{
 						if (ewindow.GetExtraData ("exclusive_by") == window.GetName ())
 						{
