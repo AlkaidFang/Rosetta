@@ -9,12 +9,13 @@ namespace Alkaid
     {
 
         private Dictionary<string, IWindow> mWindowMap;
+		private Dictionary<string, IWindow> mExclusiveWindows;
 
         public WindowManager()
         {
             mWindowMap = new Dictionary<string, IWindow>();
 
-
+			mExclusiveWindows = new Dictionary<string, IWindow>();
         }
 
         public bool Init()
@@ -43,9 +44,9 @@ namespace Alkaid
             }
         }
 
-        public void RegisterWindow(string name, string layoutFile, string scriptName)
+		public void RegisterWindow(string name, string layoutFile, string scriptName, List<string> exclusive)
         {
-            IWindow window = new IWindow(name, layoutFile, scriptName);
+			IWindow window = new IWindow(name, layoutFile, scriptName, exclusive);
             this.mWindowMap.Add(window.GetName(), window);
         }
 

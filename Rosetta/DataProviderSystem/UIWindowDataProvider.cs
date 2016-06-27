@@ -15,6 +15,8 @@ namespace Rosetta
             public string mAltasPath = string.Empty;
             public string mParentName = string.Empty;
             public bool mUseFramework = false;
+			public string mExclusiveIDs = string.Empty;
+
         }
 
         private List<UIWindowDataItem> mDataList = new List<UIWindowDataItem>();
@@ -38,14 +40,30 @@ namespace Rosetta
                 item.mAltasPath = FileReader.ReadString();
                 item.mParentName = FileReader.ReadString();
                 item.mUseFramework = FileReader.ReadBoolean();
+				item.mExclusiveIDs = FileReader.ReadString();
 
                 mDataList.Add(item);
             }
 
             // 加入注册所有窗口
+			List<string> exclusive = new List<string>();
+			List<int> eid;
             foreach (var i in mDataList)
             {
-                WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName);
+				exclusive.Clear ();
+				eid = Converter.ConvertNumberList<int> (i.mExclusiveIDs);
+				foreach (var id in eid)
+				{
+					foreach (var j in mDataList)
+					{
+						if (id == j.mID)
+						{
+							exclusive.Add (j.mName);
+						}
+					}	
+				}
+
+				WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName, exclusive);
             }
         }
 

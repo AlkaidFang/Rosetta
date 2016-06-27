@@ -13,6 +13,7 @@ namespace Alkaid
         private string mName;
         private string mLayoutFile;
         private string mScript;
+		private List<string> mExclusiveNames;
 
         private Dictionary<string, string> mExtraDatas;
 
@@ -23,17 +24,21 @@ namespace Alkaid
             mIsLoad = false;
             mName = string.Empty;
             mLayoutFile = string.Empty;
+			mExclusiveNames = new List<string> ();
             mExtraDatas = new Dictionary<string,string>();
         }
 
-        public IWindow(string name, string layout, string script)
+		public IWindow(string name, string layout, string script, List<string> exclusive)
         {
             mBaseNode = null;
             mIsShow = false;
             mIsLoad = false;
             mName = name;
             mLayoutFile = layout;
-            mScript = script;
+			mScript = script;
+			mExclusiveNames = new List<string> ();
+			mExclusiveNames.AddRange (exclusive);
+			mExtraDatas = new Dictionary<string,string>();
         }
 
         public bool Init()
@@ -136,6 +141,16 @@ namespace Alkaid
         {
             mScript = script;
         }
+
+		public void SetExclusiveNames(List<string> arg)
+		{
+			mExclusiveNames.AddRange (arg);
+		}
+
+		public List<string> GetExclusiveNames()
+		{
+			return mExclusiveNames;
+		}
 
         public void SetExtraData(string k, string v)
         {
