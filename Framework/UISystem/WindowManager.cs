@@ -89,6 +89,8 @@ namespace Alkaid
             {
                 w.Show(true);
             }
+
+			CheckExclusive (name, true);
         }
 
         public void HideWindow(string name)
@@ -109,5 +111,42 @@ namespace Alkaid
                 i.Show(false);
             }
         }
+
+		public void CheckExclusive(IWindow window, bool isShow)
+		{
+			if (isShow) {
+				// 与windowname互斥的窗口都关闭，并且将关闭的窗口增加一个exclusive_by标签
+				string ename;
+				IWindow ewindow;
+				for (int i = 0; i < window.GetExclusiveNames ().Count; ++i) {
+					ename = window.GetExclusiveNames () [i];
+					if (IsWindowVisible (ename)) {
+						ewindow = GetWindowByName (ename);
+						ewindow.Show (false);
+						ewindow.SetExtraData ("exclusive_by", window.GetName ());
+						mExclusiveWindows.Add (ewindow.GetName (), ewindow);
+					}
+				}
+			}
+			else
+			{
+				// 关闭了window，则之前由window导致的关闭都应该打开
+				string ename;
+				IWindow ewindow;
+				for (int i = 0; i < window.GetExclusiveNames ().Count; ++i)
+				{
+					ename = window.GetExclusiveNames () [i];
+					if (mExclusiveWindows.TryGetValue(ename, ewindow))
+					{
+						if (ewindow.GetExtraData ("exclusive_by") == window.GetName ())
+						{
+							ewindow.Show (true);
+							ewindow.SetExtraData ("exclusive_by", string.Empty);
+							mExclusiveWindows.Remove (ename);
+						}
+					}
+				}
+			}
+		}
     }
 }
