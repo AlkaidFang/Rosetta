@@ -109,7 +109,7 @@ namespace Alkaid
 					eh = total[i];
 					if (eh != null)
 					{
-						eh.Fire(e.GetKey(), e.GetArgs());
+						eh.Fire(e);
 					}
 				}
 			}

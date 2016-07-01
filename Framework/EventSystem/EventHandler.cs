@@ -34,11 +34,11 @@ namespace Alkaid
 			
 		}
 
-        public void Fire(string key, object[] parameters)
+		public void Fire(Event e)
         {
             if (mHandler != null && mHoster != null)
             {
-                mHandler.DynamicInvoke(parameters);
+				mHandler.DynamicInvoke(e.GetArgs());
 				//this.mHandler.Invoke (parameters);
 				//this.mHandler (parameters);
                 mFireCount++;
