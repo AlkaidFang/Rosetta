@@ -30,13 +30,13 @@ public class TestMono : MonoBehaviour {
         
         if (Application.isEditor)
         {
-            LoggerSystem.Instance.SetFileLogPath(Application.temporaryCachePath);
+            FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
             FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
         }
         else
         {
-            LoggerSystem.Instance.SetFileLogPath(Application.temporaryCachePath);
-			FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
+            FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
+            FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
         }
     }
 	
