@@ -36,6 +36,12 @@ namespace Alkaid
             mShareTask = false;
             mThreadCount = ConstTaskThreadNum;
             mIndexRnd = 0;
+
+			for (int i = 0; i < mThreadCount; ++i)
+			{
+				mThreadList [i].Stop ();
+			}
+
             mThreadList.Clear();
         }
 
@@ -54,6 +60,8 @@ namespace Alkaid
                     tp = new TaskProcessor();
                 }
                 mThreadList.Add(new AsyncThread(Process, tp));
+
+				mThreadList [i].Start ();
             }
         }
 
@@ -67,7 +75,7 @@ namespace Alkaid
             }
         }
 
-        private TaskProcessor GetProcessor()
+        public TaskProcessor GetProcessor()
         {
             AsyncThread at = mThreadList[(mIndexRnd++) % mThreadCount];
             return (TaskProcessor)at.GetExtraData();
