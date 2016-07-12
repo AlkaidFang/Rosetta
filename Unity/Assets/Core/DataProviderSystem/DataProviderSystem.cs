@@ -48,7 +48,7 @@ namespace Alkaid
 
         public string FormatDataProviderPath(string datapath)
         {
-            return System.IO.Path.Combine(FrameworkSetup.Instance.GetStreamAssetsRootDir(), datapath);
+            return System.IO.Path.Combine(Framework.Instance.GetStreamAssetsRootDir(), datapath);
         }
     }
 }

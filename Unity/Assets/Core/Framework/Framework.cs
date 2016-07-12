@@ -7,9 +7,10 @@ namespace Alkaid
 {
     public class Framework : Singleton<Framework>, Lifecycle
     {
-        /**
-         * This function will be call in renderthread
-         * */
+        private string mVersion = string.Empty;
+        private string mStreamAssetsRootDir = string.Empty;
+        private string mWritableRootDir = string.Empty;
+
         public bool Init()
         {
             do
@@ -74,6 +75,37 @@ namespace Alkaid
             LoggerSystem.Instance.Destroy();
         }
 
+
+        public void SetVersion(string version)
+        {
+            mVersion = version;
+            LocalStorageSystem.Instance.SetAppVersion(mVersion);
+        }
+
+        public string GetVersion()
+        {
+            return mVersion;
+        }
+
+        public void SetStreamAssetsRootDir(string path)
+        {
+            mStreamAssetsRootDir = path;
+        }
+
+        public string GetStreamAssetsRootDir()
+        {
+            return mStreamAssetsRootDir;
+        }
+
+        public void SetWritableRootDir(string path)
+        {
+            mWritableRootDir = path;
+        }
+
+        public string GetWritableRootDir()
+        {
+            return mWritableRootDir;
+        }
     }
 
     

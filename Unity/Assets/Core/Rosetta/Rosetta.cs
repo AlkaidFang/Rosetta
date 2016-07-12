@@ -8,20 +8,27 @@ using System.Collections.Generic;
 
 namespace Alkaid
 {
-    public enum NetCtr
-    {
-        Lobby = 1,
-        Room,
-    }
-
     public class Rosetta : Singleton<Rosetta>, Lifecycle
     {
-        public void RenderTick(float interval)
+        public enum NetCtr
         {
+            Lobby = 1,
+            Room,
         }
 
         public bool Init()
         {
+            if (Application.isEditor)
+            {
+                Framework.Instance.SetWritableRootDir(Application.temporaryCachePath);
+                Framework.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
+            }
+            else
+            {
+                Framework.Instance.SetWritableRootDir(Application.temporaryCachePath);
+                Framework.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
+            }
+
             // DataProviderSystem
             DataProviderSystem.Instance.RegisterDataProvider(DictionaryDataProvider.Instance);
             DataProviderSystem.Instance.RegisterDataProvider(UIWindowDataProvider.Instance);
@@ -31,19 +38,9 @@ namespace Alkaid
             LocalStorageSystem.Instance.RegisterLocalStorage(LocalServerStorage.Instance);
             LocalStorageSystem.Instance.RegisterLocalStorage(LocalUnVerifyIAPStorage.Instance);
 
+            // LoggerSystem
             LoggerSystem.Instance.SetConsoleLogger(new Alkaid.Logger(UnityEngine.Debug.Log));
-
-            if (Application.isEditor)
-            {
-                FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
-                FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
-            }
-            else
-            {
-                FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
-                FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
-            }
-
+            
             // NetSystem
             PacketFormat pf = new PacketFormat();
             PacketHandlerManager pm = new PacketHandlerManager();

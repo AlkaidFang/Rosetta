@@ -6,7 +6,14 @@ public class Main : MonoBehaviour
 {
     void Awake()
     {
-        Rosetta.Instance.Init();
+        if (Rosetta.Instance.Init())
+        {
+            LoggerSystem.Instance.Info("启动成功！");
+        }
+        else
+        {
+            LoggerSystem.Instance.Error("启动失败！");
+        }
     }
 
     void Update()

@@ -6,6 +6,7 @@ namespace Alkaid
 {
     public class EngineSystem : Singleton<EngineSystem>, Lifecycle
     {
+        private int mFPS = 30;
 
         public bool Init()
         {
@@ -30,5 +31,16 @@ namespace Alkaid
 
         }
 
+        public void SetFPS(int fps)
+        {
+            if (fps > 0)
+            {
+                mFPS = fps;
+            }
+        }
+        public int GetFPS()
+        {
+            return mFPS;
+        }
     }
 }

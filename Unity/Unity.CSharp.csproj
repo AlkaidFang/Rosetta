@@ -83,7 +83,6 @@
     <Compile Include="Assets\Core\EventSystem\EventManager.cs" />
     <Compile Include="Assets\Core\EventSystem\EventSystem.cs" />
     <Compile Include="Assets\Core\Framework\Framework.cs" />
-    <Compile Include="Assets\Core\Framework\FrameworkSetup.cs" />
     <Compile Include="Assets\Core\LocalStorageSystem\ILocalStorage.cs" />
     <Compile Include="Assets\Core\LocalStorageSystem\LocalAccountStorage.cs" />
     <Compile Include="Assets\Core\LocalStorageSystem\LocalServerStorage.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Assets\Core\NetSystem\PacketType.cs" />
     <Compile Include="Assets\Core\NetSystem\RemoteHost.cs" />
     <Compile Include="Assets\Core\NetSystem\XMessage.cs" />
-    <Compile Include="Assets\Core\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Core\Rosetta\Rosetta.cs" />
     <Compile Include="Assets\Core\ThirdPartySystem\ThirdPartySystem.cs" />
     <Compile Include="Assets\Core\TimeSystem\TimeSystem.cs" />

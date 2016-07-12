@@ -36,12 +36,12 @@ namespace Alkaid
             // fps
             if (mConfigs.TryGetValue("fps", out v))
             {
-                FrameworkSetup.Instance.SetFPS(Converter.ConvertNumber<int>(v));
+                EngineSystem.Instance.SetFPS(Converter.ConvertNumber<int>(v));
             }
             // version
             if (mConfigs.TryGetValue("version", out v))
             {
-                FrameworkSetup.Instance.SetVersion(v);
+                Framework.Instance.SetVersion(v);
             }
             // log
             if (mConfigs.TryGetValue("consolelogmode", out v))
