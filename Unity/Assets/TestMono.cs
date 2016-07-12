@@ -2,7 +2,6 @@
 using System;
 using System.Reflection;
 using Alkaid;
-using Rosetta;
 
 public class TestMono : MonoBehaviour {
 
@@ -17,38 +16,7 @@ public class TestMono : MonoBehaviour {
 				Debug.Log(info.Invoke(null, null));
 		}
 
-        Rosetta.Rosetta r = Rosetta.Rosetta.Instance;
-        Debug.LogWarning("Rosetta  100   " + r.GetRandomNum100());
-        Debug.LogWarning("Rosetta  1000   " + r.GetRandomNum1000());
-
-        Rosetta.Rosetta.Instance.Init(SetUpWithUnity);
-	}
-
-    private void SetUpWithUnity()
-    {
-        LoggerSystem.Instance.SetConsoleLogger(new Alkaid.Logger(UnityEngine.Debug.Log));
-        
-        if (Application.isEditor)
-        {
-            FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
-            FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
-        }
-        else
-        {
-            FrameworkSetup.Instance.SetWritableRootDir(Application.temporaryCachePath);
-            FrameworkSetup.Instance.SetStreamAssetsRootDir(Application.streamingAssetsPath);
-        }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        Rosetta.Rosetta.Instance.Tick(Time.deltaTime);
-	}
-
-    void OnDestroy()
-    {
-        Rosetta.Rosetta.Instance.Destroy();
-    }
+	}	
 
     private int count = 0;
     public void OnClick()
@@ -56,7 +24,7 @@ public class TestMono : MonoBehaviour {
         if (count == 0)
         {
             //NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "ws://127.0.0.1:8080/PearlHarbor/Game", 8080);
-            NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "10.12.25.205", 10086);
+            NetSystem.Instance.Connect((int)NetCtr.Lobby, "10.12.25.205", 10086);
         }
         if (count > 0)
         {
@@ -67,7 +35,7 @@ public class TestMono : MonoBehaviour {
             proto.String = "helloworld";
             proto.Long = 22222 - count;
             pa.Proto = proto;
-            NetSystem.Instance.Send((int)RosettaSetup.NetCtr.Lobby, pa);
+            NetSystem.Instance.Send((int)NetCtr.Lobby, pa);
         }
 
         Alkaid.MyRandom mr = new Alkaid.MyRandom();

@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.5f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -61,17 +63,8 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Framework">
-      <HintPath>Assets\Plugins\Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf3.5">
       <HintPath>Assets\Plugins\Google.Protobuf3.5.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>Assets\Plugins\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="Rosetta">
-      <HintPath>Assets\Plugins\Rosetta.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net">
       <HintPath>Assets\Plugins\WebSocket4Net.dll</HintPath>
@@ -79,9 +72,77 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Base.cs" />
+    <Compile Include="Assets\Core\ConfigSystem\ConfigSystem.cs" />
+    <Compile Include="Assets\Core\DataProviderSystem\DataProviderSystem.cs" />
+    <Compile Include="Assets\Core\DataProviderSystem\DictionaryDataProvider.cs" />
+    <Compile Include="Assets\Core\DataProviderSystem\IDataProvider.cs" />
+    <Compile Include="Assets\Core\DataProviderSystem\UIWindowDataProvider.cs" />
+    <Compile Include="Assets\Core\EngineSystem\EngineSystem.cs" />
+    <Compile Include="Assets\Core\EventSystem\Event.cs" />
+    <Compile Include="Assets\Core\EventSystem\EventHandler.cs" />
+    <Compile Include="Assets\Core\EventSystem\EventManager.cs" />
+    <Compile Include="Assets\Core\EventSystem\EventSystem.cs" />
+    <Compile Include="Assets\Core\Framework\Framework.cs" />
+    <Compile Include="Assets\Core\Framework\FrameworkSetup.cs" />
+    <Compile Include="Assets\Core\LocalStorageSystem\ILocalStorage.cs" />
+    <Compile Include="Assets\Core\LocalStorageSystem\LocalAccountStorage.cs" />
+    <Compile Include="Assets\Core\LocalStorageSystem\LocalServerStorage.cs" />
+    <Compile Include="Assets\Core\LocalStorageSystem\LocalStorageSystem.cs" />
+    <Compile Include="Assets\Core\LocalStorageSystem\LocalUnVerifyIAPStorage.cs" />
+    <Compile Include="Assets\Core\Logger\FileLogger.cs" />
+    <Compile Include="Assets\Core\Logger\Logger.cs" />
+    <Compile Include="Assets\Core\Logger\LoggerSystem.cs" />
+    <Compile Include="Assets\Core\NetSystem\ConnectionType.cs" />
+    <Compile Include="Assets\Core\NetSystem\Connector\INetConnector.cs" />
+    <Compile Include="Assets\Core\NetSystem\Connector\TCPConnector.cs" />
+    <Compile Include="Assets\Core\NetSystem\Connector\UDPConnector.cs" />
+    <Compile Include="Assets\Core\NetSystem\Connector\WebSocketConnector.cs" />
+    <Compile Include="Assets\Core\NetSystem\IPacket.cs" />
+    <Compile Include="Assets\Core\NetSystem\IPacketFormat.cs" />
+    <Compile Include="Assets\Core\NetSystem\IPacketHandler.cs" />
+    <Compile Include="Assets\Core\NetSystem\IPacketHandlerManager.cs" />
+    <Compile Include="Assets\Core\NetSystem\NetPacket.cs" />
+    <Compile Include="Assets\Core\NetSystem\NetSystem.cs" />
+    <Compile Include="Assets\Core\NetSystem\PacketFormat.cs" />
+    <Compile Include="Assets\Core\NetSystem\PacketHandler\SCHelloWorldResultHandler.cs" />
+    <Compile Include="Assets\Core\NetSystem\PacketHandlerManager.cs" />
+    <Compile Include="Assets\Core\NetSystem\PacketType.cs" />
+    <Compile Include="Assets\Core\NetSystem\RemoteHost.cs" />
+    <Compile Include="Assets\Core\NetSystem\XMessage.cs" />
+    <Compile Include="Assets\Core\Properties\AssemblyInfo.cs" />
+    <Compile Include="Assets\Core\Rosetta\Rosetta.cs" />
+    <Compile Include="Assets\Core\ThirdPartySystem\ThirdPartySystem.cs" />
+    <Compile Include="Assets\Core\TimeSystem\TimeSystem.cs" />
+    <Compile Include="Assets\Core\UISystem\IWindow.cs" />
+    <Compile Include="Assets\Core\UISystem\UISystem.cs" />
+    <Compile Include="Assets\Core\UISystem\WindowManager.cs" />
+    <Compile Include="Assets\Core\UpdateSystem\UpdateSystem.cs" />
+    <Compile Include="Assets\Core\Util\AsyncTaskDispatcher.cs" />
+    <Compile Include="Assets\Core\Util\AsyncThread.cs" />
+    <Compile Include="Assets\Core\Util\BitOperator.cs" />
+    <Compile Include="Assets\Core\Util\Buffer.cs" />
+    <Compile Include="Assets\Core\Util\Converter.cs" />
+    <Compile Include="Assets\Core\Util\Delegate.cs" />
+    <Compile Include="Assets\Core\Util\FileReader.cs" />
+    <Compile Include="Assets\Core\Util\FileSaver.cs" />
+    <Compile Include="Assets\Core\Util\IObject.cs" />
+    <Compile Include="Assets\Core\Util\JRandom.cs" />
+    <Compile Include="Assets\Core\Util\Lifecycle.cs" />
+    <Compile Include="Assets\Core\Util\NetStream.cs" />
+    <Compile Include="Assets\Core\Util\SafeList.cs" />
+    <Compile Include="Assets\Core\Util\SafeMap.cs" />
+    <Compile Include="Assets\Core\Util\SafeQueue.cs" />
+    <Compile Include="Assets\Core\Util\SimplePool.cs" />
+    <Compile Include="Assets\Core\Util\Singleton.cs" />
+    <Compile Include="Assets\Core\Util\Task.cs" />
+    <Compile Include="Assets\Core\Util\TaskProcessor.cs" />
+    <Compile Include="Assets\Core\Util\UnionDataCollection.cs" />
+    <Compile Include="Assets\Core\Util\UnityTools.cs" />
+    <Compile Include="Assets\Core\Util\UtilTools.cs" />
     <Compile Include="Assets\Other.cs" />
     <Compile Include="Assets\Resources\UI\Scripts\LogoWindows.cs" />
     <Compile Include="Assets\Resources\UI\Scripts\TestWindow.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\TestFather.cs" />
     <Compile Include="Assets\TestMono.cs" />
   </ItemGroup>
