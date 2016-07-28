@@ -8,6 +8,9 @@ namespace Alkaid
     public class WindowManager : Singleton<WindowManager>, Lifecycle
     {
 
+		/// <summary>
+		/// windowmap由配表获取，一次构建后，不再释放
+		/// </summary>
         private Dictionary<string, IWindow> mWindowMap;
 		private Dictionary<string, IWindow> mExclusiveWindows;
 
@@ -20,6 +23,26 @@ namespace Alkaid
 
         public bool Init()
         {
+			// 加入注册所有窗口
+			List<string> exclusive = new List<string>();
+			List<int> eid;
+			UIWindowDataProvider.UIWindowData d;
+			foreach (var i in UIWindowDataProvider.Instance.mDataMap.Values)
+			{
+				exclusive.Clear ();
+				eid = Converter.ConvertNumberList<int> (i.mExclusiveIDs);
+				foreach (var id in eid)
+				{
+					if (UIWindowDataProvider.Instance.mDataMap.TryGetValue (id, out d))
+					{
+						exclusive.Add (d.mName);
+					}
+				}
+
+				RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName, exclusive);
+			}
+
+
             foreach (var i in mWindowMap.Values)
             {
                 i.Init();
@@ -44,7 +67,7 @@ namespace Alkaid
             }
         }
 
-		public void RegisterWindow(string name, string layoutFile, string scriptName, List<string> exclusive)
+		private void RegisterWindow(string name, string layoutFile, string scriptName, List<string> exclusive)
         {
 			IWindow window = new IWindow(name, layoutFile, scriptName, exclusive);
             this.mWindowMap.Add(window.GetName(), window);
@@ -135,9 +158,10 @@ namespace Alkaid
 				// 关闭了window，则之前由window导致的关闭都应该打开
 				string ename;
 				IWindow ewindow;
-				for (int i = 0; i < window.GetExclusiveNames ().Count; ++i)
+				List<string> exclusiveWindowName = window.GetExclusiveNames ();
+				for (int i = 0; i < exclusiveWindowName.Count; ++i)
 				{
-					ename = window.GetExclusiveNames () [i];
+					ename = exclusiveWindowName [i];
 					if (mExclusiveWindows.TryGetValue(ename, out ewindow))
 					{
 						if (ewindow.GetExtraData ("exclusive_by") == window.GetName ())

@@ -5,7 +5,7 @@ namespace Alkaid
 {
     public class UIWindowDataProvider : Singleton<UIWindowDataProvider>, IDataProvider
     {
-        public class UIWindowDataItem
+        public class UIWindowData
         {
             public int mID = -1;
             public string mName = string.Empty;
@@ -18,7 +18,7 @@ namespace Alkaid
 
         }
 
-        private List<UIWindowDataItem> mDataList = new List<UIWindowDataItem>();
+		public Dictionary<int, UIWindowData> mDataMap = new Dictionary<int, UIWindowData>();
 
         public string Path()
         {
@@ -27,11 +27,11 @@ namespace Alkaid
 
         public void Load()
         {
-            UIWindowDataItem item = null;
+            UIWindowData item = null;
             while (!FileReader.IsEnd())
             {
                 FileReader.ReadLine();
-                item = new UIWindowDataItem();
+                item = new UIWindowData();
                 item.mID = FileReader.ReadInt();
                 item.mName = FileReader.ReadString();
                 item.mScriptName = FileReader.ReadString();
@@ -41,34 +41,14 @@ namespace Alkaid
                 item.mUseFramework = FileReader.ReadBoolean();
 				item.mExclusiveIDs = FileReader.ReadString();
 
-                mDataList.Add(item);
+				mDataMap.Add (item.mID, item);
             }
 
-            // 加入注册所有窗口
-			List<string> exclusive = new List<string>();
-			List<int> eid;
-            foreach (var i in mDataList)
-            {
-				exclusive.Clear ();
-				eid = Converter.ConvertNumberList<int> (i.mExclusiveIDs);
-				foreach (var id in eid)
-				{
-					foreach (var j in mDataList)
-					{
-						if (id == j.mID)
-						{
-							exclusive.Add (j.mName);
-						}
-					}	
-				}
-
-				WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName, exclusive);
-            }
         }
 
         public bool Verify()
         {
-            foreach(var i in mDataList)
+			foreach (var i in mDataMap.Values)
 	        {
                 LoggerSystem.Instance.Debug("UIWindow   " + i.mID + "  " + i.mName);
 	        }

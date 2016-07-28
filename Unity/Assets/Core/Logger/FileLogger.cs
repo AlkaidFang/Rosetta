@@ -84,13 +84,11 @@ namespace Alkaid
         public void SetFileLogFrontName(string name)
         {
             mSaveFrontName = name;
-            FormatFinalFileName();
         }
 
         public void SetFileLogExtName(string name)
         {
             mSaveExtName = name;
-            FormatFinalFileName();
         }
         private void FormatFinalFileName()
         {
