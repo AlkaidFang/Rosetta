@@ -24,7 +24,7 @@ public class TestMono : MonoBehaviour {
         if (count == 0)
         {
             //NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "ws://127.0.0.1:8080/PearlHarbor/Game", 8080);
-            NetSystem.Instance.Connect((int)Rosetta.NetCtr.Lobby, "10.12.25.205", 10086);
+			NetSystem.Instance.Connect((int)Rosetta.NetCtr.Lobby, "120.131.1.171", 8192);
         }
         if (count > 0)
         {

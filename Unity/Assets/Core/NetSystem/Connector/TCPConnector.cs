@@ -81,7 +81,7 @@ namespace Alkaid
 					LoggerSystem.Instance.Error(e.Message);
 					SetConnectStatus(ConnectionStatus.ERROR);
 					CallbackConnected(IsConnected());
-					// return IsConnected();
+					return;
 				}
 
 				SetConnectStatus(ConnectionStatus.CONNECTED);
