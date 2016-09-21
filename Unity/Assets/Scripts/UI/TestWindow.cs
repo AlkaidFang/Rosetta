@@ -26,6 +26,15 @@ public class TestWindow : MonoBehaviour {
 	
 	}
 
+    void Destroy()
+    {
+        EventSystem.Instance.UnRegisterEvent("click", "testwindow", this);
+
+        EventSystem.Instance.UnRegisterEvent("network", "testwindow", this);
+
+        EventSystem.Instance.UnRegisterEvent("ping", "testwindow", this);
+    }
+
     int i = 0;
     public void OnLogoClick()
     {
