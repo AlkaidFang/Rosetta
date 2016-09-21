@@ -8,6 +8,8 @@ namespace Alkaid
     public class UISystem : Singleton<UISystem>, Lifecycle
     {
         private GameObject mUIRoot;
+        private GameObject mUICamera;
+        private GameObject mForwardCamera;
 
         public UISystem()
         {
@@ -21,6 +23,10 @@ namespace Alkaid
             {
                 return false;
             }
+
+            mUICamera = mUIRoot.transform.FindChild("UICamera").gameObject;
+            mForwardCamera = mUIRoot.transform.FindChild("ForwardCamera").gameObject;
+            
             // 设置UISystem的一些数据
             UnityEngine.Object.DontDestroyOnLoad(mUIRoot);
 
@@ -39,10 +45,14 @@ namespace Alkaid
             WindowManager.Instance.Destroy();
         }
 
-        public GameObject GetRootNode()
+        public GameObject GetUICamera()
         {
-            return mUIRoot;
+            return mUICamera;
         }
 
+        public GameObject GetForwardCamera()
+        {
+            return mForwardCamera;
+        }
     }
 }

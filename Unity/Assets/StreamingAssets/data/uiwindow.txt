@@ -2,4 +2,5 @@
 1	LogoWindow	LogoWindow	UI/Prefabs/LogoWindow	none	root	TRUE	-1
 2	HelloWindow	1	0	none	root	TRUE	-1
 3	TestWindow	TestWindow	UI/Prefabs/TestWindow	none	root	TRUE	-1
+3	CGWindow	CGWindow	UI/Prefabs/CGWindow	none	root	TRUE	-1
 #3	JJJWindow	1	0	none	root	FALSE	-1

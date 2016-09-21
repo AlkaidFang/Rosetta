@@ -11,9 +11,7 @@ namespace Alkaid
         private bool mIsShow;
         private bool mIsLoad;
         private string mName;
-        private string mLayoutFile;
-        private string mScript;
-		private List<string> mExclusiveNames;
+        private UIWindowDataItem mData;
 
         private Dictionary<string, string> mExtraDatas;
 
@@ -23,27 +21,22 @@ namespace Alkaid
             mIsShow = false;
             mIsLoad = false;
             mName = string.Empty;
-            mLayoutFile = string.Empty;
-			mExclusiveNames = new List<string> ();
             mExtraDatas = new Dictionary<string,string>();
         }
 
-		public IWindow(string name, string layout, string script, List<string> exclusive)
+		public IWindow(string name, UIWindowDataItem data)
         {
             mBaseNode = null;
             mIsShow = false;
             mIsLoad = false;
             mName = name;
-            mLayoutFile = layout;
-			mScript = script;
-			mExclusiveNames = new List<string> ();
-			mExclusiveNames.AddRange (exclusive);
+            mData = data;
 			mExtraDatas = new Dictionary<string,string>();
         }
 
         public bool Init()
         {
-            if (string.IsNullOrEmpty(mName) || string.IsNullOrEmpty(mLayoutFile))
+            if (string.IsNullOrEmpty(mName) || string.IsNullOrEmpty(mData.mPrefabPath))
             {
                 LoggerSystem.Instance.Error("IWindow   init   failed! name:" + mName);
             }
@@ -67,19 +60,19 @@ namespace Alkaid
 
         private void Load()
         {
-            if (string.IsNullOrEmpty(mLayoutFile))
+            if (string.IsNullOrEmpty(mData.mPrefabPath))
             {
                 return;
             }
 
-            GameObject prefab = Resources.Load(mLayoutFile) as GameObject;
+            GameObject prefab = Resources.Load(mData.mPrefabPath) as GameObject;
             if (null == prefab)
             {
-                LoggerSystem.Instance.Error("Failed to load res:" + mLayoutFile);
+                LoggerSystem.Instance.Error("Failed to load res:" + mData.mPrefabPath);
                 return;
             }
 
-            mBaseNode = UnityTools.AddChild(UISystem.Instance.GetRootNode(), prefab);
+            mBaseNode = UnityTools.AddChild(UISystem.Instance.GetUICamera(), prefab);
 
             mBaseNode.SetActive(false);
             mIsLoad = true;
@@ -132,25 +125,10 @@ namespace Alkaid
             return mName;
         }
 
-        public void SetLayoutFilePath(string path)
+        public UIWindowDataItem GetConfig()
         {
-            mLayoutFile = path;
+            return mData;
         }
-
-        public void SetScript(string script)
-        {
-            mScript = script;
-        }
-
-		public void SetExclusiveNames(List<string> arg)
-		{
-			mExclusiveNames.AddRange (arg);
-		}
-
-		public List<string> GetExclusiveNames()
-		{
-			return mExclusiveNames;
-		}
 
         public void SetExtraData(string k, string v)
         {

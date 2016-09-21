@@ -83,8 +83,7 @@ namespace Alkaid
             mSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(OnMessageReceivedCallback);
             mSocket.DataReceived += new EventHandler<DataReceivedEventArgs>(OnDataReceivedCallback);
             mSocket.Open();
-
-            // return true;
+            
         }
 
         public override void SendPacket(IPacket packet)

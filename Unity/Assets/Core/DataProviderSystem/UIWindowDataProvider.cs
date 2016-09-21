@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Alkaid
 {
+    public class UIWindowDataItem
+    {
+        public int mID = -1;
+        public string mName = string.Empty;
+        public string mScriptName = string.Empty;
+        public string mPrefabPath = string.Empty;
+        public string mAltasPath = string.Empty;
+        public string mParentName = string.Empty;
+        public bool mUseFramework = false;
+        public string mExclusiveIDs = string.Empty;
+
+    }
+
     public class UIWindowDataProvider : Singleton<UIWindowDataProvider>, IDataProvider
     {
-        public class UIWindowDataItem
-        {
-            public int mID = -1;
-            public string mName = string.Empty;
-            public string mScriptName = string.Empty;
-            public string mPrefabPath = string.Empty;
-            public string mAltasPath = string.Empty;
-            public string mParentName = string.Empty;
-            public bool mUseFramework = false;
-			public string mExclusiveIDs = string.Empty;
-
-        }
-
         private List<UIWindowDataItem> mDataList = new List<UIWindowDataItem>();
 
         public string Path()
@@ -44,7 +44,7 @@ namespace Alkaid
                 mDataList.Add(item);
             }
 
-            // 加入注册所有窗口
+            /*// 加入注册所有窗口
 			List<string> exclusive = new List<string>();
 			List<int> eid;
             foreach (var i in mDataList)
@@ -63,7 +63,7 @@ namespace Alkaid
 				}
 
 				WindowManager.Instance.RegisterWindow(i.mName, i.mPrefabPath, i.mScriptName, exclusive);
-            }
+            }*/
         }
 
         public bool Verify()
@@ -73,6 +73,11 @@ namespace Alkaid
                 LoggerSystem.Instance.Debug("UIWindow   " + i.mID + "  " + i.mName);
 	        }
 	        return true;
+        }
+
+        public List<UIWindowDataItem> GetAllData()
+        {
+            return mDataList;
         }
     }
 }

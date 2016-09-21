@@ -39,6 +39,10 @@ namespace Alkaid
             LoggerSystem.Instance.Info("LocalStorageSystem    init   begin");
             // 注册存储服务信息, 在setup中进行了注册
 
+            RegisterLocalStorage(LocalAccountStorage.Instance);
+            RegisterLocalStorage(LocalServerStorage.Instance);
+            RegisterLocalStorage(LocalUnVerifyIAPStorage.Instance);
+
             // 加载存储信息
             LoadStorage();
 
@@ -69,7 +73,7 @@ namespace Alkaid
             m_sAppVersion = version;
         }
 
-        public void RegisterLocalStorage(ILocalStorage storage)
+        private void RegisterLocalStorage(ILocalStorage storage)
         {
             m_lStorageList.Add(storage.Name(), storage);
         }

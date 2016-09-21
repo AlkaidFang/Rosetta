@@ -10,7 +10,6 @@ using scg = global::System.Collections.Generic;
 namespace XMessage {
 
   /// <summary>Holder for reflection information generated from XMessage.proto</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class XMessageReflection {
 
     #region Descriptor
@@ -34,42 +33,49 @@ namespace XMessage {
             "cmluZxgEIAEoCSIqChNTQ19IZWxsb1dvcmxkUmVzdWx0EhMKC19yZXN1bHRD",
             "b2RlGAEgASgFIjwKCENTX0xvZ2luEg8KB2FjY291bnQYASABKAkSEAoIcGFz",
             "c3dvcmQYAiABKAkSDQoFdWd1aWQYAyABKAkiJAoOU0NfTG9naW5SZXN1bHQS",
-            "EgoKcmVzdWx0Y29kZRgBIAEoCEImChpjb20uYWxrYWlkLnBlYXJsaGFyYm9y",
-            "Lm5ldEIIWE1lc3NhZ2ViBnByb3RvMw=="));
+            "EgoKcmVzdWx0Y29kZRgBIAEoCCIcCgdDU19QaW5nEhEKCXRpbWVzdGFtcBgB",
+            "IAEoASIiCg1TQ19QaW5nUmVzdWx0EhEKCXRpbWVzdGFtcBgBIAEoAUImChpj",
+            "b20uYWxrYWlkLnBlYXJsaGFyYm9yLm5ldEIIWE1lc3NhZ2ViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedCodeInfo(null, new pbr::GeneratedCodeInfo[] {
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.Person), global::XMessage.Person.Parser, new[]{ "Name", "Id", "Email", "Phones" }, null, new[]{ typeof(global::XMessage.Person.Types.PhoneType) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::XMessage.Person.Types.PhoneNumber), global::XMessage.Person.Types.PhoneNumber.Parser, new[]{ "Number", "Type" }, null, null, null)}),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.AddressBook), global::XMessage.AddressBook.Parser, new[]{ "People" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.CS_HelloWorld), global::XMessage.CS_HelloWorld.Parser, new[]{ "Int", "Float", "Long", "String" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.SC_HelloWorldResult), global::XMessage.SC_HelloWorldResult.Parser, new[]{ "ResultCode" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.CS_Login), global::XMessage.CS_Login.Parser, new[]{ "Account", "Password", "Uguid" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::XMessage.SC_LoginResult), global::XMessage.SC_LoginResult.Parser, new[]{ "Resultcode" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.Person), global::XMessage.Person.Parser, new[]{ "Name", "Id", "Email", "Phones" }, null, new[]{ typeof(global::XMessage.Person.Types.PhoneType) }, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.Person.Types.PhoneNumber), global::XMessage.Person.Types.PhoneNumber.Parser, new[]{ "Number", "Type" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.AddressBook), global::XMessage.AddressBook.Parser, new[]{ "People" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.CS_HelloWorld), global::XMessage.CS_HelloWorld.Parser, new[]{ "Int", "Float", "Long", "String" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.SC_HelloWorldResult), global::XMessage.SC_HelloWorldResult.Parser, new[]{ "ResultCode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.CS_Login), global::XMessage.CS_Login.Parser, new[]{ "Account", "Password", "Uguid" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.SC_LoginResult), global::XMessage.SC_LoginResult.Parser, new[]{ "Resultcode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.CS_Ping), global::XMessage.CS_Ping.Parser, new[]{ "Timestamp" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::XMessage.SC_PingResult), global::XMessage.SC_PingResult.Parser, new[]{ "Timestamp" }, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class Person : pb::IMessage<Person> {
     private static readonly pb::MessageParser<Person> _parser = new pb::MessageParser<Person>(() => new Person());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<Person> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[0]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Person() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Person(Person other) : this() {
       name_ = other.name_;
       id_ = other.id_;
@@ -77,6 +83,7 @@ namespace XMessage {
       phones_ = other.phones_.Clone();
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Person Clone() {
       return new Person(this);
     }
@@ -84,10 +91,11 @@ namespace XMessage {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
       get { return name_; }
       set {
-        name_ = pb::Preconditions.CheckNotNull(value, "value");
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -97,6 +105,7 @@ namespace XMessage {
     /// <summary>
     ///  Unique ID number for this person.
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Id {
       get { return id_; }
       set {
@@ -107,10 +116,11 @@ namespace XMessage {
     /// <summary>Field number for the "email" field.</summary>
     public const int EmailFieldNumber = 3;
     private string email_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Email {
       get { return email_; }
       set {
-        email_ = pb::Preconditions.CheckNotNull(value, "value");
+        email_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -119,14 +129,17 @@ namespace XMessage {
     private static readonly pb::FieldCodec<global::XMessage.Person.Types.PhoneNumber> _repeated_phones_codec
         = pb::FieldCodec.ForMessage(34, global::XMessage.Person.Types.PhoneNumber.Parser);
     private readonly pbc::RepeatedField<global::XMessage.Person.Types.PhoneNumber> phones_ = new pbc::RepeatedField<global::XMessage.Person.Types.PhoneNumber>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::XMessage.Person.Types.PhoneNumber> Phones {
       get { return phones_; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Person);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(Person other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -141,6 +154,7 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
@@ -150,10 +164,12 @@ namespace XMessage {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Name.Length != 0) {
         output.WriteRawTag(10);
@@ -170,6 +186,7 @@ namespace XMessage {
       phones_.WriteTo(output, _repeated_phones_codec);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Name.Length != 0) {
@@ -185,6 +202,7 @@ namespace XMessage {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(Person other) {
       if (other == null) {
         return;
@@ -201,6 +219,7 @@ namespace XMessage {
       phones_.Add(other.phones_);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -230,38 +249,43 @@ namespace XMessage {
 
     #region Nested types
     /// <summary>Container for nested types declared in the Person message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum PhoneType {
-        MOBILE = 0,
-        HOME = 1,
-        WORK = 2,
+        [pbr::OriginalName("MOBILE")] Mobile = 0,
+        [pbr::OriginalName("HOME")] Home = 1,
+        [pbr::OriginalName("WORK")] Work = 2,
       }
 
-      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
       public sealed partial class PhoneNumber : pb::IMessage<PhoneNumber> {
         private static readonly pb::MessageParser<PhoneNumber> _parser = new pb::MessageParser<PhoneNumber>(() => new PhoneNumber());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pb::MessageParser<PhoneNumber> Parser { get { return _parser; } }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
           get { return global::XMessage.Person.Descriptor.NestedTypes[0]; }
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         pbr::MessageDescriptor pb::IMessage.Descriptor {
           get { return Descriptor; }
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public PhoneNumber() {
           OnConstruction();
         }
 
         partial void OnConstruction();
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public PhoneNumber(PhoneNumber other) : this() {
           number_ = other.number_;
           type_ = other.type_;
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public PhoneNumber Clone() {
           return new PhoneNumber(this);
         }
@@ -269,16 +293,18 @@ namespace XMessage {
         /// <summary>Field number for the "number" field.</summary>
         public const int NumberFieldNumber = 1;
         private string number_ = "";
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Number {
           get { return number_; }
           set {
-            number_ = pb::Preconditions.CheckNotNull(value, "value");
+            number_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
           }
         }
 
         /// <summary>Field number for the "type" field.</summary>
         public const int TypeFieldNumber = 2;
-        private global::XMessage.Person.Types.PhoneType type_ = global::XMessage.Person.Types.PhoneType.MOBILE;
+        private global::XMessage.Person.Types.PhoneType type_ = 0;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public global::XMessage.Person.Types.PhoneType Type {
           get { return type_; }
           set {
@@ -286,10 +312,12 @@ namespace XMessage {
           }
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other) {
           return Equals(other as PhoneNumber);
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool Equals(PhoneNumber other) {
           if (ReferenceEquals(other, null)) {
             return false;
@@ -302,39 +330,44 @@ namespace XMessage {
           return true;
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override int GetHashCode() {
           int hash = 1;
           if (Number.Length != 0) hash ^= Number.GetHashCode();
-          if (Type != global::XMessage.Person.Types.PhoneType.MOBILE) hash ^= Type.GetHashCode();
+          if (Type != 0) hash ^= Type.GetHashCode();
           return hash;
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override string ToString() {
           return pb::JsonFormatter.ToDiagnosticString(this);
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public void WriteTo(pb::CodedOutputStream output) {
           if (Number.Length != 0) {
             output.WriteRawTag(10);
             output.WriteString(Number);
           }
-          if (Type != global::XMessage.Person.Types.PhoneType.MOBILE) {
+          if (Type != 0) {
             output.WriteRawTag(16);
             output.WriteEnum((int) Type);
           }
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public int CalculateSize() {
           int size = 0;
           if (Number.Length != 0) {
             size += 1 + pb::CodedOutputStream.ComputeStringSize(Number);
           }
-          if (Type != global::XMessage.Person.Types.PhoneType.MOBILE) {
+          if (Type != 0) {
             size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
           }
           return size;
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public void MergeFrom(PhoneNumber other) {
           if (other == null) {
             return;
@@ -342,11 +375,12 @@ namespace XMessage {
           if (other.Number.Length != 0) {
             Number = other.Number;
           }
-          if (other.Type != global::XMessage.Person.Types.PhoneType.MOBILE) {
+          if (other.Type != 0) {
             Type = other.Type;
           }
         }
 
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public void MergeFrom(pb::CodedInputStream input) {
           uint tag;
           while ((tag = input.ReadTag()) != 0) {
@@ -376,29 +410,34 @@ namespace XMessage {
   /// <summary>
   ///  Our address book file is just one of these.
   /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class AddressBook : pb::IMessage<AddressBook> {
     private static readonly pb::MessageParser<AddressBook> _parser = new pb::MessageParser<AddressBook>(() => new AddressBook());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<AddressBook> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[1]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public AddressBook() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public AddressBook(AddressBook other) : this() {
       people_ = other.people_.Clone();
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public AddressBook Clone() {
       return new AddressBook(this);
     }
@@ -408,14 +447,17 @@ namespace XMessage {
     private static readonly pb::FieldCodec<global::XMessage.Person> _repeated_people_codec
         = pb::FieldCodec.ForMessage(10, global::XMessage.Person.Parser);
     private readonly pbc::RepeatedField<global::XMessage.Person> people_ = new pbc::RepeatedField<global::XMessage.Person>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::XMessage.Person> People {
       get { return people_; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as AddressBook);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(AddressBook other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -427,26 +469,31 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       hash ^= people_.GetHashCode();
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       people_.WriteTo(output, _repeated_people_codec);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       size += people_.CalculateSize(_repeated_people_codec);
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(AddressBook other) {
       if (other == null) {
         return;
@@ -454,6 +501,7 @@ namespace XMessage {
       people_.Add(other.people_);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -471,25 +519,29 @@ namespace XMessage {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class CS_HelloWorld : pb::IMessage<CS_HelloWorld> {
     private static readonly pb::MessageParser<CS_HelloWorld> _parser = new pb::MessageParser<CS_HelloWorld>(() => new CS_HelloWorld());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<CS_HelloWorld> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[2]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_HelloWorld() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_HelloWorld(CS_HelloWorld other) : this() {
       Int_ = other.Int_;
       Float_ = other.Float_;
@@ -497,6 +549,7 @@ namespace XMessage {
       String_ = other.String_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_HelloWorld Clone() {
       return new CS_HelloWorld(this);
     }
@@ -504,6 +557,7 @@ namespace XMessage {
     /// <summary>Field number for the "_int" field.</summary>
     public const int IntFieldNumber = 1;
     private int Int_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Int {
       get { return Int_; }
       set {
@@ -514,6 +568,7 @@ namespace XMessage {
     /// <summary>Field number for the "_float" field.</summary>
     public const int FloatFieldNumber = 2;
     private float Float_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float Float {
       get { return Float_; }
       set {
@@ -524,6 +579,7 @@ namespace XMessage {
     /// <summary>Field number for the "_long" field.</summary>
     public const int LongFieldNumber = 3;
     private long Long_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long Long {
       get { return Long_; }
       set {
@@ -534,17 +590,20 @@ namespace XMessage {
     /// <summary>Field number for the "_string" field.</summary>
     public const int StringFieldNumber = 4;
     private string String_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string String {
       get { return String_; }
       set {
-        String_ = pb::Preconditions.CheckNotNull(value, "value");
+        String_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as CS_HelloWorld);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(CS_HelloWorld other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -559,6 +618,7 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Int != 0) hash ^= Int.GetHashCode();
@@ -568,10 +628,12 @@ namespace XMessage {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Int != 0) {
         output.WriteRawTag(8);
@@ -591,6 +653,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Int != 0) {
@@ -608,6 +671,7 @@ namespace XMessage {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(CS_HelloWorld other) {
       if (other == null) {
         return;
@@ -626,6 +690,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -655,29 +720,34 @@ namespace XMessage {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class SC_HelloWorldResult : pb::IMessage<SC_HelloWorldResult> {
     private static readonly pb::MessageParser<SC_HelloWorldResult> _parser = new pb::MessageParser<SC_HelloWorldResult>(() => new SC_HelloWorldResult());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SC_HelloWorldResult> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[3]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_HelloWorldResult() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_HelloWorldResult(SC_HelloWorldResult other) : this() {
       ResultCode_ = other.ResultCode_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_HelloWorldResult Clone() {
       return new SC_HelloWorldResult(this);
     }
@@ -685,6 +755,7 @@ namespace XMessage {
     /// <summary>Field number for the "_resultCode" field.</summary>
     public const int ResultCodeFieldNumber = 1;
     private int ResultCode_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int ResultCode {
       get { return ResultCode_; }
       set {
@@ -692,10 +763,12 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as SC_HelloWorldResult);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(SC_HelloWorldResult other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -707,16 +780,19 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (ResultCode != 0) hash ^= ResultCode.GetHashCode();
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (ResultCode != 0) {
         output.WriteRawTag(8);
@@ -724,6 +800,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (ResultCode != 0) {
@@ -732,6 +809,7 @@ namespace XMessage {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(SC_HelloWorldResult other) {
       if (other == null) {
         return;
@@ -741,6 +819,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -758,31 +837,36 @@ namespace XMessage {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class CS_Login : pb::IMessage<CS_Login> {
     private static readonly pb::MessageParser<CS_Login> _parser = new pb::MessageParser<CS_Login>(() => new CS_Login());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<CS_Login> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[4]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_Login() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_Login(CS_Login other) : this() {
       account_ = other.account_;
       password_ = other.password_;
       uguid_ = other.uguid_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CS_Login Clone() {
       return new CS_Login(this);
     }
@@ -790,37 +874,42 @@ namespace XMessage {
     /// <summary>Field number for the "account" field.</summary>
     public const int AccountFieldNumber = 1;
     private string account_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Account {
       get { return account_; }
       set {
-        account_ = pb::Preconditions.CheckNotNull(value, "value");
+        account_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "password" field.</summary>
     public const int PasswordFieldNumber = 2;
     private string password_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Password {
       get { return password_; }
       set {
-        password_ = pb::Preconditions.CheckNotNull(value, "value");
+        password_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "uguid" field.</summary>
     public const int UguidFieldNumber = 3;
     private string uguid_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Uguid {
       get { return uguid_; }
       set {
-        uguid_ = pb::Preconditions.CheckNotNull(value, "value");
+        uguid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as CS_Login);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(CS_Login other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -834,6 +923,7 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Account.Length != 0) hash ^= Account.GetHashCode();
@@ -842,10 +932,12 @@ namespace XMessage {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Account.Length != 0) {
         output.WriteRawTag(10);
@@ -861,6 +953,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Account.Length != 0) {
@@ -875,6 +968,7 @@ namespace XMessage {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(CS_Login other) {
       if (other == null) {
         return;
@@ -890,6 +984,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -915,29 +1010,34 @@ namespace XMessage {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class SC_LoginResult : pb::IMessage<SC_LoginResult> {
     private static readonly pb::MessageParser<SC_LoginResult> _parser = new pb::MessageParser<SC_LoginResult>(() => new SC_LoginResult());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SC_LoginResult> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[5]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_LoginResult() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_LoginResult(SC_LoginResult other) : this() {
       resultcode_ = other.resultcode_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SC_LoginResult Clone() {
       return new SC_LoginResult(this);
     }
@@ -945,6 +1045,7 @@ namespace XMessage {
     /// <summary>Field number for the "resultcode" field.</summary>
     public const int ResultcodeFieldNumber = 1;
     private bool resultcode_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Resultcode {
       get { return resultcode_; }
       set {
@@ -952,10 +1053,12 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as SC_LoginResult);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(SC_LoginResult other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -967,16 +1070,19 @@ namespace XMessage {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Resultcode != false) hash ^= Resultcode.GetHashCode();
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Resultcode != false) {
         output.WriteRawTag(8);
@@ -984,6 +1090,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Resultcode != false) {
@@ -992,6 +1099,7 @@ namespace XMessage {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(SC_LoginResult other) {
       if (other == null) {
         return;
@@ -1001,6 +1109,7 @@ namespace XMessage {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -1010,6 +1119,240 @@ namespace XMessage {
             break;
           case 8: {
             Resultcode = input.ReadBool();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class CS_Ping : pb::IMessage<CS_Ping> {
+    private static readonly pb::MessageParser<CS_Ping> _parser = new pb::MessageParser<CS_Ping>(() => new CS_Ping());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<CS_Ping> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CS_Ping() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CS_Ping(CS_Ping other) : this() {
+      timestamp_ = other.timestamp_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CS_Ping Clone() {
+      return new CS_Ping(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private double timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as CS_Ping);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(CS_Ping other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Timestamp != other.Timestamp) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Timestamp != 0D) hash ^= Timestamp.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Timestamp != 0D) {
+        output.WriteRawTag(9);
+        output.WriteDouble(Timestamp);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Timestamp != 0D) {
+        size += 1 + 8;
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(CS_Ping other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Timestamp != 0D) {
+        Timestamp = other.Timestamp;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 9: {
+            Timestamp = input.ReadDouble();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class SC_PingResult : pb::IMessage<SC_PingResult> {
+    private static readonly pb::MessageParser<SC_PingResult> _parser = new pb::MessageParser<SC_PingResult>(() => new SC_PingResult());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SC_PingResult> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::XMessage.XMessageReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SC_PingResult() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SC_PingResult(SC_PingResult other) : this() {
+      timestamp_ = other.timestamp_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SC_PingResult Clone() {
+      return new SC_PingResult(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private double timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SC_PingResult);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SC_PingResult other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Timestamp != other.Timestamp) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Timestamp != 0D) hash ^= Timestamp.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Timestamp != 0D) {
+        output.WriteRawTag(9);
+        output.WriteDouble(Timestamp);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Timestamp != 0D) {
+        size += 1 + 8;
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SC_PingResult other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Timestamp != 0D) {
+        Timestamp = other.Timestamp;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 9: {
+            Timestamp = input.ReadDouble();
             break;
           }
         }

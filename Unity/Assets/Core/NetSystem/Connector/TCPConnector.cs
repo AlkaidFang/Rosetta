@@ -75,25 +75,19 @@ namespace Alkaid
 				try
 				{
 					mSocket.Connect(mRemoteHost.GetAddress(), mRemoteHost.GetPort());
-				}
+				    mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
+                    SetConnectStatus(ConnectionStatus.CONNECTED);
+                }
 				catch(Exception e)
 				{
 					LoggerSystem.Instance.Error(e.Message);
 					SetConnectStatus(ConnectionStatus.ERROR);
-					CallbackConnected(IsConnected());
-					// return IsConnected();
 				}
-
-				SetConnectStatus(ConnectionStatus.CONNECTED);
-				mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
-
+                
 				CallbackConnected(IsConnected());
-			
 			});
 
 			connectThread.Start ();
-
-            // return IsConnected();
         }
 
         public override void SendPacket(IPacket packet)
@@ -121,9 +115,10 @@ namespace Alkaid
 
         private void ReadComplete(IAsyncResult ar)
         {
+            int readLength = 0;
             try
             {
-                int readLength = mSocket.GetStream().EndRead(ar);
+                readLength = mSocket.GetStream().EndRead(ar);
                 LoggerSystem.Instance.Info("读取到数据字节数:" + readLength);
                 if (readLength > 0)
                 {
@@ -143,21 +138,22 @@ namespace Alkaid
                 LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生读取错误：" + e.Message);
                 DisConnect();
             }
+            finally
+            {
+                mNetStream.FinishedIn(readLength);
+            }
 
         }
 
         private void SendComplete(IAsyncResult ar)
         {
+            int sendLength = 0;
             try
             {
                 mSocket.GetStream().EndWrite(ar);
-                int sendLength = (int)ar.AsyncState;
+                sendLength = (int)ar.AsyncState;
                 LoggerSystem.Instance.Info("发送数据字节数：" + sendLength);
-                if (sendLength > 0)
-                {
-                    mNetStream.FinishedOut(sendLength);
-                }
-                else
+                if (sendLength <= 0)
                 {
                     // error
                     DisConnect();
@@ -167,6 +163,10 @@ namespace Alkaid
             {
                 LoggerSystem.Instance.Error("发生写入错误：" + e.Message);
                 DisConnect();
+            }
+            finally
+            {
+                mNetStream.FinishedOut(sendLength);
             }
         }
 

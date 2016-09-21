@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using UnityEngine;
 
 namespace Alkaid
 {
     public class FileReader
     {
-
         private static int _line_ptr = 0;
         private static List<string> _line_array = new List<string>();
         private static int _element_ptr = 0;
@@ -28,31 +27,60 @@ namespace Alkaid
             return _element_array[_element_ptr++];
         }
 
-        public static bool Load(string filePath)
+        public static bool LoadPath(string filePath)
         {
-            _reset();
-
-            // read all lines=
-            if (File.Exists(filePath))
+            if (!string.IsNullOrEmpty(filePath))
             {
+                string text = string.Empty;
                 try
                 {
-                    StreamReader file = File.OpenText(filePath);
-                    string line = null;
-                    while ((line = file.ReadLine()) != null)
+                    if (filePath.Contains("://"))
                     {
-                        lines_temp.Add(line);
+                        WWW www = new WWW(filePath);
+                        while (!www.isDone) ;
+                        text = www.text;
                     }
-
-                    // 去除注释行
-                    DeleteComments();
-
-                    file.Close();
+                    else
+                    {
+                        if (File.Exists(filePath))
+                        {
+                            StreamReader file = File.OpenText(filePath);
+                            text = file.ReadToEnd();
+                            file.Close();
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
+                    UnityEngine.Debug.LogErrorFormat("Error Loading File [{0}]", filePath);
                     return false;
                 }
+
+                return LoadText(text);
+            }
+
+            return false;
+        }
+
+        public static bool LoadText(string text)
+        {
+            _reset();
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                string[] lines = text.Split('\n');
+                string temp;
+                for (int i = 0; i < lines.Length; ++i)
+                {
+                    temp = lines[i];
+                    if (temp.EndsWith("\r"))
+                    {
+                        temp = temp.Substring(0, temp.Length - 1);
+                    }
+                    lines_temp.Add(temp);
+                }
+
+                DeleteComments();
 
                 return true;
             }
@@ -65,6 +93,9 @@ namespace Alkaid
             _reset();
         }
 
+        /// <summary>
+        /// 删除#开始的注释行
+        /// </summary>
         private static void DeleteComments()
         {
             foreach (var line in lines_temp)

@@ -80,19 +80,15 @@ namespace Alkaid
                 mRemoteEndPoint = new IPEndPoint(IPAddress.Parse(mRemoteHost.GetAddress()), mRemoteHost.GetPort());
                 mSocket.Connect(mRemoteEndPoint);
                 mSocket.DontFragment = true; // 不分段
+                mSocket.BeginReceive(mReadCompleteCallback, this);
+			    SetConnectStatus (ConnectionStatus.CONNECTED);
             }
             catch (Exception e)
             {
                 LoggerSystem.Instance.Error(e.Message);
 				SetConnectStatus (ConnectionStatus.ERROR);
-                CallbackConnected(IsConnected());
-                // return IsConnected();
             }
-			SetConnectStatus (ConnectionStatus.CONNECTED);
             CallbackConnected(IsConnected());
-            mSocket.BeginReceive(mReadCompleteCallback, this);
-
-            // return IsConnected();
         }
 
         public override void SendPacket(IPacket packet)

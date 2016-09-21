@@ -11,22 +11,13 @@ namespace Alkaid
         public bool Init()
         {
             LoggerSystem.Instance.Info("DataProviderSystem   init   begin");
-            IDataProvider provider = null;
-            for (int i = 0; i < mDataProvider.Count; ++i)
-            {
-                provider = mDataProvider[i];
-                if (null != provider)
-                {
-                    FileReader.Load(FormatDataProviderPath(provider.Path()));
 
-                    provider.Load();
+            // 注册
+            RegisterDataProvider(DictionaryDataProvider.Instance);
+            RegisterDataProvider(UIWindowDataProvider.Instance);
 
-                    if (!provider.Verify()) return false;
-
-                    FileReader.UnLoad();
-                }
-            }
-
+            // 加载
+            if (!Load()) return false;
             LoggerSystem.Instance.Info("DataProviderSystem   init   end");
             return true;
         }
@@ -41,7 +32,28 @@ namespace Alkaid
             mDataProvider.Clear();
         }
 
-        public void RegisterDataProvider(IDataProvider dataProvider)
+        private bool Load()
+        {
+            IDataProvider provider = null;
+            for (int i = 0; i < mDataProvider.Count; ++i)
+            {
+                provider = mDataProvider[i];
+                if (null != provider)
+                {
+                    FileReader.LoadPath(FormatDataProviderPath(provider.Path()));
+
+                    provider.Load();
+
+                    if (!provider.Verify()) return false;
+
+                    FileReader.UnLoad();
+                }
+            }
+
+            return true;
+        }
+
+        private void RegisterDataProvider(IDataProvider dataProvider)
         {
             mDataProvider.Add(dataProvider);
         }

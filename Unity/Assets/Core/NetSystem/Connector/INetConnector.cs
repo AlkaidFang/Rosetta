@@ -36,17 +36,17 @@ namespace Alkaid
 
         public virtual bool Init()
         {
-            return false;
+            return mPacketHandlerManager.Init();
         }
 
         public virtual void Tick(float interval)
         {
-
+            mPacketHandlerManager.Tick(interval);
         }
 
         public virtual void Destroy()
         {
-
+            mPacketHandlerManager.Destroy();
         }
 
         public virtual ConnectionType GetConnectionType()

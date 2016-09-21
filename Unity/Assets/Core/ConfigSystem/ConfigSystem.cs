@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using UnityEngine;
 
 namespace Alkaid
 {
@@ -18,7 +17,7 @@ namespace Alkaid
         public bool Init()
         {
             // 加载文件
-            FileReader.Load(DataProviderSystem.Instance.FormatDataProviderPath(mConfigFilePath));
+            FileReader.LoadPath(DataProviderSystem.Instance.FormatDataProviderPath(mConfigFilePath));
 
             string k, v;
             while (!FileReader.IsEnd())

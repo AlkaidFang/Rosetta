@@ -24,7 +24,7 @@ public class TestMono : MonoBehaviour {
         if (count == 0)
         {
             //NetSystem.Instance.Connect((int)RosettaSetup.NetCtr.Lobby, "ws://127.0.0.1:8080/PearlHarbor/Game", 8080);
-            NetSystem.Instance.Connect((int)Rosetta.NetCtr.Lobby, "10.12.25.205", 10086);
+            NetSystem.Instance.Connect((int)NetCtr.Lobby, "192.168.1.111", 33333); 
         }
         if (count > 0)
         {
@@ -35,7 +35,7 @@ public class TestMono : MonoBehaviour {
             proto.String = "helloworld";
             proto.Long = 22222 - count;
             pa.Proto = proto;
-            NetSystem.Instance.Send((int)Rosetta.NetCtr.Lobby, pa);
+            NetSystem.Instance.Send((int)NetCtr.Lobby, pa);
         }
 
         Alkaid.MyRandom mr = new Alkaid.MyRandom();
@@ -47,6 +47,6 @@ public class TestMono : MonoBehaviour {
         go.transform.localPosition = Vector3.one * count;
 
 
-        WindowManager.Instance.ShowWindow("LogoWindow");
+        //WindowManager.Instance.ShowWindow("LogoWindow");
     }
 }

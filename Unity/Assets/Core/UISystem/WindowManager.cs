@@ -20,6 +20,14 @@ namespace Alkaid
 
         public bool Init()
         {
+            List<UIWindowDataItem> data = UIWindowDataProvider.Instance.GetAllData();
+            UIWindowDataItem config;
+            for (int i = 0; i < data.Count; ++i)
+            {
+                config = data[i];
+                RegisterWindow(config.mName, config);
+            }
+            
             foreach (var i in mWindowMap.Values)
             {
                 i.Init();
@@ -44,9 +52,9 @@ namespace Alkaid
             }
         }
 
-		public void RegisterWindow(string name, string layoutFile, string scriptName, List<string> exclusive)
+		private void RegisterWindow(string name, UIWindowDataItem data)
         {
-			IWindow window = new IWindow(name, layoutFile, scriptName, exclusive);
+			IWindow window = new IWindow(name, data);
             this.mWindowMap.Add(window.GetName(), window);
         }
 
@@ -99,7 +107,7 @@ namespace Alkaid
             mWindowMap.TryGetValue(name, out w);
             if (null != w)
             {
-                w.Show(false);
+                w.Show(false); 
 				w.ReleaseAssets();
 
 				CheckExclusive (w, false);
@@ -116,7 +124,8 @@ namespace Alkaid
 
 		public void CheckExclusive(IWindow window, bool isShow)
 		{
-			if (isShow) {
+            /*
+            if (isShow) {
 				// 与windowname互斥的窗口都关闭，并且将关闭的窗口增加一个exclusive_by标签
 				string ename;
 				IWindow ewindow;
@@ -148,7 +157,7 @@ namespace Alkaid
 						}
 					}
 				}
-			}
+			}*/
 		}
     }
 }

@@ -33,6 +33,10 @@ namespace Alkaid
 
         public bool Init()
         {
+
+            RegisterHandler(typeof(XMessage.SC_HelloWorldResult), new SCHelloWorldResultHandler());
+            RegisterHandler(typeof(XMessage.SC_PingResult), new SCPingResultHandler());
+
             return true;
         }
 
@@ -45,7 +49,6 @@ namespace Alkaid
         {
             mHandlerDict.Clear();
         }
-
 
         public void RegisterHandler(Type protoType, IPacketHandler handler)
         {
