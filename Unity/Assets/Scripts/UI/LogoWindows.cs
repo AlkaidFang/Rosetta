@@ -2,23 +2,32 @@
 using System.Collections;
 using Alkaid;
 
-public class LogoWindows : MonoBehaviour {
+public class LogoWindows : BaseWindow {
 
-    public int showTimes = 3;
+    public int showTimes = 2;
 
-	// Use this for initialization
-	void Start ()
-    {
-        LogoCountDown();
-    }
+	public override void OnShow ()
+	{
+		LogoCountDown ();
+	}
+
+	public override void OnHide ()
+	{
+		
+	}
+
+	public override void OnUIEventHandler (int eventId, params object[] args)
+	{
+		
+	}
 
     private void LogoCountDown()
     {
         --showTimes;
         if (showTimes < 0)
         {
-            WindowManager.Instance.ShowWindow("CGWindow");
-            WindowManager.Instance.HideWindow("LogoWindow");
+			UISystem2.Instance.ShowWindow("CGWindow");
+			UISystem2.Instance.HideWindow("LogoWindow");
         }
         else
         {

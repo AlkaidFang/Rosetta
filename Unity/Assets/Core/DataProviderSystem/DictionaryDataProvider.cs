@@ -5,13 +5,13 @@ namespace Alkaid
 {
     public class DictionaryDataProvider : Singleton<DictionaryDataProvider>, IDataProvider
     {
-        public class DictionaryDataItem
+        public class DictionaryData
         {
             public int mID = -1;
             public string mData = string.Empty;
         }
 
-        private List<DictionaryDataItem> mDataList = new List<DictionaryDataItem>();
+        private List<DictionaryData> mDataList = new List<DictionaryData>();
 
         public DictionaryDataProvider()
         {
@@ -25,11 +25,11 @@ namespace Alkaid
 
         public void Load()
         {
-            DictionaryDataItem item = null;
+            DictionaryData item = null;
             while (!FileReader.IsEnd())
             {
                 FileReader.ReadLine();
-                item = new DictionaryDataItem();
+                item = new DictionaryData();
                 item.mID = FileReader.ReadInt();
                 item.mData = FileReader.ReadString();
 
@@ -39,7 +39,7 @@ namespace Alkaid
 
         public bool Verify()
         {
-            foreach(DictionaryDataItem i in mDataList)
+            foreach(DictionaryData i in mDataList)
 	        {
                 LoggerSystem.Instance.Debug("Dictionary   " + i.mID + "  " + i.mData);
 	        }

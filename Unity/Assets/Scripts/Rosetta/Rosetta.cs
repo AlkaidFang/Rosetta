@@ -1,7 +1,4 @@
-﻿/**
- * Rosetta视为RenderThread
- * Framework视为LogicThread
- * */
+﻿
 using System;
 using UnityEngine;
 using System.Collections;
@@ -54,12 +51,14 @@ public class Rosetta : Singleton<Rosetta>, Lifecycle
 
     private void ConnectedCallback(bool status)
     {
-        EventSystem.Instance.FireEvent("network", "testwindow", status);
+        //EventSystem.Instance.FireEvent("network", "testwindow", status);
+		EventSystem2.Instance.FireEvent ((int)EventId.Network, status);
     }
 
     private void DisConnectedCallback()
     {
-        EventSystem.Instance.FireEvent("network", "testwindow", false);
+		//EventSystem.Instance.FireEvent("network", "testwindow", false);
+		EventSystem2.Instance.FireEvent ((int)EventId.Network, false);
     }
 
     public IEnumerator ConnectLobby(string ip, int port)

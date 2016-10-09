@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Alkaid
 {
-    public class UIWindowDataItem
+    public class UIWindowData
     {
         public int mID = -1;
         public string mName = string.Empty;
@@ -13,12 +13,13 @@ namespace Alkaid
         public string mParentName = string.Empty;
         public bool mUseFramework = false;
         public string mExclusiveIDs = string.Empty;
+		public bool mHideWithDestroy = true;
 
     }
 
     public class UIWindowDataProvider : Singleton<UIWindowDataProvider>, IDataProvider
     {
-        private List<UIWindowDataItem> mDataList = new List<UIWindowDataItem>();
+        private List<UIWindowData> mDataList = new List<UIWindowData>();
 
         public string Path()
         {
@@ -27,11 +28,11 @@ namespace Alkaid
 
         public void Load()
         {
-            UIWindowDataItem item = null;
+            UIWindowData item = null;
             while (!FileReader.IsEnd())
             {
                 FileReader.ReadLine();
-                item = new UIWindowDataItem();
+                item = new UIWindowData();
                 item.mID = FileReader.ReadInt();
                 item.mName = FileReader.ReadString();
                 item.mScriptName = FileReader.ReadString();
@@ -75,9 +76,20 @@ namespace Alkaid
 	        return true;
         }
 
-        public List<UIWindowDataItem> GetAllData()
+        public List<UIWindowData> GetAllData()
         {
             return mDataList;
         }
+
+		public UIWindowData GetData(string name)
+		{
+			UIWindowData ret = null;
+			for (int i = 0; i < mDataList.Count; ++i) {
+				if (mDataList [i].mName.Equals (name))
+					ret = mDataList [i];
+			}
+
+			return ret;
+		}
     }
 }

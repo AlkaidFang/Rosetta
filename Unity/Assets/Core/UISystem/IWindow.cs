@@ -11,7 +11,7 @@ namespace Alkaid
         private bool mIsShow;
         private bool mIsLoad;
         private string mName;
-        private UIWindowDataItem mData;
+        private UIWindowData mData;
 
         private Dictionary<string, string> mExtraDatas;
 
@@ -24,7 +24,7 @@ namespace Alkaid
             mExtraDatas = new Dictionary<string,string>();
         }
 
-		public IWindow(string name, UIWindowDataItem data)
+		public IWindow(string name, UIWindowData data)
         {
             mBaseNode = null;
             mIsShow = false;
@@ -125,7 +125,7 @@ namespace Alkaid
             return mName;
         }
 
-        public UIWindowDataItem GetConfig()
+        public UIWindowData GetConfig()
         {
             return mData;
         }

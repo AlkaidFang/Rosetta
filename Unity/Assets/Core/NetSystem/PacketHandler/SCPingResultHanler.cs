@@ -19,6 +19,7 @@ namespace Alkaid
             double ms = (DateTime.Now - d).TotalMilliseconds;
 
             EventSystem.Instance.FireEvent("ping", "testwindow", ms);
+			EventSystem2.Instance.FireEvent ((int)EventId.Ping, ms);
 
             return true;
         }

@@ -3,12 +3,22 @@ using System.Collections;
 using UnityEngine;
 using Alkaid;
 
-public class CGWindow : MonoBehaviour
+public class CGWindow : BaseWindow
 {
-    void Start()
-    {
-        this.StartCoroutine(PlayCG());
-    }
+	public override void OnShow ()
+	{
+		this.StartCoroutine(PlayCG());
+	}
+
+	public override void OnHide ()
+	{
+		
+	}
+
+	public override void OnUIEventHandler (int eventId, params object[] args)
+	{
+		
+	}
 
     private IEnumerator PlayCG()
     {
@@ -18,8 +28,8 @@ public class CGWindow : MonoBehaviour
 #else
         yield return 0;
 #endif
-        WindowManager.Instance.ShowWindow("TestWindow");
-        WindowManager.Instance.HideWindow("CGWindow");
+		UISystem2.Instance.ShowWindow("TestWindow");
+		UISystem2.Instance.HideWindow("CGWindow");
         Debug.LogWarning("视屏播放结束");
     }
 

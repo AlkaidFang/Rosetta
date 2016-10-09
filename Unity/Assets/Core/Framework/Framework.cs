@@ -21,10 +21,12 @@ namespace Alkaid
                 LoggerSystem.Instance.Info("Framework    init begin.");
                 if (!TimeSystem.Instance.Init()) break;
                 if (!DataProviderSystem.Instance.Init()) break;
-                if (!EngineSystem.Instance.Init()) break;
-                if (!EventSystem.Instance.Init()) break;
-                if (!LocalStorageSystem.Instance.Init()) break;
-                if (!UISystem.Instance.Init()) break;
+				if (!EngineSystem.Instance.Init()) break;
+				if (!EventSystem.Instance.Init()) break;
+				if (!EventSystem2.Instance.Init()) break;
+				if (!LocalStorageSystem.Instance.Init()) break;
+				if (!UISystem.Instance.Init()) break;
+				if (!UISystem2.Instance.Init()) break;
                 if (!NetSystem.Instance.Init()) break;
                 if (!ThirdPartySystem.Instance.Init()) break;
 
@@ -45,9 +47,12 @@ namespace Alkaid
             LoggerSystem.Instance.Tick(interval);
             DataProviderSystem.Instance.Tick(interval);
             EngineSystem.Instance.Tick(interval);
-            TimeSystem.Instance.Tick(interval);
-            EventSystem.Instance.Tick(interval);
+			TimeSystem.Instance.Tick(interval);
+			EventSystem.Instance.Tick(interval);
+			EventSystem2.Instance.Tick(interval);
             LocalStorageSystem.Instance.Tick(interval);
+			UISystem.Instance.Tick (interval);
+			UISystem2.Instance.Tick (interval);
             NetSystem.Instance.Tick(interval);
             ThirdPartySystem.Instance.Tick(interval);
         }
@@ -63,8 +68,9 @@ namespace Alkaid
             EventSystem.Instance.Destroy();
             LocalStorageSystem.Instance.Destroy();
             DataProviderSystem.Instance.Destroy();
-            TimeSystem.Instance.Destroy();
-            UISystem.Instance.Destroy();
+			TimeSystem.Instance.Destroy();
+			UISystem.Instance.Destroy();
+			UISystem2.Instance.Destroy();
             NetSystem.Instance.Destroy();
             ThirdPartySystem.Instance.Destroy();
 

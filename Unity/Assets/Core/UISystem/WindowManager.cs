@@ -20,8 +20,8 @@ namespace Alkaid
 
         public bool Init()
         {
-            List<UIWindowDataItem> data = UIWindowDataProvider.Instance.GetAllData();
-            UIWindowDataItem config;
+            List<UIWindowData> data = UIWindowDataProvider.Instance.GetAllData();
+            UIWindowData config;
             for (int i = 0; i < data.Count; ++i)
             {
                 config = data[i];
@@ -52,7 +52,7 @@ namespace Alkaid
             }
         }
 
-		private void RegisterWindow(string name, UIWindowDataItem data)
+		private void RegisterWindow(string name, UIWindowData data)
         {
 			IWindow window = new IWindow(name, data);
             this.mWindowMap.Add(window.GetName(), window);

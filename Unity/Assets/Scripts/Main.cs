@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        WindowManager.Instance.ShowWindow("LogoWindow");
+		UISystem2.Instance.ShowWindow("LogoWindow");
     }
 
     void Update()
