@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Alkaid
 {
-	public class Event2
+	public class Event2 : IPoolObject<Event2>
 	{
 		private int mKey;
 		private object[] mArgs;
 
-		public Event2(int key, object[] args)
+		public void Set(int key, object[] args)
 		{
 			mKey = key;
 			mArgs = args;

@@ -9,11 +9,13 @@ namespace Alkaid
 	{
 		private const int MAX_PROCESS_PER_TICK = 10;
 		private Dictionary<int, List<EventHandler2>> mEventHandlerMap;
+		private SimplePool<Event2> mEventPool;
 		private List<Event2> mFiredEventList;
 
 		public EventSystem2()
 		{
 			mEventHandlerMap = new Dictionary<int, List<EventHandler2>> ();
+			mEventPool = new SimplePool<Event2> ();
 			mFiredEventList = new List<Event2> ();
 		}
 
@@ -34,7 +36,7 @@ namespace Alkaid
 				if (i >= mFiredEventList.Count)
 					break;
 
-				DirectFire (mFiredEventList [i]);
+				TrigEvent (mFiredEventList [i]);
 				mFiredEventList.RemoveAt (i);
 			}
 		}
@@ -44,6 +46,11 @@ namespace Alkaid
 			LoggerSystem.Instance.Info("EventSystemSimple    destroy  begin");
 
 			mEventHandlerMap.Clear ();
+			for (int i = 0; i < mFiredEventList.Count; ++i)
+			{
+				mEventPool.Recycle (mFiredEventList [i]);
+			}
+			mFiredEventList.Clear ();
 
 			LoggerSystem.Instance.Info("EventSystemSimple    destroy  end");
 		}
@@ -102,11 +109,26 @@ namespace Alkaid
 
 		public void FireEvent(int key, params object[] args)
 		{
-			Event2 e = new Event2(key, args);
-			DelayFire (e, 1);
+			// 先判断目前的事件队列中是否有这个事件，如果有的话，则刷新为最新。因为在同一帧中两次事件的没有作用
+			Event2 e = null;
+			for (int i = 0; i < mFiredEventList.Count; ++i)
+			{
+				if (mFiredEventList [i].GetKey () == key) {
+					e = mFiredEventList [i];
+					break;
+				}
+			}
+
+			if (e == null) {
+				e = mEventPool.Alloc ();
+				e.Set (key, args);
+				mFiredEventList.Add (e);
+			} else {
+				e.Set(key, args);
+			}
 		}
 
-		private void DirectFire(Event2 e)
+		private void TrigEvent(Event2 e)
 		{
 			List<EventHandler2> total = null;
 			if (this.mEventHandlerMap.TryGetValue(e.GetKey(), out total))
@@ -118,6 +140,7 @@ namespace Alkaid
 					if (eh != null)
 					{
 						eh.Fire(e);
+						mEventPool.Recycle (e);
 					}
 				}
 			}
@@ -127,9 +150,5 @@ namespace Alkaid
 			}
 		}
 
-		private void DelayFire(Event2 e, int delay)
-		{
-			mFiredEventList.Add(e);
-		}
 	}
 }
