@@ -35,6 +35,7 @@ public class Rosetta : Singleton<Rosetta>, Lifecycle
         PacketFormat pf = new PacketFormat();
         PacketHandlerManager pm = new PacketHandlerManager();
         NetSystem.Instance.RegisterConnector((int)NetCtr.Lobby, ConnectionType.TCP, pf, pm, ConnectedCallback, null, DisConnectedCallback, null);
+//		NetSystem.Instance.RegisterConnector((int)NetCtr.Room, ConnectionType.TCP, pf, pm, conne)
 
         return Framework.Instance.Init();
     }
