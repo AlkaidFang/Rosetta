@@ -36,7 +36,7 @@ public class BuildAssetBundle {
         for (int i = 0; i < list.Count; ++i)
         {
             Ast a = list[i];
-            string [] depends = AssetDatabase.GetDependencies(a.pathName, false);
+            string [] depends = AssetDatabase.GetDependencies(a.pathName, true);
             for (int j = 0; j < depends.Length; ++j)
             {
                 if (depends[j] == a.pathName)
@@ -124,12 +124,13 @@ public class BuildAssetBundle {
                 if (d.count == a.count + 1)
                 {
                     array.Add(d);
+                	CalDepends(d, array, global, all);
                 }
                 else
                 {
-                    global.Add(d);
+                	if (!global.Contains(d))
+                    	global.Add(d);
                 }
-                CalDepends(d, array, global, all);
             }
         }
     }
