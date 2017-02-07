@@ -1,7 +1,7 @@
 #ID	Name	ScripName	PrefabPath	AltasPath	ParentName	UseFramework	ExclusiveID
 1	LogoWindow	LogoWindow	UI/Prefabs/LogoWindow	none	root	TRUE	-1
 2	HelloWindow	1	0	none	root	TRUE	-1
-I3	TestWindow	TestWindow	UI/Prefabs/TestWindow	none	root	TRUE	-1
+3	TestWindow	TestWindow	UI/Prefabs/TestWindow	none	root	TRUE	-1
 4	TestWindow2	TestWindow2	UI/Prefabs/TestWindow2	none	root	TRUE	-1
 5	CGWindow	CGWindow	UI/Prefabs/CGWindow	none	root	TRUE	-1
 6	SelectServerWindow	SelectServerWindow	UI/Prefabs/SelectServerWindow	none	root	TRUE	-1
