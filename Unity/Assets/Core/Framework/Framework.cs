@@ -30,6 +30,13 @@ namespace Alkaid
                 if (!NetSystem.Instance.Init()) break;
                 if (!ThirdPartySystem.Instance.Init()) break;
 
+                // 一些配置
+                string val = string.Empty;
+                if (ConfigSystem.Instance.TryGetConfig("version", out val))
+                {
+                    SetVersion(val);
+                }
+
 
                 LoggerSystem.Instance.Info("Framework init end.");
                 return true;

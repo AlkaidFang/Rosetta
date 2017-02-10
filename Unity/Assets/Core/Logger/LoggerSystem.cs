@@ -38,7 +38,34 @@ namespace Alkaid
 
         public bool Init()
         {
-			SetFileLogPath (Framework.Instance.GetWritableRootDir());
+            // 读取配置
+            string val = string.Empty;
+            if (ConfigSystem.Instance.TryGetConfig("consolelogmode", out val))
+            {
+                SetConsoleLogMode(Converter.ConvertBool(val));
+            }
+            if (ConfigSystem.Instance.TryGetConfig("consoleloglevel", out val))
+            {
+                LoggerSystem.Instance.SetConsoleLogLevel(Converter.ConvertNumber<int>(val));
+            }
+            if (ConfigSystem.Instance.TryGetConfig("filelogmode", out val))
+            {
+                LoggerSystem.Instance.SetFileLogMode(Converter.ConvertBool(val));
+            }
+            if (ConfigSystem.Instance.TryGetConfig("fileloglevel", out val))
+            {
+                LoggerSystem.Instance.SetFileLogLevel(Converter.ConvertNumber<int>(val));
+            }
+            if (ConfigSystem.Instance.TryGetConfig("filelogfrontname", out val))
+            {
+                LoggerSystem.Instance.SetFileLogFrontName(val);
+            }
+            if (ConfigSystem.Instance.TryGetConfig("filelogextname", out val))
+            {
+                LoggerSystem.Instance.SetFileLogExtName(val);
+            }
+
+            SetFileLogPath (Framework.Instance.GetWritableRootDir());
 
             mFileLogger.Init();
             ConsoleLog(LogLevel.ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
@@ -121,15 +148,15 @@ namespace Alkaid
         /**
          * 设置console log的方法
          * */
-        public void SetConsoleLogMode(bool status)
-        {
-            mConsoleLogMode = status;
-        }
         public void SetConsoleLogger(Logger logger)
         {
             mConsoleLogger = logger;
         }
-        public void SetConsoleLogLevel(int level)
+        private void SetConsoleLogMode(bool status)
+        {
+            mConsoleLogMode = status;
+        }
+        private void SetConsoleLogLevel(int level)
         {
             mConsoleLogLevel = (LogLevel)level;
         }
@@ -137,30 +164,30 @@ namespace Alkaid
         /**
          * 设置file log的方法
          * */
-        public void SetFileLogMode(bool status)
-        {
-            mFileLogMode = status;
-        }
-        public void SetFileLogger(Logger logger)
+        private void SetFileLogger(Logger logger)
         {
             mFileLogger = logger;
         }
-        public void SetFileLogLevel(int level)
+        private void SetFileLogMode(bool status)
+        {
+            mFileLogMode = status;
+        }
+        private void SetFileLogLevel(int level)
         {
             mFileLogLevel = (LogLevel)level;
         }
-        public void SetFileLogPath(string path)
+        private void SetFileLogPath(string path)
         {
             if (mFileLogMode)
             {
                 ((FileLogger)mFileLogger).SetSavePath(path);
             }
         }
-        public void SetFileLogFrontName(string name)
+        private void SetFileLogFrontName(string name)
         {
             ((FileLogger)mFileLogger).SetFileLogFrontName(name);
         }
-        public void SetFileLogExtName(string name)
+        private void SetFileLogExtName(string name)
         {
             ((FileLogger)mFileLogger).SetFileLogExtName(name);
         }

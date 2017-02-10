@@ -32,42 +32,6 @@ namespace Alkaid
             // 卸载文件
             FileReader.UnLoad();
 
-            // fps
-            if (mConfigs.TryGetValue("fps", out v))
-            {
-                EngineSystem.Instance.SetFPS(Converter.ConvertNumber<int>(v));
-            }
-            // version
-            if (mConfigs.TryGetValue("version", out v))
-            {
-                Framework.Instance.SetVersion(v);
-            }
-            // log
-            if (mConfigs.TryGetValue("consolelogmode", out v))
-            {
-                LoggerSystem.Instance.SetConsoleLogMode(Converter.ConvertBool(v));
-            }
-            if (mConfigs.TryGetValue("consoleloglevel", out v))
-            {
-                LoggerSystem.Instance.SetConsoleLogLevel(Converter.ConvertNumber<int>(v));
-            }
-            if (mConfigs.TryGetValue("filelogmode", out v))
-            {
-                LoggerSystem.Instance.SetFileLogMode(Converter.ConvertBool(v));
-            }
-            if (mConfigs.TryGetValue("fileloglevel", out v))
-            {
-                LoggerSystem.Instance.SetFileLogLevel(Converter.ConvertNumber<int>(v));
-            }
-            if (mConfigs.TryGetValue("filelogfrontname", out v))
-            {
-                LoggerSystem.Instance.SetFileLogFrontName(v);
-            }
-            if (mConfigs.TryGetValue("filelogextname", out v))
-            {
-                LoggerSystem.Instance.SetFileLogExtName(v);
-            }
-
             return true;
         }
 
@@ -79,6 +43,11 @@ namespace Alkaid
         public void Destroy()
         {
 
+        }
+
+        public bool TryGetConfig(string key, out string v)
+        {
+            return mConfigs.TryGetValue(key, out v);
         }
     }
 }

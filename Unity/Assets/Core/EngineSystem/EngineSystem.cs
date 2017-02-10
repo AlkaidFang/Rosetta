@@ -12,6 +12,11 @@ namespace Alkaid
         {
             LoggerSystem.Instance.Info("EngineSystem    init  begin");
 
+            string val = string.Empty;
+            if (ConfigSystem.Instance.TryGetConfig("fps", out val))
+            {
+                SetFPS (Converter.ConvertNumber<int>(val));
+            }
 
             LoggerSystem.Instance.Info("EngineSystem    init  end");
             return true;
@@ -31,7 +36,7 @@ namespace Alkaid
 
         }
 
-        public void SetFPS(int fps)
+        private void SetFPS(int fps)
         {
             if (fps > 0)
             {
