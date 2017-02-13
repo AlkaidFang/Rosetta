@@ -47,7 +47,7 @@ namespace Alkaid
         public void PushExcute(Callback<List<object>> cb, params object[] args)
         {
             bool newTaskFailed = true;
-            SimplePool<Task> pool = mTaskTypePools.Get<SimplePool<Task>>();
+            SimplePool<Task> pool = mTaskTypePools.GetOrNew<SimplePool<Task>>();
             if (null != pool)
             {
                 Task task = pool.Alloc();
@@ -73,7 +73,7 @@ namespace Alkaid
         public void PushExcute<T0>(Callback<T0> cb, T0 t)
         {
             bool newTaskFailed = true;
-            SimplePool<Task<T0>> pool = mTaskTypePools.Get<SimplePool<Task<T0>>>();
+            SimplePool<Task<T0>> pool = mTaskTypePools.GetOrNew<SimplePool<Task<T0>>>();
             if (null != pool)
             {
                 Task<T0> task = pool.Alloc();
