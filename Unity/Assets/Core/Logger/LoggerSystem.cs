@@ -46,41 +46,51 @@ namespace Alkaid
             }
             if (ConfigSystem.Instance.TryGetConfig("consoleloglevel", out val))
             {
-                LoggerSystem.Instance.SetConsoleLogLevel(Converter.ConvertNumber<int>(val));
+                SetConsoleLogLevel(Converter.ConvertNumber<int>(val));
             }
             if (ConfigSystem.Instance.TryGetConfig("filelogmode", out val))
             {
-                LoggerSystem.Instance.SetFileLogMode(Converter.ConvertBool(val));
+                SetFileLogMode(Converter.ConvertBool(val));
             }
             if (ConfigSystem.Instance.TryGetConfig("fileloglevel", out val))
             {
-                LoggerSystem.Instance.SetFileLogLevel(Converter.ConvertNumber<int>(val));
+                SetFileLogLevel(Converter.ConvertNumber<int>(val));
             }
             if (ConfigSystem.Instance.TryGetConfig("filelogfrontname", out val))
             {
-                LoggerSystem.Instance.SetFileLogFrontName(val);
+                SetFileLogFrontName(val);
             }
             if (ConfigSystem.Instance.TryGetConfig("filelogextname", out val))
             {
-                LoggerSystem.Instance.SetFileLogExtName(val);
+                SetFileLogExtName(val);
             }
 
-            SetFileLogPath (Framework.Instance.GetWritableRootDir());
 
-            mFileLogger.Init();
-            ConsoleLog(LogLevel.ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
+            // 初始化filelogger
+            if (mFileLogMode)
+            {
+                SetFileLogPath(Framework.Instance.GetWritableRootDir());
+                mFileLogger.Init();
+                ConsoleLog(LogLevel.ALWAYS, "FileLogger file path:" + (mFileLogger as FileLogger).GetFinalFilePath());
+            }
 
             return true;
         }
 
         public void Tick(float interval)
         {
-            mFileLogger.Tick(interval);
+            if (mFileLogMode)
+            {
+                mFileLogger.Tick(interval);
+            }
         }
 
         public void Destroy()
         {
-            mFileLogger.Destroy();
+            if (mFileLogMode)
+            {
+                mFileLogger.Destroy();
+            }
         }
 
         public void Debug(string message)

@@ -69,6 +69,10 @@ namespace Alkaid
             if (!string.IsNullOrEmpty(text))
             {
                 string[] lines = text.Split('\n');
+                if (lines.Length == 1)
+                {
+                    lines = text.Split('\r');
+                }
                 string temp;
                 for (int i = 0; i < lines.Length; ++i)
                 {
