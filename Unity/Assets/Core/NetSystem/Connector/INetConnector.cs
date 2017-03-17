@@ -21,6 +21,8 @@ namespace Alkaid
 
 		private ConnectionStatus mConnectedStatus = ConnectionStatus.UNKNOW;
 
+		private bool mDisconnectEvent; // 断开消息，必须要在主线程中处理
+
         public INetConnector(IPacketFormat packetFormat, IPacketHandlerManager packetHandlerManager)
         {
             mUid = -1;
@@ -32,6 +34,8 @@ namespace Alkaid
 
             mPacketFormat = packetFormat;
             mPacketHandlerManager = packetHandlerManager;
+
+			mDisconnectEvent = false;
         }
 
         public virtual bool Init()
@@ -42,6 +46,11 @@ namespace Alkaid
         public virtual void Tick(float interval)
         {
             mPacketHandlerManager.Tick(interval);
+
+			if (mDisconnectEvent) {
+				mDisconnectEvent = false;
+				OnDisconnected();
+			}
         }
 
         public virtual void Destroy()
@@ -88,10 +97,11 @@ namespace Alkaid
 
         protected void CallbackDisconnected()
         {
-            if (OnDisconnected != null)
-            {
-                OnDisconnected();
-            }
+			if (OnDisconnected != null)
+			{
+				mDisconnectEvent = true;
+				//OnDisconnected();
+			}
         }
 
         protected void CallbackError()

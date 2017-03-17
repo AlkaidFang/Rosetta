@@ -115,59 +115,61 @@ namespace Alkaid
 
         private void ReadComplete(IAsyncResult ar)
         {
-            int readLength = 0;
-            try
-            {
-                readLength = mSocket.GetStream().EndRead(ar);
-                LoggerSystem.Instance.Info("读取到数据字节数:" + readLength);
-                if (readLength > 0)
-                {
-                    mNetStream.FinishedIn(readLength);
+			if (!IsConnected ())
+				return;
 
-                    mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
-                }
-                else
-                {
-                    // error
-                    LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mRemoteHost.ToString());
-                    DisConnect();
-                }
-            }
-            catch (Exception e)
-            {
-                LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生读取错误：" + e.Message);
-                DisConnect();
-            }
-            finally
-            {
-                mNetStream.FinishedIn(readLength);
-            }
+			int readLength = 0;
+			try
+			{
+				readLength = mSocket.GetStream().EndRead(ar);
+				LoggerSystem.Instance.Info("读取到数据字节数:" + readLength);
+				if (readLength > 0)
+				{
+					mNetStream.FinishedIn(readLength);
 
+					mSocket.GetStream().BeginRead(mNetStream.AsyncPipeIn, 0, INetConnector.MAX_SOCKET_BUFFER_SIZE, mReadCompleteCallback, this);
+				}
+				else
+				{
+					// error
+					LoggerSystem.Instance.Error("读取数据为0，将要断开此链接接:" + mRemoteHost.ToString());
+					DisConnect();
+				}
+			}
+			catch (Exception e)
+			{
+				LoggerSystem.Instance.Error("链接：" + mRemoteHost.ToString() + ", 发生读取错误：" + e.Message);
+				DisConnect();
+			}
         }
 
         private void SendComplete(IAsyncResult ar)
         {
-            int sendLength = 0;
-            try
-            {
-                mSocket.GetStream().EndWrite(ar);
-                sendLength = (int)ar.AsyncState;
-                LoggerSystem.Instance.Info("发送数据字节数：" + sendLength);
-                if (sendLength <= 0)
-                {
-                    // error
-                    DisConnect();
-                }
-            }
-            catch (Exception e)
-            {
-                LoggerSystem.Instance.Error("发生写入错误：" + e.Message);
-                DisConnect();
-            }
-            finally
-            {
-                mNetStream.FinishedOut(sendLength);
-            }
+			if (!IsConnected ())
+				return;
+
+			int sendLength = 0;
+			try
+			{
+				mSocket.GetStream().EndWrite(ar);
+				sendLength = (int)ar.AsyncState;
+				LoggerSystem.Instance.Info("发送数据字节数：" + sendLength);
+				if (sendLength > 0)
+				{
+					mNetStream.FinishedOut (sendLength);
+				}
+				else
+				{
+					// error
+					LoggerSystem.Instance.Error("发送数据为0，将要断开此链接接:" + mRemoteHost.ToString());
+					DisConnect();
+				}
+			}
+			catch (Exception e)
+			{
+				LoggerSystem.Instance.Error("发生写入错误：" + e.Message);
+				DisConnect();
+			}
         }
 
         private void doDecodeMessage()
